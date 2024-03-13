@@ -1,0 +1,1 @@
+<a {{ $attributes->merge(['class' => 'btn btn-secondary btn-sm']) }}>{!! $slot !!}</a>
