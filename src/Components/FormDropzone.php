@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Diviky\LaravelComponents\Components;
 
+use Diviky\LaravelFormComponents\Concerns\HandlesValidationErrors;
+
 class FormDropzone extends Component
 {
     use HandlesDefaultAndOldValue;

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Diviky\LaravelComponents\Components;
 
+use Diviky\LaravelFormComponents\Concerns\HandlesValidationErrors;
+
 class FormFile extends Component
 {
     use HandlesDefaultAndOldValue;

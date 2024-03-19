@@ -18,9 +18,9 @@ class Avatar extends Component
      * Create a new component instance.
      */
     public function __construct(
-        string $name = null,
+        ?string $name = null,
         string $url = '',
-        string $color = null,
+        ?string $color = null,
         bool $stacked = false
     ) {
         $this->color = $color ?? $this->getColor($name);

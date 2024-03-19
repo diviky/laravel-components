@@ -3,7 +3,7 @@
 'content',
 ])
 
-<tbody {!! $attributes->merge(['class' => 'table-body']) !!} @if (isset($fragment)) ajax-content @endif>
+<tbody {!! $attributes->merge(['class' => 'table-body']) !!} @if (isset($fragment)) ajax-content="{{ $fragment }}" @endif>
     @if(isset($fragment))
     @fragment($fragment)
     @endif

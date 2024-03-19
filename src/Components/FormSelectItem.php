@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Diviky\LaravelComponents\Components;
 
+use Diviky\LaravelFormComponents\Concerns\HandlesBoundValues;
+use Diviky\LaravelFormComponents\Concerns\HandlesValidationErrors;
+
 class FormSelectItem extends Component
 {
     use HandlesBoundValues;

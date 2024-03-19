@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Diviky\LaravelComponents\Support;
+namespace Diviky\LaravelComponents\Providers;
 
 use Diviky\LaravelComponents\FormDataBinder;
 use Illuminate\Support\Collection;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\Support\Str;
 
-class ServiceProvider extends BaseServiceProvider
+class LaravelServiceProvider extends BaseServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -28,9 +28,13 @@ class ServiceProvider extends BaseServiceProvider
         }
 
         $this->bootSupportMacros();
+        $this->bootBalde();
 
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'laravel-components');
+    }
 
+    protected function bootBalde(): self
+    {
         $prefix = config('laravel-components.prefix');
         $framework = config('laravel-components.framework');
 
@@ -45,6 +49,8 @@ class ServiceProvider extends BaseServiceProvider
         );
 
         Blade::anonymousComponentPath(__DIR__.'/../../resources/views/components/'.$framework, $prefix.'theme');
+
+        return $this;
     }
 
     /**
