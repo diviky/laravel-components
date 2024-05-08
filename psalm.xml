@@ -45,6 +45,11 @@
                 <directory name="src"/>
             </errorLevel>
         </NoInterfaceProperties>
+        <PossiblyInvalidCast>
+            <errorLevel type="suppress">
+                <directory name="src"/>
+            </errorLevel>
+        </PossiblyInvalidCast>
         <!-- @todo: Can't get this to work within a package? Ide helper or migrations somehow? -->
         <UndefinedMagicPropertyFetch>
             <errorLevel type="suppress">

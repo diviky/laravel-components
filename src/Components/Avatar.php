@@ -25,7 +25,7 @@ class Avatar extends Component
     ) {
         $this->color = $color ?? $this->getColor($name);
 
-        if ($name) {
+        if (isset($name)) {
             preg_match_all('#(?<=\s|\b)\pL#u', $name, $matches);
             $name = implode('', array_slice($matches[0], 0, 2));
         }
@@ -35,7 +35,7 @@ class Avatar extends Component
         $this->stacked = $stacked;
     }
 
-    protected function getColor($name)
+    protected function getColor(?string $name): string
     {
         if ($name === null || strlen($name) === 0) {
             $name = chr(random_int(65, 90));
@@ -61,12 +61,8 @@ class Avatar extends Component
         return $this->getRandomElement($colors, $name);
     }
 
-    protected function getRandomElement($array, $name)
+    protected function getRandomElement(array $array, string $name): string
     {
-        if (count($array) == 0) {
-            return null;
-        }
-
         $number = ord($name[0]);
         $i = 1;
         $charLength = strlen($name);

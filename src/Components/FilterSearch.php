@@ -43,7 +43,7 @@ class FilterSearch extends Component
         $this->showErrors = $showErrors;
         $this->floating = $floating && $type !== 'hidden';
 
-        if ($language) {
+        if (isset($language)) {
             $this->name = "{$name}[{$language}]";
         }
 

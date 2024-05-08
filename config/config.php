@@ -53,13 +53,13 @@ return [
         'theme-alert-success' => [
             'view' => 'laravel-components::{framework}.alert.success',
         ],
-        'form-button-cancel' => [
+        'button.cancel' => [
             'view' => 'laravel-components::{framework}.button.cancel',
         ],
-        'form-button-primary' => [
+        'button.primary' => [
             'view' => 'laravel-components::{framework}.button.primary',
         ],
-        'form-button-secondary' => [
+        'button.secondary' => [
             'view' => 'laravel-components::{framework}.button.secondary',
         ],
         'theme-checkbox' => [

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Diviky\LaravelComponents\Providers;
 
-use Diviky\LaravelComponents\FormDataBinder;
+use Diviky\LaravelFormComponents\FormDataBinder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
@@ -43,7 +43,7 @@ class LaravelServiceProvider extends BaseServiceProvider
                 if (isset($component['class'])) {
                     Blade::component($alias, $component['class'], $prefix);
                 } else {
-                    Blade::component(str_replace('{framework}', $framework, $component['view']), $alias, $prefix);
+                    Blade::component((string) Str::replace('{framework}', $framework, $component['view']), $alias, $prefix);
                 }
             }
         );

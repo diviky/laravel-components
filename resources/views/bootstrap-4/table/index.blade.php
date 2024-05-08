@@ -16,7 +16,7 @@
         @endisset
 
         @isset($head)
-            <x-table.header :attributes="$header->attributes">{!! $head !!}</x-table.header>
+            <x-table.header :attributes="$head->attributes">{!! $head !!}</x-table.header>
         @endisset
 
         @isset($body)

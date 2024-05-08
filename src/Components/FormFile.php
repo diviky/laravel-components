@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Diviky\LaravelComponents\Components;
 
+use Diviky\LaravelFormComponents\Concerns\HandlesDefaultAndOldValue;
 use Diviky\LaravelFormComponents\Concerns\HandlesValidationErrors;
 
 class FormFile extends Component
@@ -34,7 +35,7 @@ class FormFile extends Component
         $this->label = $label;
         $this->showErrors = $showErrors;
 
-        if ($language) {
+        if (isset($language)) {
             $this->name = "{$name}[{$language}]";
         }
 

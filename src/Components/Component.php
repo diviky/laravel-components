@@ -20,6 +20,6 @@ abstract class Component extends BaseComponent
 
         $framework = config('laravel-components.framework');
 
-        return str_replace('{framework}', $framework, $config['view']);
+        return (string) Str::replace('{framework}', $framework, $config['view']);
     }
 }
