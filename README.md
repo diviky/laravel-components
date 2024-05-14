@@ -149,7 +149,7 @@ will be output as
 
 But if you want to display some text or icons in button instead of submit you can use it as a \$slot
 
-##### Example:
+##### Example
 
 ```html
 <x-form-button> Update </x-form-button>
@@ -349,13 +349,24 @@ But if you want to display some text or icons in button instead of submit you ca
 #### Link
 
 ```html
-<x-link href="/post" />Submit</link>
+<x-link href="/post">Submit</link>
 ```
 
 ##### will be output as
 
 ```html
 <a href="/link">Submit</a>
+```
+
+#### Date Picker
+
+```html
+<x-form-date />
+```
+#### Date Range Picker
+
+```html
+<x-form-date-range />
 ```
 
 ### Testing

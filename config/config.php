@@ -24,6 +24,14 @@ return [
             'view' => 'laravel-components::{framework}.form-button',
             'class' => Components\FormButton::class,
         ],
+        'form-date' => [
+            'view' => 'laravel-components::{framework}.form-date',
+            'class' => Components\FormDate::class,
+        ],
+        'form-date-range' => [
+            'view' => 'laravel-components::{framework}.form-date-range',
+            'class' => Components\FormDateRange::class,
+        ],
         'form-select-group' => [
             'view' => 'laravel-components::{framework}.form-select-group',
             'class' => Components\FormSelectGroup::class,
@@ -32,10 +40,18 @@ return [
             'view' => 'laravel-components::{framework}.form-select-item',
             'class' => Components\FormSelectItem::class,
         ],
+        'form-file' => [
+            'view' => 'laravel-components::{framework}.form-file',
+            'class' => Components\FormFile::class,
+        ],
+        'form-dropzone' => [
+            'view' => 'laravel-components::{framework}.form-dropzone',
+            'class' => Components\FormDropzone::class,
+        ],
         'theme-counter' => [
             'view' => 'laravel-components::{framework}.theme-counter',
         ],
-        'theme-modal' => [
+        'theme.modal' => [
             'view' => 'laravel-components::{framework}.theme-modal',
         ],
         'theme-alert-error' => [
@@ -66,11 +82,11 @@ return [
             'view' => 'laravel-components::{framework}.theme-checkbox',
             'class' => Components\ThemeCheckbox::class,
         ],
-        'filter-search' => [
+        'filter.search' => [
             'view' => 'laravel-components::{framework}.filters.search',
             'class' => Components\FilterSearch::class,
         ],
-        'filter-dates' => [
+        'filter.dates' => [
             'view' => 'laravel-components::{framework}.filters.dates',
             'class' => Components\FilterDates::class,
         ],
@@ -81,18 +97,6 @@ return [
         'style' => [
             'view' => 'laravel-components::{framework}.style',
             'class' => Components\Style::class,
-        ],
-        'form-file' => [
-            'view' => 'laravel-components::{framework}.form-file',
-            'class' => Components\FormFile::class,
-        ],
-        'action-link' => [
-            'view' => 'laravel-components::{framework}.action-link',
-            'class' => Components\ActionLink::class,
-        ],
-        'form-dropzone' => [
-            'view' => 'laravel-components::{framework}.form-dropzone',
-            'class' => Components\FormDropzone::class,
         ],
         'link' => [
             'view' => 'laravel-components::{framework}.link',
@@ -117,6 +121,24 @@ return [
             'view' => 'laravel-components::{framework}.card.footer',
         ],
         'card.filter' => [
+            'view' => 'laravel-components::{framework}.card.filter',
+        ],
+        'card-header' => [
+            'view' => 'laravel-components::{framework}.card.header',
+        ],
+        'card-body' => [
+            'view' => 'laravel-components::{framework}.card.body',
+        ],
+        'card-title' => [
+            'view' => 'laravel-components::{framework}.card.title',
+        ],
+        'card-options' => [
+            'view' => 'laravel-components::{framework}.card.options',
+        ],
+        'card-footer' => [
+            'view' => 'laravel-components::{framework}.card.footer',
+        ],
+        'card-filter' => [
             'view' => 'laravel-components::{framework}.card.filter',
         ],
         'table' => [
