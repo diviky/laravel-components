@@ -47,7 +47,22 @@ return [
             'view' => 'laravel-components::{framework}.form-dropzone',
             'class' => Components\FormDropzone::class,
         ],
-        'theme-counter' => [
+        'form-email' => [
+            'view' => 'laravel-components::{framework}.form-email',
+        ],
+        'form-url' => [
+            'view' => 'laravel-components::{framework}.form-url',
+        ],
+        'form-tel' => [
+            'view' => 'laravel-components::{framework}.form-tel',
+        ],
+        'form-number' => [
+            'view' => 'laravel-components::{framework}.form-number',
+        ],
+        'form-password' => [
+            'view' => 'laravel-components::{framework}.form-password',
+        ],
+        'theme.counter' => [
             'view' => 'laravel-components::{framework}.theme-counter',
         ],
         'theme.modal' => [
