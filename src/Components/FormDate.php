@@ -7,16 +7,20 @@ use Diviky\LaravelFormComponents\Concerns\HandlesValidationErrors;
 
 class FormDate extends Component
 {
-    use HandlesValidationErrors;
     use HandlesDefaultAndOldValue;
+    use HandlesValidationErrors;
 
     public string $name;
+
     public string $label;
+
     public string $type;
+
     public string $selector;
+
     public bool $floating;
 
-    public $value;
+    public ?string $value;
 
     /**
      * Create a new component instance.
@@ -28,20 +32,20 @@ class FormDate extends Component
         string $label = '',
         string $type = 'text',
         string $selector = 'datepicker',
-        $bind = null,
-        $default = null,
-        $language = null,
+        mixed $bind = null,
+        ?string $default = null,
+        ?string $language = null,
         bool $showErrors = true,
         bool $floating = false
     ) {
-        $this->name       = $name;
-        $this->label      = $label;
-        $this->type       = $type;
-        $this->selector   = 'data-'.$selector;
+        $this->name = $name;
+        $this->label = $label;
+        $this->selector = 'data-'.$selector;
         $this->showErrors = $showErrors;
-        $this->floating   = $floating && $type !== 'hidden';
+        $this->type = $type;
+        $this->floating = $floating && $type !== 'hidden';
 
-        if ($language) {
+        if (isset($language)) {
             $this->name = "{$name}[{$language}]";
         }
 

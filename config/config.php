@@ -30,7 +30,6 @@ return [
         ],
         'form-date-range' => [
             'view' => 'laravel-components::{framework}.form-date-range',
-            'class' => Components\FormDateRange::class,
         ],
         'form-select-group' => [
             'view' => 'laravel-components::{framework}.form-select-group',

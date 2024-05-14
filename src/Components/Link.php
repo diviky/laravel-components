@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Diviky\LaravelComponents\Components;
 
+use Illuminate\Support\Facades\Auth;
+use InvalidArgumentException;
 
 class Link extends Component
 {
@@ -12,9 +14,13 @@ class Link extends Component
     public string $action = '';
 
     public bool $modal = false;
+
     public bool $confirm = false;
+
     public bool $away = false;
+
     public bool $button = false;
+
     public bool $slideover = false;
 
     protected array $allowedAction = [
@@ -48,12 +54,12 @@ class Link extends Component
 
     private function isAuthorized(): bool
     {
-        return (empty($this->action) || !user()->isPermissionRevoked($this->allowedAction[$this->action])) ? true : false;
+        return (empty($this->action) || ! Auth::user()->isPermissionRevoked($this->allowedAction[$this->action])) ? true : false;
     }
 
     private function validateActions(): void
     {
-        if (!empty($this->action) && !isset($this->allowedAction[$this->action])) {
+        if (! empty($this->action) && ! isset($this->allowedAction[$this->action])) {
             throw new InvalidArgumentException("Invalid action: $this->action. Link action must be one of: ".implode(', ', array_keys($this->allowedAction)));
         }
     }
@@ -63,4 +69,3 @@ class Link extends Component
         return $this->isAuthorized();
     }
 }
-
