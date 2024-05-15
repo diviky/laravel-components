@@ -33,6 +33,16 @@ class LaravelServiceProvider extends BaseServiceProvider
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'laravel-components');
     }
 
+    /**
+     * Register the application services.
+     */
+    public function register(): void
+    {
+        $this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'laravel-components');
+
+        $this->app->singleton(FormDataBinder::class, fn () => new FormDataBinder());
+    }
+
     protected function bootBalde(): self
     {
         $prefix = config('laravel-components.prefix');
@@ -51,16 +61,6 @@ class LaravelServiceProvider extends BaseServiceProvider
         Blade::anonymousComponentPath(__DIR__.'/../../resources/views/components/'.$framework, $prefix.'theme');
 
         return $this;
-    }
-
-    /**
-     * Register the application services.
-     */
-    public function register(): void
-    {
-        $this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'laravel-components');
-
-        $this->app->singleton(FormDataBinder::class, fn () => new FormDataBinder());
     }
 
     protected function bootSupportMacros(): self
