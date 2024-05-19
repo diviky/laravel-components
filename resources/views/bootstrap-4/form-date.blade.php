@@ -1,26 +1,13 @@
-<div class="@if ($type === 'hidden') d-none @else form-group @endif">
-    <x-form-label :label="$label" :for="$attributes->get('id') ?: $id()" />
+<x-form-input :attributes="$attributes->merge([
+    'placeholder' => 'Select Date',
+    'date-format' => 'MMM DD, YYYY',
+    'type' => 'text',
+    $selector => $selector,
+    'class' => 'datepicker',
+])" name="{{ $name }}" value="{{ $value }}">
+    {!! $slot !!}
 
-    <div class="input-group input-icon">
-        <input {!! $attributes->merge([
-            'class' => 'form-control ' . ($hasError($name) ? 'is-invalid' : ''),
-            'placeholder' => 'Select Date',
-            'type' => 'text',
-        ]) !!} {{ $selector }}
-            @if ($isWired()) wire:model{!! $wireModifier() !!}="{{ $name }}"
-        @else
-        value="{{ $value }}" @endif
-            name="{{ $name }}" @if ($label && !$attributes->get('id')) id="{{ $id() }}" @endif />
-
-        <span class="input-icon-addon">
-            <i class="{{ $attributes->has('icon') ? $attributes->get('icon') : 'ti ti-calendar-month' }}"></i>
-        </span>
-
-        @if ($hasErrorAndShow($name))
-            <x-form-errors :name="$name" />
-        @endif
-    </div>
-
-    {!! $help ?? null !!}
-
-</div>
+    @slot('icon')
+        <i class="{{ $attributes->has('icon') ? $attributes->get('icon') : 'ti ti-calendar-month' }}"></i>
+    @endslot
+</x-form-input>

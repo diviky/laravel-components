@@ -4,13 +4,17 @@
     @endisset
     <div {!! $attributes->merge([
         'class' =>
-            'selectgroup ' .
+            'form-selectgroup ' .
             (($hasError($name) ? 'is-invalid' : '') . $inline ? 'd-flex flex-row flex-wrap inline-space' : ''),
     ]) !!}>
 
-        @isset($item)
-            <x-form-select-item :attributes="$header->attributes">{!! $item !!}</x-form-select-item>
-        @endisset
+        @forelse($options as $key => $option)
+            <x-form-select-item name="{{ $key }}" type="{{ $type }}">
+                {!! $option !!}
+            </x-form-select-item>
+        @empty
+            {!! $slot !!}
+        @endforelse
 
         {!! $slot !!}
 

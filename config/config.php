@@ -5,15 +5,10 @@ declare(strict_types=1);
 use Diviky\LaravelComponents\Components;
 
 return [
-    'prefix' => env('COMPONENTS_PREFIX'),
+    'prefix' => env('LARAVEL_COMPONENTS_PREFIX', env('COMPONENTS_PREFIX')),
 
-    // tailwind | tailwind-2 | tailwind-forms-simple | bootstrap-4 | bootstrap-5
-    'framework' => env('COMPONENTS_FRAMEWORK', 'bootstrap-4'),
-
-    'use_eloquent_date_casting' => false,
-
-    // bool | string
-    'default_wire' => false,
+    // bootstrap-4
+    'framework' => env('LARAVEL_COMPONENTS_FRAMEWORK', env('COMPONENTS_FRAMEWORK', 'bootstrap-4')),
 
     'components' => [
         'form-switch' => [
@@ -23,6 +18,15 @@ return [
         'form-button' => [
             'view' => 'laravel-components::{framework}.form-button',
             'class' => Components\FormButton::class,
+        ],
+        'form-button-cancel' => [
+            'view' => 'laravel-components::{framework}.button.cancel',
+        ],
+        'form-button-primary' => [
+            'view' => 'laravel-components::{framework}.button.primary',
+        ],
+        'form-button-secondary' => [
+            'view' => 'laravel-components::{framework}.button.secondary',
         ],
         'form-date' => [
             'view' => 'laravel-components::{framework}.form-date',
@@ -56,6 +60,9 @@ return [
         'form-tel' => [
             'view' => 'laravel-components::{framework}.form-tel',
         ],
+        'form-search' => [
+            'view' => 'laravel-components::{framework}.form-search',
+        ],
         'form-number' => [
             'view' => 'laravel-components::{framework}.form-number',
         ],
@@ -68,19 +75,22 @@ return [
         'theme.modal' => [
             'view' => 'laravel-components::{framework}.theme-modal',
         ],
-        'theme-alert-error' => [
+        'alert-error' => [
             'view' => 'laravel-components::{framework}.alert.error',
         ],
-        'theme-alert-warning' => [
+        'alert-warning' => [
             'view' => 'laravel-components::{framework}.alert.warning',
         ],
-        'theme-alert-danger' => [
+        'alert-danger' => [
             'view' => 'laravel-components::{framework}.alert.danger',
         ],
-        'theme-alert-help' => [
+        'alert-help' => [
             'view' => 'laravel-components::{framework}.alert.help',
         ],
-        'theme-alert-success' => [
+        'alert-info' => [
+            'view' => 'laravel-components::{framework}.alert.help',
+        ],
+        'alert-success' => [
             'view' => 'laravel-components::{framework}.alert.success',
         ],
         'button.cancel' => [
