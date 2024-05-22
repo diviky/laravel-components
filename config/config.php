@@ -181,5 +181,17 @@ return [
             'view' => 'laravel-components::{framework}.avatar',
             'class' => Components\Avatar::class,
         ],
+        'tab' => [
+            'view' => 'laravel-components::{framework}.tabs.tabs',
+        ],
+        'tab.content' => [
+            'view' => 'laravel-components::{framework}.tabs.content',
+        ],
+        'tab.item' => [
+            'view' => 'laravel-components::{framework}.tabs.tab',
+        ],
+        'tab.pane' => [
+            'view' => 'laravel-components::{framework}.tabs.pane',
+        ],
     ],
 ];

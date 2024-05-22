@@ -3,20 +3,16 @@
         <x-form-label :label="$label" />
     @endisset
     <div {!! $attributes->merge([
-        'class' =>
-            'form-selectgroup ' .
-            (($hasError($name) ? 'is-invalid' : '') . $inline ? 'd-flex flex-row flex-wrap inline-space' : ''),
-    ]) !!}>
+            'class' => 'form-selectgroup ' . ($hasError($name) ? 'is-invalid' : ''),
+        ])->class(['form-selectgroup-pills' => $attributes->has('pills')])->except('pills') !!}>
 
         @forelse($options as $key => $option)
-            <x-form-select-item name="{{ $key }}" type="{{ $type }}">
+            <x-form-select-item name="{{ $name }}" value="{{ $key }}" type="{{ $type }}">
                 {!! $option !!}
             </x-form-select-item>
         @empty
             {!! $slot !!}
         @endforelse
-
-        {!! $slot !!}
 
         {!! $help ?? null !!}
 

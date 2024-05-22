@@ -27,8 +27,6 @@ class FormSelectGroup extends Component
 
     public bool $multiple;
 
-    public bool $floating;
-
     public string $placeholder;
 
     /**
@@ -39,14 +37,13 @@ class FormSelectGroup extends Component
      * @param  null|mixed  $default
      */
     public function __construct(
-        string $name,
+        string $name = '',
         string $label = '',
         $options = [],
         $bind = null,
         $default = null,
         bool $multiple = false,
         bool $showErrors = true,
-        bool $floating = false,
         string $placeholder = ''
     ) {
         $this->name = $name;
@@ -71,7 +68,6 @@ class FormSelectGroup extends Component
         $this->type = $multiple ? 'checkbox' : 'radio';
         $this->multiple = $multiple;
         $this->showErrors = $showErrors;
-        $this->floating = $floating && ! $multiple;
     }
 
     public function isSelected(string $key): bool
