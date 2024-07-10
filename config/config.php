@@ -51,6 +51,10 @@ return [
             'view' => 'laravel-components::{framework}.form-dropzone',
             'class' => Components\FormDropzone::class,
         ],
+        'timezone-select' => [
+            'view' => 'laravel-components::{framework}.timezone-select',
+            'class' => Components\TimezoneSelect::class,
+        ],
         'form-email' => [
             'view' => 'laravel-components::{framework}.form-email',
         ],
