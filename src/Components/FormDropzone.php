@@ -6,6 +6,8 @@ namespace Diviky\LaravelComponents\Components;
 
 use Diviky\LaravelFormComponents\Concerns\HandlesDefaultAndOldValue;
 use Diviky\LaravelFormComponents\Concerns\HandlesValidationErrors;
+use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 
 class FormDropzone extends Component
 {
@@ -29,11 +31,13 @@ class FormDropzone extends Component
         $bind = null,
         $default = null,
         $language = null,
-        bool $showErrors = true
+        bool $showErrors = true,
+        HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->name = $name;
         $this->label = $label;
         $this->showErrors = $showErrors;
+        $this->setExtraAttributes($extraAttributes);
 
         if (isset($language)) {
             $this->name = "{$name}[{$language}]";

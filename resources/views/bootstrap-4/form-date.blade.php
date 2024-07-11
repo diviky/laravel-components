@@ -1,3 +1,7 @@
+@props([
+    'extraAttributes' => [],
+])
+
 <x-form-input :extra-attributes="$extraAttributes" :attributes="$attributes->merge([
     'placeholder' => 'Select Date',
     'date-format' => 'MMM DD, YYYY',

@@ -1,6 +1,7 @@
 @props([
     'selector' => 'dateranges',
     'format' => 'MMM DD, YYYY',
+    'extraAttributes' => [],
 ])
 
 <x-form-date :extra-attributes="$extraAttributes" :attributes="$attributes->merge([

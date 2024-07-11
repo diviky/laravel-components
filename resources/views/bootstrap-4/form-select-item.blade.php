@@ -1,5 +1,5 @@
 <label class="form-selectgroup-item">
-    <input {!! $attributes->merge([
+    <input {!! $attributes->except(['extra-attributes'])->merge([
         'type' => 'radio',
         'class' => 'form-selectgroup-input ' . ($hasError($name) ? 'is-invalid' : ''),
     ]) !!} {{ $extraAttributes ?? '' }} value="{{ $value }}"

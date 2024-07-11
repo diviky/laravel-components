@@ -8,6 +8,8 @@ use Diviky\LaravelFormComponents\Concerns\HandlesBoundValues;
 use Diviky\LaravelFormComponents\Concerns\HandlesValidationErrors;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 class FormSelectGroup extends Component
@@ -44,12 +46,14 @@ class FormSelectGroup extends Component
         $default = null,
         bool $multiple = false,
         bool $showErrors = true,
-        string $placeholder = ''
+        string $placeholder = '',
+        HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->name = $name;
         $this->label = $label;
         $this->options = $options;
         $this->placeholder = $placeholder;
+        $this->setExtraAttributes($extraAttributes);
 
         if ($this->isNotWired()) {
             $inputName = static::convertBracketsToDots(Str::before($name, '[]'));

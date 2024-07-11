@@ -2,9 +2,9 @@
     <div class="form-group">
         <x-form-label :label="$label" />
     @endisset
-    <div {!! $attributes->merge([
+    <div {!! $attributes->except(['extra-attributes'])->merge([
             'class' => 'form-selectgroup ' . ($hasError($name) ? 'is-invalid' : ''),
-        ])->class(['form-selectgroup-pills' => $attributes->has('pills')])->except('pills') !!}>
+        ])->class(['form-selectgroup-pills' => $attributes->has('pills')])->except('pills') !!} {{ $extraAttributes ?? '' }}>
 
         @forelse($options as $key => $option)
             <x-form-select-item name="{{ $name }}" value="{{ $key }}" type="{{ $type }}">
