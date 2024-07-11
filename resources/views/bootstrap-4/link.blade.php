@@ -3,7 +3,7 @@
         @if ($slideover) tooltip="modal" @endif
         @if ($attributes->has('md')) data-styles="modal-md" @endif
         @if ($attributes->has('xl')) data-styles="modal-xl" @endif
-        @if ($attributes->has('title')) data-toggle="tooltip" @endif>
+        @if ($attributes->has('title')) data-toggle="tooltip" @endif {{ $extraAttributes ?? '' }}>
         {{ $slot }}
     </a>
 @else
@@ -11,7 +11,7 @@
         @if ($attributes->has('title')) data-toggle="tooltip" @endif
         @if ($attributes->has('md')) data-styles="modal-md" @endif
         @if ($attributes->has('xl')) data-styles="modal-xl" @endif
-        @if ($slideover) tooltip="modal" @endif>
+        @if ($slideover) tooltip="modal" @endif {{ $extraAttributes ?? '' }}>
         {{ $slot }}
     </a>
 @endif

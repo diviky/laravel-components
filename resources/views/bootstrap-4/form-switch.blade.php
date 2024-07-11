@@ -7,7 +7,7 @@
         <input notchecked="0" {!! $attributes->merge(['class' => 'form-check-input ' . ($hasError($name) ? 'is-invalid' : '')]) !!} type="checkbox" value="{{ $value }}"
             @if ($isWired()) wire:model{!! $wireModifier() !!}="{{ $name }}" @endif
             name="{{ $name }}" @if ($label && !$attributes->get('id')) id="{{ $id() }}" @endif
-            @if ($checked) checked="checked" @endif />
+            @if ($checked) checked="checked" @endif {{ $extraAttributes ?? '' }} />
 
         <span class="form-check-label text-upper">{{ $label }}</span>
     </label>

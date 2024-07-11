@@ -6,6 +6,8 @@ namespace Diviky\LaravelComponents\Components;
 
 use Diviky\LaravelFormComponents\Concerns\HandlesDefaultAndOldValue;
 use Diviky\LaravelFormComponents\Concerns\HandlesValidationErrors;
+use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 
 class FilterSearch extends Component
 {
@@ -35,13 +37,15 @@ class FilterSearch extends Component
         $default = null,
         $language = null,
         bool $showErrors = true,
-        bool $floating = false
+        bool $floating = false,
+        HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->name = $name;
         $this->label = $label;
         $this->type = $type;
         $this->showErrors = $showErrors;
         $this->floating = $floating && $type !== 'hidden';
+        $this->setExtraAttributes($extraAttributes);
 
         if (isset($language)) {
             $this->name = "{$name}[{$language}]";

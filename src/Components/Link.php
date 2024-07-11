@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Diviky\LaravelComponents\Components;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\HtmlString;
 use InvalidArgumentException;
 
 class Link extends Component
@@ -41,6 +43,7 @@ class Link extends Component
         bool $button = false,
         bool $away = false,
         bool $slideover = false,
+        HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->action = $action;
         $this->modal = $modal;
@@ -48,6 +51,7 @@ class Link extends Component
         $this->away = $away;
         $this->slideover = $slideover;
         $this->button = $button;
+        $this->setExtraAttributes($extraAttributes);
 
         $this->validateActions();
     }

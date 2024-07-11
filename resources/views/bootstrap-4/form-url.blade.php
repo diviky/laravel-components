@@ -1,1 +1,1 @@
-<x-form-input :attributes="$attributes->merge(['type' => 'url'])"> {!! $slot !!} </x-form-input>
+<x-form-input :extra-attributes="$extraAttributes" :attributes="$attributes->merge(['type' => 'url'])"> {!! $slot !!} </x-form-input>

@@ -6,6 +6,8 @@ namespace Diviky\LaravelComponents\Components;
 
 use Diviky\LaravelFormComponents\Concerns\HandlesBoundValues;
 use Diviky\LaravelFormComponents\Concerns\HandlesValidationErrors;
+use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 
 class FormSelectItem extends Component
 {
@@ -33,12 +35,14 @@ class FormSelectItem extends Component
         $value = 1,
         $bind = null,
         bool $default = false,
-        bool $showErrors = false
+        bool $showErrors = false,
+        HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->name = $name;
         $this->label = $label;
         $this->value = $value;
         $this->showErrors = $showErrors;
+        $this->setExtraAttributes($extraAttributes);
 
         $inputName = static::convertBracketsToDots($name);
 

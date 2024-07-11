@@ -6,7 +6,7 @@
     "type": "library",
     "authors": [],
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "bepsvpt/secure-headers": "^7.5",
         "diviky/laravel-form-components": "^1.0"
     },

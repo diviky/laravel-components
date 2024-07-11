@@ -4,6 +4,4 @@ declare(strict_types=1);
 
 namespace Diviky\LaravelComponents\Components;
 
-class FormButton extends Component
-{
-}
+class FormButton extends Component {}

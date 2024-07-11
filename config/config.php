@@ -22,6 +22,9 @@ return [
         'form-button-cancel' => [
             'view' => 'laravel-components::{framework}.button.cancel',
         ],
+        'form-button-link' => [
+            'view' => 'laravel-components::{framework}.button.link',
+        ],
         'form-button-primary' => [
             'view' => 'laravel-components::{framework}.button.primary',
         ],
@@ -50,10 +53,6 @@ return [
         'form-dropzone' => [
             'view' => 'laravel-components::{framework}.form-dropzone',
             'class' => Components\FormDropzone::class,
-        ],
-        'timezone-select' => [
-            'view' => 'laravel-components::{framework}.timezone-select',
-            'class' => Components\TimezoneSelect::class,
         ],
         'form-email' => [
             'view' => 'laravel-components::{framework}.form-email',

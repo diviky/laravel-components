@@ -7,6 +7,8 @@ namespace Diviky\LaravelComponents\Components;
 use Diviky\LaravelFormComponents\Concerns\HandlesDefaultAndOldValue;
 use Diviky\LaravelFormComponents\Concerns\HandlesValidationErrors;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 use Symfony\Component\Mime\MimeTypes;
 
 class FormFile extends Component
@@ -34,11 +36,13 @@ class FormFile extends Component
         $default = null,
         $language = null,
         bool $showErrors = true,
-        string $accept = '*.*'
+        string $accept = '*.*',
+        HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->name = $name;
         $this->label = $label;
         $this->showErrors = $showErrors;
+        $this->setExtraAttributes($extraAttributes);
 
         if (isset($language)) {
             $this->name = "{$name}[{$language}]";

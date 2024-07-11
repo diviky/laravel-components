@@ -1,4 +1,4 @@
-<x-form-input :attributes="$attributes->merge([
+<x-form-input :extra-attributes="$extraAttributes" :attributes="$attributes->merge([
     'placeholder' => 'Select Date',
     'date-format' => 'MMM DD, YYYY',
     'type' => 'text',
