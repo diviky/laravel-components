@@ -39,6 +39,7 @@ class FormDate extends Component
         ?string $language = null,
         bool $showErrors = true,
         bool $floating = false,
+        ?string $value = '',
         HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->name = $name;
@@ -47,6 +48,7 @@ class FormDate extends Component
         $this->showErrors = $showErrors;
         $this->type = $type;
         $this->floating = $floating && $type !== 'hidden';
+        $this->value = $value;
         $this->setExtraAttributes($extraAttributes);
 
         if (isset($language)) {
