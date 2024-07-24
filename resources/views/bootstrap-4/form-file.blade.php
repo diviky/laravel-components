@@ -1,4 +1,15 @@
 @props([
     'extraAttributes' => [],
 ])
-<x-form-input name="{{ $name }}" :extra-attributes="$extraAttributes" :attributes="$attributes->merge(['type' => 'file', 'data-filepond' => 'true', 'accept' => $accept])"> {!! $slot !!} </x-form-input>
+
+<div class="form-group">
+    <x-form-label :label="$label" :for="$attributes->get('id') ?: $id()" />
+
+    <input name="{{ $name }}" type="file" {!! $attributes->merge($extraAttributes)->merge(['data-filepond' => 'true', 'accept' => $accept]) !!} />
+
+    @if ($hasErrorAndShow($name))
+        <x-form-errors :name="$name" />
+    @endif
+
+    {!! $help ?? null !!}
+</div>
