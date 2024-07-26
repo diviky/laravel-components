@@ -72,6 +72,10 @@ return [
         'form-password' => [
             'view' => 'laravel-components::{framework}.form-password',
         ],
+        'form-choices' => [
+            'view' => 'laravel-components::{framework}.form-choices',
+            'class' => Components\FormChoices::class,
+        ],
         'theme.counter' => [
             'view' => 'laravel-components::{framework}.theme-counter',
         ],
@@ -105,10 +109,6 @@ return [
         'button.secondary' => [
             'view' => 'laravel-components::{framework}.button.secondary',
         ],
-        'theme-checkbox' => [
-            'view' => 'laravel-components::{framework}.theme-checkbox',
-            'class' => Components\ThemeCheckbox::class,
-        ],
         'filter-search' => [
             'view' => 'laravel-components::{framework}.filters.search',
             'class' => Components\FilterSearch::class,
@@ -129,6 +129,7 @@ return [
             'view' => 'laravel-components::{framework}.link',
             'class' => Components\Link::class,
         ],
+
         'card' => [
             'view' => 'laravel-components::{framework}.card.index',
         ],
@@ -195,6 +196,10 @@ return [
         ],
         'tab.pane' => [
             'view' => 'laravel-components::{framework}.tabs.pane',
+        ],
+        'icon' => [
+            'view' => 'laravel-components::{framework}.icon',
+            'class' => Components\Icon::class,
         ],
     ],
 ];

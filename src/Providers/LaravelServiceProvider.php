@@ -40,7 +40,7 @@ class LaravelServiceProvider extends BaseServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'laravel-components');
 
-        $this->app->singleton(FormDataBinder::class, fn () => new FormDataBinder());
+        $this->app->singleton(FormDataBinder::class, fn () => new FormDataBinder);
     }
 
     protected function bootBalde(): self
