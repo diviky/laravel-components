@@ -15,6 +15,10 @@ return [
             'view' => 'laravel-components::{framework}.form-switch',
             'class' => Components\FormSwitch::class,
         ],
+        'form-toggle' => [
+            'view' => 'laravel-components::{framework}.form-toggle',
+            'class' => Components\FormToggle::class,
+        ],
         'form-button' => [
             'view' => 'laravel-components::{framework}.form-button',
             'class' => Components\FormButton::class,
@@ -129,7 +133,10 @@ return [
             'view' => 'laravel-components::{framework}.link',
             'class' => Components\Link::class,
         ],
-
+        'popover' => [
+            'view' => 'laravel-components::{framework}.popover',
+            'class' => Components\Popover::class,
+        ],
         'card' => [
             'view' => 'laravel-components::{framework}.card.index',
         ],
