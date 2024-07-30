@@ -10,7 +10,7 @@ use Illuminate\Support\Stringable;
 class Icon extends Component
 {
     public function __construct(
-        public string $name,
+        public ?string $name = null,
         public ?string $label = null,
         public ?string $action = null
     ) {}

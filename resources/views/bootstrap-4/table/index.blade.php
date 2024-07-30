@@ -3,14 +3,25 @@
     'body' => null,
     'footer' => null,
     'responsive' => false,
+    'bordered' => true,
+    'card' => true,
+    'nowrap' => true,
+    'outline' => true,
+    'striped' => false,
 ])
 
 @isset($responsive)
     <div class="table-responsive" style="min-height: 50vh">
     @endisset
-    <table {!! $attributes->merge([
-        'class' => 'table table-hover table-outline table-vcenter card-table text-nowrap border-top',
-    ]) !!}>
+    <table {!! $attributes->class([
+            'table-outline' => $outline,
+            'table-bordered' => $bordered,
+            'text-nowrap' => $nowrap,
+            'card-table' => $card,
+            'table-striped' => $striped,
+        ])->merge([
+            'class' => 'table table-outline table-vcenter  border-top',
+        ]) !!}>
         @isset($header)
             <x-table.header :attributes="$header->attributes">{!! $header !!}</x-table.header>
         @endisset

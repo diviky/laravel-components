@@ -2,7 +2,7 @@
     'fragment' => null,
 ])
 
-<tbody {!! $attributes->merge(['class' => 'table-body']) !!} @if (isset($fragment)) ajax-content="{{ $fragment }}" @endif>
+<div {!! $attributes->merge(['class' => 'page-body']) !!} @if (isset($fragment)) ajax-content="{{ $fragment }}" @endif>
     @if (isset($fragment))
         @fragment($fragment)
         @endif
@@ -12,4 +12,4 @@
         @if (isset($fragment))
         @endfragment
     @endif
-</tbody>
+</div>

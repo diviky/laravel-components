@@ -16,7 +16,7 @@ class FormChoices extends FormSelect
     public function __construct(
         string $name,
         string $label = '',
-        public array|Collection $options = [],
+        public array|Collection|null $options = [],
         mixed $bind = null,
         mixed $default = null,
         bool $multiple = false,
@@ -29,8 +29,8 @@ class FormChoices extends FormSelect
         public ?string $childrenField = null,
         string|HtmlString|array|Collection|null $extraAttributes = null,
         public ?bool $searchable = false,
-        public ?bool $single = false,
         public ?bool $compact = false,
+        public ?bool $allowAll = false,
         public ?string $compactText = 'selected',
         public ?int $minChars = 0,
         public ?string $allowAllText = 'Select all',

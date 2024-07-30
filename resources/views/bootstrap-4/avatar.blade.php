@@ -1,12 +1,15 @@
 @if ($stacked)
     <div class="avatar-list avatar-list-stacked">
 @endif
-@if ($url)
-    <span {{ $attributes->merge(['class' => 'avatar']) }} style="background-image: url({{ $url }})">
+@if ($image)
+    <span {{ $attributes->merge(['class' => 'avatar']) }} style="background-image: url({{ $image }})">
         {!! $slot ?? null !!}
     </span>
 @else
-    <span {{ $attributes->merge(['class' => 'avatar ' . $color]) }}>{{ $name }} {!! $slot ?? null !!}</span>
+    <span
+        {{ $attributes->class(['avatar-' . $size => $size])->merge(['class' => 'avatar ' . $color]) }}>{{ $label }}
+        {!! $slot ?? null !!}
+    </span>
 @endif
 @if ($stacked)
     </div>

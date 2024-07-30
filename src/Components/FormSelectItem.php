@@ -36,6 +36,7 @@ class FormSelectItem extends Component
         $bind = null,
         bool $default = false,
         bool $showErrors = false,
+        public string $type = 'radio',
         HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->name = $name;

@@ -1,14 +1,18 @@
 @props([
     'extraAttributes' => [],
+    'selector' => 'data-datepicker',
+    'type' => 'text',
+    'format' => null,
+    'name' => null,
 ])
 
-<x-form-input :extra-attributes="$extraAttributes" :attributes="$attributes->merge([
+<x-form-input name="{{ $name }}" :extra-attributes="$extraAttributes" :attributes="$attributes->merge([
     'placeholder' => 'Select Date',
-    'date-format' => 'MMM DD, YYYY',
-    'type' => 'text',
+    'data-date-format' => $format,
+    'type' => $type,
     $selector => $selector,
     'class' => 'datepicker',
-])" name="{{ $name }}" value="{{ $value }}">
+])">
     {!! $slot !!}
 
     @slot('icon')

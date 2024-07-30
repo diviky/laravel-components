@@ -6,9 +6,9 @@ namespace Diviky\LaravelComponents\Components;
 
 class Avatar extends Component
 {
-    public ?string $name;
+    public ?string $label;
 
-    public ?string $url;
+    public ?string $image;
 
     public string $color;
 
@@ -18,27 +18,29 @@ class Avatar extends Component
      * Create a new component instance.
      */
     public function __construct(
-        ?string $name = null,
-        string $url = '',
+        ?string $label = null,
+        string $image = '',
         ?string $color = null,
+        public ?string $size = null,
         bool $stacked = false
     ) {
-        $this->color = $color ?? $this->getColor($name);
+        $this->color = $color ?? $this->getColor($label);
 
-        if (isset($name)) {
-            preg_match_all('#(?<=\s|\b)\pL#u', $name, $matches);
-            $name = implode('', array_slice($matches[0], 0, 2));
+        if (isset($label)) {
+            preg_match_all('#(?<=\s|\b)\pL#u', $label, $matches);
+            $label = implode('', array_slice($matches[0], 0, 2));
         }
 
-        $this->name = $name;
-        $this->url = $url;
+        $this->label = $label;
+        $this->image = $image;
+        $this->size = $size;
         $this->stacked = $stacked;
     }
 
-    protected function getColor(?string $name): string
+    protected function getColor(?string $label): string
     {
-        if ($name === null || strlen($name) === 0) {
-            $name = chr(random_int(65, 90));
+        if ($label === null || strlen($label) === 0) {
+            $label = chr(random_int(65, 90));
         }
 
         $colors = [
@@ -58,16 +60,16 @@ class Avatar extends Component
             'bg-gray-300',
         ];
 
-        return $this->getRandomElement($colors, $name);
+        return $this->getRandomElement($colors, $label);
     }
 
-    protected function getRandomElement(array $array, string $name): string
+    protected function getRandomElement(array $array, string $label): string
     {
-        $number = ord($name[0]);
+        $number = ord($label[0]);
         $i = 1;
-        $charLength = strlen($name);
+        $charLength = strlen($label);
         while ($i < $charLength) {
-            $number += ord($name[$i]);
+            $number += ord($label[$i]);
             $i++;
         }
 

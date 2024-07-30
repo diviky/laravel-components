@@ -15,6 +15,8 @@ class Link extends Component
 
     public string $action = '';
 
+    public string $outline = '';
+
     public bool $modal = false;
 
     public bool $confirm = false;
@@ -43,6 +45,9 @@ class Link extends Component
         bool $button = false,
         bool $away = false,
         bool $slideover = false,
+        bool $outline = false,
+        public bool $ghost = false,
+        public ?string $icon = null,
         HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->action = $action;
@@ -51,6 +56,8 @@ class Link extends Component
         $this->away = $away;
         $this->slideover = $slideover;
         $this->button = $button;
+        $this->icon = $icon;
+        $this->outline = $outline ? 'outline-' : ($ghost ? 'ghost-' : '');
         $this->setExtraAttributes($extraAttributes);
 
         $this->validateActions();

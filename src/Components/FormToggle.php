@@ -41,6 +41,7 @@ class FormToggle extends Component
         $bind = null,
         bool $default = false,
         bool $showErrors = true,
+        public ?string $copy = null,
         HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->name = $name;

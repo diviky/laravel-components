@@ -37,10 +37,15 @@ return [
         ],
         'form-date' => [
             'view' => 'laravel-components::{framework}.form-date',
-            'class' => Components\FormDate::class,
+        ],
+        'form-date-time' => [
+            'view' => 'laravel-components::{framework}.form-date-time',
         ],
         'form-date-range' => [
             'view' => 'laravel-components::{framework}.form-date-range',
+        ],
+        'form-time' => [
+            'view' => 'laravel-components::{framework}.form-time',
         ],
         'form-select-group' => [
             'view' => 'laravel-components::{framework}.form-select-group',
@@ -49,6 +54,14 @@ return [
         'form-select-item' => [
             'view' => 'laravel-components::{framework}.form-select-item',
             'class' => Components\FormSelectItem::class,
+        ],
+        'form-button-group' => [
+            'view' => 'laravel-components::{framework}.form-button-group',
+            'class' => Components\FormButtonGroup::class,
+        ],
+        'form-button-item' => [
+            'view' => 'laravel-components::{framework}.form-button-item',
+            'class' => Components\FormButtonItem::class,
         ],
         'form-file' => [
             'view' => 'laravel-components::{framework}.form-file',
@@ -188,6 +201,18 @@ return [
         'table.footer' => [
             'view' => 'laravel-components::{framework}.table.footer',
         ],
+        'page' => [
+            'view' => 'laravel-components::{framework}.page.index',
+        ],
+        'page.header' => [
+            'view' => 'laravel-components::{framework}.page.header',
+        ],
+        'page.body' => [
+            'view' => 'laravel-components::{framework}.page.body',
+        ],
+        'page.footer' => [
+            'view' => 'laravel-components::{framework}.page.footer',
+        ],
         'avatar' => [
             'view' => 'laravel-components::{framework}.avatar',
             'class' => Components\Avatar::class,
@@ -204,9 +229,45 @@ return [
         'tab.pane' => [
             'view' => 'laravel-components::{framework}.tabs.pane',
         ],
+        'dropmenu' => [
+            'view' => 'laravel-components::{framework}.dropmenu',
+        ],
+        'dropmenu-item' => [
+            'view' => 'laravel-components::{framework}.dropmenu-item',
+        ],
         'icon' => [
             'view' => 'laravel-components::{framework}.icon',
             'class' => Components\Icon::class,
+        ],
+        'steps' => [
+            'view' => 'laravel-components::{framework}.steps.index',
+        ],
+        'steps.actions' => [
+            'view' => 'laravel-components::{framework}.steps.actions',
+        ],
+        'steps.item' => [
+            'view' => 'laravel-components::{framework}.steps.item',
+        ],
+        'view.boolean' => [
+            'view' => 'laravel-components::{framework}.view.boolean',
+        ],
+        'view.tel' => [
+            'view' => 'laravel-components::{framework}.view.tel',
+        ],
+        'view.email' => [
+            'view' => 'laravel-components::{framework}.view.email',
+        ],
+        'view.datetime' => [
+            'view' => 'laravel-components::{framework}.view.datetime',
+        ],
+        'view.currency' => [
+            'view' => 'laravel-components::{framework}.view.currency',
+        ],
+        'view.text' => [
+            'view' => 'laravel-components::{framework}.view.text',
+        ],
+        'view.ago' => [
+            'view' => 'laravel-components::{framework}.view.ago',
         ],
     ],
 ];

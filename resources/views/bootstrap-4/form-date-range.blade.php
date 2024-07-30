@@ -1,5 +1,5 @@
 @props([
-    'selector' => 'dateranges',
+    'selector' => 'data-dateranges',
     'format' => 'MMM DD, YYYY',
     'extraAttributes' => [],
 ])

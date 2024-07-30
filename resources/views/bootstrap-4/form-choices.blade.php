@@ -1,7 +1,7 @@
-<div x-data="{ focused: false, selection: [] }">
+<div class="form-group form-choices" x-data="{ focused: false, selection: [] }">
     <div @click.outside = "clear()" @keyup.esc = "clear()" x-data="{
         options: {{ json_encode($options->values()) }},
-        isSingle: {{ json_encode($multiple) }},
+        isSingle: {{ json_encode(!$multiple) }},
         isSearchable: {{ json_encode($searchable) }},
         isReadonly: {{ json_encode($isReadonly()) }},
         isDisabled: {{ json_encode($isDisabled()) }},
@@ -92,129 +92,114 @@
             <x-form-label :label="$label" :for="$attributes->get('id') ?: $id()" />
         @endif
 
-        <!-- PREPEND/APPEND CONTAINER -->
-        @if (isset($prepend) || isset($append))
-            <div class="flex">
-        @endif
-
-        <!-- PREPEND -->
-        @if (isset($prepend))
-            <div class="rounded-s-lg flex items-center bg-base-200">
-                {{ $prepend }}
+        @isset($prepend)
+            <div class="input-group-text">
+                {!! $prepend !!}
             </div>
-        @endif
+        @endisset
 
         <!-- SELECTED OPTIONS + SEARCH INPUT -->
-        <div @click="focus();" x-ref="container"
-            {{ $attributes->class([
-                'select select-bordered form-select select-primary w-full h-fit pe-16 pb-1 pt-1.5 inline-block cursor-pointer relative',
-            ]) }}>
+        <div @click="focus();" x-ref="container" {{ $attributes->class(['form-select']) }}>
             <!-- ICON  -->
             @if (isset($icon))
-                <x-icon :name="$icon"
-                    class="absolute top-1/2 -translate-y-1/2 start-3 text-gray-400 pointer-events-none" />
+                <x-icon :name="$icon" class="choice-append" />
             @endif
 
             <!-- CLEAR ICON  -->
             @if (!$attributes->has('readonly') && !$attributes->has('disabled'))
-                <x-icon @click="reset()" name="o-x-mark" x-show="!isSelectionEmpty"
-                    class="absolute top-1/2 end-8 -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-600" />
+                <x-icon @click="reset()" name="x" x-show="!isSelectionEmpty" class="choice-clear" />
             @endif
 
             <!-- SELECTED OPTIONS -->
-            <span>
-                <template x-for="(option, index) in selectedOptions" :key="index">
-                    <div
-                        class="mary-choices-element bg-primary/5 text-primary hover:bg-primary/10 dark:bg-primary/20 dark:hover:bg-primary/40 dark:text-inherit px-2 me-2 mt-0.5 mb-1.5 last:me-0 inline-block rounded cursor-pointer">
-                        <!-- SELECTION SLOT -->
-                        @if (isset($selection))
-                            <span
-                                x-html="document.getElementById('selection-{{ $id() . '-\' + option.' . $valueField }}).innerHTML"></span>
-                        @else
-                            <span x-text="option.{{ $labelField }}"></span>
-                        @endif
-
-                        <x-icon @click="toggle(option.{{ $valueField }})"
-                            x-show="!isReadonly && !isDisabled && !isSingle" name="o-x-mark"
-                            class="text-gray-500 hover:text-red-500" />
+            <span class="tags-list">
+                @if ($compact)
+                    <div class="compact-text">
+                        <span class="tag">
+                            {{ $compactText }}
+                            <span class="badge badge-sm bg-primary tag-badge" x-text="selectedOptions.length"></span>
+                        </span>
                     </div>
-                </template>
+                @else
+                    <template x-for="(option, index) in selectedOptions" :key="index">
+                        <div class="form-choices-element tag">
+                            <!-- SELECTION SLOT -->
+                            @if (isset($selection))
+                                <span
+                                    x-html="document.getElementById('selection-{{ $id() . '-\' + option.' . $valueField }}).innerHTML"></span>
+                            @else
+                                <span x-text="option.{{ $labelField }}"></span>
+                            @endif
+
+                            <x-icon @click="toggle(option.{{ $valueField }})"
+                                x-show="!isReadonly && !isDisabled && !isSingle" name="x" />
+                        </div>
+                    </template>
+                @endif
+
+                <!-- INPUT SEARCH -->
+                <input x-ref="searchInput" x-model="search" @keyup="lookup()" @input="focus()"
+                    :required="isRequired && isSelectionEmpty" :readonly="isReadonly || isDisabled || !isSearchable"
+                    :class="(isReadonly || isDisabled || !isSearchable || !focused) && 'w-2'" class="choice-input w-20"
+                    name="{{ $name }}" />
             </span>
 
-            &nbsp;
-
-            <!-- INPUT SEARCH -->
-            <input x-ref="searchInput" x-model="search" @keyup="lookup()" @input="focus()"
-                :required="isRequired && isSelectionEmpty" :readonly="isReadonly || isDisabled || !isSearchable"
-                :class="(isReadonly || isDisabled || !isSearchable || !focused) && '!w-1'"
-                class="outline-none mt-0.5 transparent w-20" />
         </div>
-
 
         <!-- APPEND -->
-        @if (isset($append))
-            <div class="rounded-e-lg flex items-center bg-base-200">
-                {{ $append }}
+        @isset($append)
+            <div class="input-group-text">
+                {!! $append !!}
             </div>
-        @endif
+        @endisset
 
-        <!-- END: APPEND/PREPEND CONTAINER  -->
-        @if (isset($prepend) || isset($append))
-    </div>
-    @endif
+        <!-- OPTIONS LIST -->
+        <div x-show="focused" x-cloak class="choice-list">
+            <div class="choice-items" x-anchor.bottom-start="$refs.container">
 
-    <!-- OPTIONS LIST -->
-    <div x-show="focused" x-cloak class="relative">
-        <div class="w-full absolute z-10 shadow-xl bg-base-100 border border-base-300 rounded-lg cursor-pointer overflow-y-auto"
-            x-anchor.bottom-start="$refs.container">
-
-            <!-- SELECT ALL -->
-            @if (isset($allowAll))
-                <div class="font-bold   border border-s-4 border-b-base-200 hover:bg-base-200">
-                    <div x-show="!isAllSelected" @click="selectAll()"
-                        class="p-3 underline decoration-wavy decoration-info">
-                        {{ $allowAllText }}
+                <!-- SELECT ALL -->
+                @isset($allowAll)
+                    <div class="choice-select-all">
+                        <div x-show="!isAllSelected" @click="selectAll()" class="p-2">
+                            {{ $allowAllText }}
+                        </div>
+                        <div x-show="isAllSelected" @click="reset()" class="p-2">
+                            {{ $removeAllText }}
+                        </div>
                     </div>
-                    <div x-show="isAllSelected" @click="reset()" class="p-3 underline decoration-wavy decoration-error">
-                        {{ $removeAllText }}
-                    </div>
+                @endisset
+
+                <!-- NO RESULTS -->
+                <div x-show="noResults" class="p-2">
+                    {{ $noResultText }}
                 </div>
-            @endif
 
-            <!-- NO RESULTS -->
-            <div x-show="noResults"
-                class="p-3 decoration-wavy decoration-warning underline font-bold border border-s-4 border-s-warning border-b-base-200">
-                {{ $noResultText }}
-            </div>
-
-            <div x-ref="choicesOptions" class="list-group">
-                @foreach ($options as $option)
-                    <div id="option-{{ $id() }}-{{ $optionValue($option) }}"
-                        @click="toggle('{{ $optionValue($option) }}')"
-                        :class="isActive('{{ $optionValue($option) }}') && 'border-s-4 border-s-primary'"
-                        search-value="{{ $optionLabel($option) }}" class="border-s-4 list-group">
-                        <!-- ITEM SLOT -->
-                        @if (isset($item))
-                            {{ $item($option) }}
-                        @else
-                            <div class="list-group-item">
+                <div x-ref="choicesOptions" class="list-group">
+                    @foreach ($options as $option)
+                        <div id="option-{{ $id() }}-{{ $optionValue($option) }}"
+                            @click="toggle('{{ $optionValue($option) }}')"
+                            :class="isActive('{{ $optionValue($option) }}') && 'active'"
+                            search-value="{{ $optionLabel($option) }}" class="list-group-item">
+                            <!-- ITEM SLOT -->
+                            @if (isset($item))
+                                {{ $item($option) }}
+                            @else
                                 {{ $optionLabel($option) }}
-                            </div>
-                        @endif
+                            @endif
 
-                        <!-- SELECTION SLOT -->
-                        @if (isset($selection))
-                            <span id="selection-{{ $id() }}-{{ $optionValue($option) }}" class="hidden">
-                                {{ $selection($option) }}
-                            </span>
-                        @endif
-                    </div>
-                @endforeach
+                            <!-- SELECTION SLOT -->
+                            @if (isset($selection))
+                                <span id="selection-{{ $id() }}-{{ $optionValue($option) }}" class="hidden">
+                                    {{ $selection($option) }}
+                                </span>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
-    </div>
 
-    @if ($hasErrorAndShow($name))
-        <x-form-errors :name="$name" />
-    @endif
+        @if ($hasErrorAndShow($name))
+            <x-form-errors :name="$name" />
+        @endif
+    </div>
 </div>
