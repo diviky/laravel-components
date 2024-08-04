@@ -5,7 +5,7 @@
     ]) !!} {{ $extraAttributes ?? '' }} value="{{ $value }}"
         @if ($isWired()) wire:model{!! $wireModifier() !!}="{{ $name }}" @endif
         name="{{ $name }}" @if (!$attributes->get('id')) id="{{ $id() }}" @endif
-        @if ($checked) checked="checked" @endif />
+        @checked($checked) />
 
     <span class="form-selectgroup-label">{!! $slot !!} {{ $label }} </span>
 </label>

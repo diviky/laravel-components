@@ -93,6 +93,9 @@ return [
             'view' => 'laravel-components::{framework}.form-choices',
             'class' => Components\FormChoices::class,
         ],
+        'form-currency' => [
+            'view' => 'laravel-components::{framework}.form-currency',
+        ],
         'theme.counter' => [
             'view' => 'laravel-components::{framework}.theme-counter',
         ],
@@ -277,6 +280,15 @@ return [
         ],
         'view.ago' => [
             'view' => 'laravel-components::{framework}.view.ago',
+        ],
+        'view.status' => [
+            'view' => 'laravel-components::{framework}.view.status',
+        ],
+        'view.date' => [
+            'view' => 'laravel-components::{framework}.view.date',
+        ],
+        'view.time' => [
+            'view' => 'laravel-components::{framework}.view.time',
         ],
     ],
 ];

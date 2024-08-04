@@ -10,37 +10,37 @@
     'striped' => false,
 ])
 
-@isset($responsive)
+@if ($responsive)
     <div class="table-responsive" style="min-height: 50vh">
+@endif
+<table {!! $attributes->class([
+        'table-outline' => $outline,
+        'table-bordered' => $bordered,
+        'text-nowrap' => $nowrap,
+        'card-table' => $card,
+        'table-striped' => $striped,
+    ])->merge([
+        'class' => 'table table-outline table-vcenter  border-top',
+    ]) !!}>
+    @isset($header)
+        <x-table.header :attributes="$header->attributes">{!! $header !!}</x-table.header>
     @endisset
-    <table {!! $attributes->class([
-            'table-outline' => $outline,
-            'table-bordered' => $bordered,
-            'text-nowrap' => $nowrap,
-            'card-table' => $card,
-            'table-striped' => $striped,
-        ])->merge([
-            'class' => 'table table-outline table-vcenter  border-top',
-        ]) !!}>
-        @isset($header)
-            <x-table.header :attributes="$header->attributes">{!! $header !!}</x-table.header>
-        @endisset
 
-        @isset($head)
-            <x-table.header :attributes="$head->attributes">{!! $head !!}</x-table.header>
-        @endisset
+    @isset($head)
+        <x-table.header :attributes="$head->attributes">{!! $head !!}</x-table.header>
+    @endisset
 
-        @isset($body)
-            <x-table.body :attributes="$body->attributes">{!! $body !!}</x-table.body>
-        @endisset
+    @isset($body)
+        <x-table.body :attributes="$body->attributes">{!! $body !!}</x-table.body>
+    @endisset
 
-        {!! $slot !!}
+    {!! $slot !!}
 
-        @isset($footer)
-            <x-table.footer :attributes="$footer->attributes">{!! $footer !!}</x-table.footer>
-        @endisset
-    </table>
+    @isset($footer)
+        <x-table.footer :attributes="$footer->attributes">{!! $footer !!}</x-table.footer>
+    @endisset
+</table>
 
-    @isset($responsive)
+@if ($responsive)
     </div>
-@endisset
+@endif

@@ -8,10 +8,17 @@
     @endisset
 
     <label class="form-check form-switch">
-        <input {!! $attributes->merge(['class' => 'form-check-input ' . ($hasError($name) ? 'is-invalid' : '')]) !!} type="checkbox" value="{{ $value }}"
+        <input {!! $attributes->class([
+                'is-invalid' => $hasError($name),
+            ])->merge([
+                'class' => 'form-check-input',
+                'id' => $id(),
+                'name' => $name,
+                'type' => 'checkbox',
+                'value' => $value,
+            ]) !!}
             @if ($isWired()) wire:model{!! $wireModifier() !!}="{{ $name }}" @endif
-            name="{{ $name }}" @if ($label && !$attributes->get('id')) id="{{ $id() }}" @endif
-            @if ($checked) checked="checked" @endif {{ $extraAttributes ?? '' }} />
+            @checked($checked) {{ $extraAttributes ?? '' }} />
 
         <span class="form-check-label text-upper">{{ $label }}</span>
     </label>

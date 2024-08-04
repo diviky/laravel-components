@@ -5,14 +5,14 @@
 ])
 
 @if ($stacked)
-    <x-form-date :extra-attributes="$extraAttributes" :attributes="$attributes->merge(['selector' => 'data-datetime'])"></x-form-date>
+    <x-form-date :extra-attributes="$extraAttributes" name="{{ $name }}" :attributes="$attributes->merge(['selector' => 'data-datetime'])" />
 @else
     <div class="row">
         <div class="col">
-            <x-form-date name="{{ $name }}_date" :extra-attributes="$extraAttributes" :attributes="$attributes"></x-form-date>
+            <x-form-date name="{{ $name }}[date]" :extra-attributes="$extraAttributes" :attributes="$attributes" />
         </div>
         <div class="col-4">
-            <x-form-time name="{{ $name }}_time" :extra-attributes="$extraAttributes" :attributes="$attributes"></x-form-time>
+            <x-form-time name="{{ $name }}[time]" :extra-attributes="$extraAttributes" :attributes="$attributes" />
         </div>
     </div>
 @endif

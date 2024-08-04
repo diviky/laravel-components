@@ -7,10 +7,10 @@
 
 <x-icon :name="$icon" />
 {!! $label !!}
-@if (!empty($value))
-    <span {{ $attributes->merge(['class' => 'badge badge-success']) }}>Yes</span>
+@if ($value == 1)
+    <span {{ $attributes->merge(['class' => 'badge badge-success']) }}>Active</span>
 @else
-    <span {{ $attributes->merge(['class' => 'badge badge-warning']) }}>No</span>
+    <span {{ $attributes->merge(['class' => 'badge badge-warning']) }}>Inactive</span>
 @endif
 @if ($copy)
     <x-icon name="copy" class="cursor-pointer" title="copy to clipboard" data-clipboard="{{ $value }}" />

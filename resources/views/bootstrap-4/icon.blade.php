@@ -5,7 +5,8 @@
     @if (!empty($action))
         <a onclick="{!! $action !!}" class="cursor-pointer">
     @endif
-    <i {{ $attributes->merge(['class' => $icon()]) }}></i>
+    <i {{ $attributes->merge(['class' => $icon()]) }}
+        @if ($attributes->has('title')) title="{{ $attributes->get('title') }}" data-toggle="tooltip" @endif></i>
     @if (!empty($action))
         </a>
     @endif

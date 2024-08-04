@@ -3,7 +3,7 @@
 ])
 
 <div class="form-group">
-    <x-form-label :label="$label" :required="$attributes->get('required')" :for="$attributes->get('id') ?: $id()" />
+    <x-form-label :label="$label" :required="$attributes->has('required')" :for="$attributes->get('id') ?: $id()" />
 
     <input name="{{ $name }}" type="file" {!! $attributes->merge($extraAttributes)->merge(['data-filepond' => 'true', 'accept' => $accept]) !!} />
 
