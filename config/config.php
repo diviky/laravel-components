@@ -201,6 +201,15 @@ return [
         'table.footer' => [
             'view' => 'laravel-components::{framework}.table.footer',
         ],
+        'table.heading' => [
+            'view' => 'laravel-components::{framework}.table.heading',
+        ],
+        'table.row' => [
+            'view' => 'laravel-components::{framework}.table.row',
+        ],
+        'table.cell' => [
+            'view' => 'laravel-components::{framework}.table.cell',
+        ],
         'page' => [
             'view' => 'laravel-components::{framework}.page.index',
         ],
