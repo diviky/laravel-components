@@ -9,4 +9,5 @@
     'class' => 'date-time-picker',
 ])" icon="ti ti-clock"
     selector="{{ $selector }}">
-    {!! $slot !!} </x-form-date>
+    {!! $slot !!}
+</x-form-date>

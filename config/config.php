@@ -83,6 +83,9 @@ return [
         'form-search' => [
             'view' => 'laravel-components::{framework}.form-search',
         ],
+        'form-color' => [
+            'view' => 'laravel-components::{framework}.form-color',
+        ],
         'form-number' => [
             'view' => 'laravel-components::{framework}.form-number',
         ],
@@ -225,6 +228,9 @@ return [
         'page.footer' => [
             'view' => 'laravel-components::{framework}.page.footer',
         ],
+        'page.title' => [
+            'view' => 'laravel-components::{framework}.page.title',
+        ],
         'avatar' => [
             'view' => 'laravel-components::{framework}.avatar',
             'class' => Components\Avatar::class,
@@ -260,6 +266,9 @@ return [
         'steps.item' => [
             'view' => 'laravel-components::{framework}.steps.item',
         ],
+        'fragment' => [
+            'view' => 'laravel-components::{framework}.fragment',
+        ],
         'view.boolean' => [
             'view' => 'laravel-components::{framework}.view.boolean',
         ],
@@ -275,8 +284,8 @@ return [
         'view.currency' => [
             'view' => 'laravel-components::{framework}.view.currency',
         ],
-        'view.text' => [
-            'view' => 'laravel-components::{framework}.view.text',
+        'view.string' => [
+            'view' => 'laravel-components::{framework}.view.string',
         ],
         'view.ago' => [
             'view' => 'laravel-components::{framework}.view.ago',
@@ -289,6 +298,18 @@ return [
         ],
         'view.time' => [
             'view' => 'laravel-components::{framework}.view.time',
+        ],
+        'view.progress' => [
+            'view' => 'laravel-components::{framework}.view.progress',
+        ],
+        'view.avatar' => [
+            'view' => 'laravel-components::{framework}.view.avatar',
+        ],
+        'view.tag' => [
+            'view' => 'laravel-components::{framework}.view.tag',
+        ],
+        'view.number' => [
+            'view' => 'laravel-components::{framework}.view.number',
         ],
     ],
 ];

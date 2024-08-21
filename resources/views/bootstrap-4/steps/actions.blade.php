@@ -1,6 +1,13 @@
 @props([
     'steps' => collect(),
+    'action' => 'Create',
 ])
+
+@php
+    if (!$steps instanceof \Illuminate\Support\Collection) {
+        $steps = collect($steps);
+    }
+@endphp
 
 @if ($steps->count() > 1)
     @foreach ($steps as $step)
@@ -10,7 +17,7 @@
                 <x-form-button-link data-step-back="{{ $loop->index }}" class="ms-auto">
                     Back
                 </x-form-button-link>
-                <x-form-submit class="ms-auto">Create</x-form-submit>
+                <x-form-submit class="ms-auto">{{ $action }}</x-form-submit>
             @else
                 @if (!$loop->first)
                     <x-form-button-link data-step-back="{{ $loop->index }}" class="ms-auto">
@@ -24,5 +31,5 @@
         </div>
     @endforeach
 @else
-    <x-form-submit class="ms-auto">Create</x-form-submit>
+    <x-form-submit class="ms-auto">{{ $action }}</x-form-submit>
 @endif

@@ -52,7 +52,7 @@ class FormSelectItem extends Component
         }
 
         if (! session()->hasOldInput() && $this->isNotWired()) {
-            $boundValue = $this->getBoundValue($bind, $name);
+            $boundValue = $this->getBoundValue($bind, $inputName);
 
             if (! is_null($boundValue)) {
                 $this->checked = $boundValue == $this->value;

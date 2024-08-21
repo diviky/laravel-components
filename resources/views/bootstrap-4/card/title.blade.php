@@ -1,6 +1,8 @@
-@props(['total', 'title'])
+@props(['total' => null, 'title' => null, 'sm' => null])
 
-<h2 {!! $attributes->merge(['class' => 'card-title']) !!}>
+<h4 {!! $attributes->merge(['class' => 'card-title'])->class([
+    'h5' => $sm,
+]) !!}>
     @isset($total)
         <span ajax-total>{{ $total }}</span>
     @endisset
@@ -8,4 +10,4 @@
     @isset($title)
         {{ $title }}
     @endisset
-</h2>
+</h4>

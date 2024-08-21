@@ -8,10 +8,11 @@
     'nowrap' => true,
     'outline' => true,
     'striped' => false,
+    'height' => '50vh',
 ])
 
 @if ($responsive)
-    <div class="table-responsive" style="min-height: 50vh">
+    <div class="table-responsive" style="min-height: {{ $height }} ">
 @endif
 <table {!! $attributes->class([
         'table-outline' => $outline,

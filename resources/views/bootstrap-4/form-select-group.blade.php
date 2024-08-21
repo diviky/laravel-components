@@ -3,11 +3,17 @@
         <x-form-label :label="$label" />
     @endisset
     <div {!! $attributes->except(['extra-attributes'])->merge([
-            'class' => 'form-selectgroup ' . ($hasError($name) ? 'is-invalid' : ''),
-        ])->class(['form-selectgroup-pills' => $attributes->has('pills')])->except('pills') !!} {{ $extraAttributes ?? '' }}>
+            'class' => 'form-selectgroup',
+        ])->class([
+            'form-selectgroup-pills' => $attributes->has('pills'),
+            'is-invalid' => $hasError($name),
+            'd-flex' => true,
+            'flex-column' => $attributes->has('full'),
+        ])->except('pills') !!} {{ $extraAttributes ?? '' }}>
 
         @forelse($options as $key => $option)
-            <x-form-select-item name="{{ $name }}" value="{{ $key }}" type="{{ $type }}">
+            <x-form-select-item name="{{ $name }}" value="{{ $key }}" type="{{ $type }}"
+                :show="$attributes->has('show')">
                 {!! $option !!}
             </x-form-select-item>
         @empty
@@ -17,7 +23,7 @@
         {!! $help ?? null !!}
 
         @if ($hasErrorAndShow($name))
-            <x-form-errors :name="$name" class="d-block" />
+            <x-form-errors :name="$name" />
         @endif
 
     </div>

@@ -1,16 +1,14 @@
 <button {!! $attributes->merge([
-        'class' =>
-            'btn' .
-            ($attributes->has('class') ? null : ' btn-primary') .
-            ($attributes->has('color') ? null : ' btn-' . $attributes->get('color')),
+        'class' => 'btn',
         'type' => 'button',
         'title' => $attributes->has('title'),
     ])->class([
+        'dropdown-toggle' => $attributes->has('dropdown'),
         'disabled' => $attributes->has('disabled'),
         'btn-sm' => $attributes->has('sm') || $attributes->has('small'),
         'btn-lg' => $attributes->has('lg') || $attributes->has('large'),
         'btn-link' => $attributes->has('link'),
-        'btn-' . $outline . 'primary' => $attributes->has('primary'),
+        'btn-' . $outline . 'primary' => $attributes->has('primary') && !$attributes->has('link'),
         'btn-' . $outline . 'secondary' => $attributes->has('light'),
         'btn-' . $outline . 'success' => $attributes->has('success'),
         'btn-' . $outline . 'warning' => $attributes->has('warning'),
@@ -21,6 +19,9 @@
         'btn-loading' => $attributes->has('loading'),
         'btn-square' => $attributes->has('square'),
         'btn-pill' => $attributes->has('pill'),
+        'btn-block' => $attributes->has('full'),
+        'btn-primary' => !$attributes->has('class') && !$attributes->has('link'),
+        'btn-' . $attributes->get('color') => $attributes->has('color'),
     ])->except(['label']) !!} @if ($attributes->has('dropdown')) data-bs-toggle="dropdown" @endif>
 
     @if ($attributes->has('icon'))

@@ -11,5 +11,6 @@
         <x-form-errors :name="$name" />
     @endif
 
-    {!! $help ?? null !!}
+    <x-help> {!! $help ?? null !!} </x-help>
+
 </div>

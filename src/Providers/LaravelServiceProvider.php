@@ -27,7 +27,6 @@ class LaravelServiceProvider extends BaseServiceProvider
             ], 'views');
         }
 
-        $this->bootSupportMacros();
         $this->bootBalde();
 
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'laravel-components');
@@ -57,37 +56,6 @@ class LaravelServiceProvider extends BaseServiceProvider
                 }
             }
         );
-
-        Blade::anonymousComponentPath(__DIR__.'/../../resources/views/components/'.$framework, $prefix.'theme');
-
-        return $this;
-    }
-
-    protected function bootSupportMacros(): self
-    {
-        if (! Str::hasMacro('shortNumber')) {
-            Str::macro('shortNumber', function (int $number, int $decimals = 1) {
-                if ($number < 1_000) {
-                    $format = number_format($number, $decimals);
-                    $suffix = '';
-                } elseif ($number < 1_000_000) {
-                    $format = number_format(floor($number / 100) / 10, $decimals);
-                    $suffix = 'K';
-                } elseif ($number < 1_000_000_000) {
-                    $format = number_format(floor($number / 100000) / 10, $decimals);
-                    $suffix = 'M';
-                } else {
-                    return '🤯';
-                }
-
-                if ($decimals > 0) {
-                    $dotzero = '.'.str_repeat('0', $decimals);
-                    $format = str_replace($dotzero, '', $format);
-                }
-
-                return $format.$suffix;
-            });
-        }
 
         return $this;
     }

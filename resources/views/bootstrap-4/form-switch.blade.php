@@ -1,13 +1,20 @@
-<div class="form-group">
+<div @class([
+    'form-group' => true,
+    'form-check-inline' => $attributes->has('inline'),
+])>
     @if ($attributes->has('title'))
         <label class="form-label">{{ $attributes->get('title') }}</label>
     @endif
 
-    @isset($copy)
+    @if ($copy !== false)
         <input type="hidden" value="{{ $copy }}" name="{{ $name }}" />
-    @endisset
+    @endif
 
-    <label class="form-check form-switch">
+    <label @class([
+        'form-check' => true,
+        'form-switch' => true,
+        'form-check-inline' => $attributes->has('inline'),
+    ])>
         <input {!! $attributes->class([
                 'is-invalid' => $hasError($name),
             ])->merge([
@@ -20,7 +27,10 @@
             @if ($isWired()) wire:model{!! $wireModifier() !!}="{{ $name }}" @endif
             @checked($checked) {{ $extraAttributes ?? '' }} />
 
-        <span class="form-check-label text-upper">{{ $label }}</span>
+        <span class="form-check-label">{{ $label }}</span>
+        <span class="form-check-description">
+            <x-help> {!! $help ?? null !!} </x-help>
+        </span>
     </label>
 
     {!! $help ?? null !!}

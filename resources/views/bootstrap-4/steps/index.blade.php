@@ -2,6 +2,12 @@
     'steps' => collect(),
 ])
 
+@php
+    if (!$steps instanceof \Illuminate\Support\Collection) {
+        $steps = collect($steps);
+    }
+@endphp
+
 @if ($steps->count() > 1)
     <div class="wizard" step-wizard>
         <div class="container">

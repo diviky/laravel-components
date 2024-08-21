@@ -3,8 +3,11 @@
         <x-form-label :label="$label" />
     @endisset
     <div {!! $attributes->except(['extra-attributes'])->merge([
-        'class' => 'btn-group d-flex ' . ($hasError($name) ? 'is-invalid' : ''),
-    ]) !!} {{ $extraAttributes ?? '' }}>
+            'class' => 'btn-group d-flex',
+        ])->class([
+            'is-invalid' => $hasError($name),
+            'btn-group-vertical' => $attributes->has('vertical'),
+        ]) !!} {{ $extraAttributes ?? '' }}>
 
         {!! $before ?? null !!}
 
@@ -22,7 +25,7 @@
     {!! $help ?? null !!}
 
     @if ($hasErrorAndShow($name))
-        <x-form-errors :name="$name" class="d-block" />
+        <x-form-errors :name="$name" />
     @endif
 
     @isset($label)

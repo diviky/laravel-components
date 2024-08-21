@@ -19,7 +19,7 @@ class Avatar extends Component
      */
     public function __construct(
         ?string $label = null,
-        string $image = '',
+        ?string $image = '',
         ?string $color = null,
         public ?string $size = null,
         bool $stacked = false

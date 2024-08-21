@@ -3,6 +3,7 @@
     'icon' => null,
     'label' => null,
     'copy' => false,
+    'settings' => [],
 ])
 
 @if ($value)

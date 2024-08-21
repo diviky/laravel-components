@@ -3,10 +3,11 @@
     'icon' => null,
     'label' => null,
     'copy' => false,
+    'settings' => [],
 ])
 
 @if ($value)
-    <span {{ $attributes }}>
+    <span {{ $attributes->merge(['class' => 'view-datetime']) }}>
         <x-icon :name="$icon" />
         {!! $label !!}
         {{ datetime($value) }}

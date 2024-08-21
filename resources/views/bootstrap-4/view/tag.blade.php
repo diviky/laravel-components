@@ -6,11 +6,18 @@
     'settings' => [],
 ])
 
+@php
+    $color = $settings['color'] ?? 'primary';
+@endphp
+
 @if ($value)
-    <span {{ $attributes }}>
+    <span {{ $attributes->class([
+        'badge' => true,
+        'badge-' . ($color = $color),
+    ]) }}>
         <x-icon :name="$icon" />
         {!! $label !!}
-        <a href="mailto:{{ $value }}">{{ $value }}</a>
+        {{ $value }}
         @if ($copy)
             <x-icon name="copy" class="cursor-pointer" title="copy to clipboard" data-clipboard="{{ $value }}" />
         @endif

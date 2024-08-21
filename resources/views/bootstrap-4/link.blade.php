@@ -8,7 +8,7 @@
         'btn-lg' => $attributes->has('lg'),
         'btn-link' => $attributes->has('link'),
         'disabled' => $attributes->has('disabled'),
-        'btn-' . $outline . 'primary' => $button || $attributes->has('primary'),
+        'btn-' . $outline . 'primary' => ($button || $attributes->has('primary')) && !$attributes->has('link'),
         'btn-' . $outline . 'secondary' => $attributes->has('light'),
         'btn-' . $outline . 'success' => $attributes->has('success'),
         'btn-' . $outline . 'warning' => $attributes->has('warning'),
@@ -18,6 +18,7 @@
         'btn-' . $outline . 'loading' => $attributes->has('loading'),
         'btn-square' => $attributes->has('square'),
         'btn-pill' => $attributes->has('pill'),
+        'btn-block' => $attributes->has('full'),
     ]) !!} @if ($modal) tooltip="modal" @endif
     @if ($attributes->has('title')) data-toggle="tooltip" @endif
     @if ($attributes->has('rm')) data-method="delete" data-delete @endif

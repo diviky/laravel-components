@@ -3,12 +3,25 @@
     'position' => 'right',
     'header' => null,
     'label' => null,
+    'inline' => true,
+    'link' => null,
 ])
 
-<div class="dropdown">
-    <x-link data-bs-toggle="dropdown" {{ $attributes->merge(['class' => 'btn-link', 'href' => '#']) }}>
-        <x-icon :name="$icon" />{{ $label }}
-    </x-link>
+<div @class([
+    'dropdown' => true,
+    'align-self-center' => true,
+    'd-inline' => $inline,
+])>
+    @isset($link)
+        {!! $link !!}
+    @else
+        <x-link data-bs-toggle="dropdown"
+            {{ $attributes->merge(['href' => '#'])->class([
+                'btn-link' => !$attributes->has('class'),
+            ]) }}>
+            <x-icon :name="$icon" /> {{ $label }}
+        </x-link>
+    @endisset
 
     <div class="dropdown-menu dropdown-menu-{{ $position }}">
         @if ($header)

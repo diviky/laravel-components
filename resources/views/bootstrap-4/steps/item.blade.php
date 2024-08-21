@@ -1,9 +1,6 @@
-@props([
-    'step' => collect(),
-    'loop',
-])
+@props(['id' => null, 'index' => 0])
 
-<div class="{{ $step['id'] }}" data-step-content
-    style="display:@if ($loop->index == 0) block @else none @endif">
+<div class="{{ $id }}" {{ $attributes }} data-step-content
+    style="display:@if ($index == 0) block @else none @endif">
     {!! $slot !!}
 </div>
