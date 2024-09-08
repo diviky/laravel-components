@@ -3,6 +3,7 @@
         'id' => $id(),
     ])->class([
         'btn' => $button,
+        'active' => $active,
         'btn-' . $attributes->get('color') => $attributes->has('color'),
         'btn-sm' => $attributes->has('sm'),
         'btn-lg' => $attributes->has('lg'),

@@ -10,7 +10,7 @@
     <span {{ $attributes->merge(['class' => 'view-date']) }}>
         <x-icon :name="$icon" />
         {!! $label !!}
-        {{ datetime($value, 'M d, Y') }}
+        {{ carbon($value, 'M d, Y') }}
         @if ($copy)
             <x-icon name="copy" class="cursor-pointer" title="copy to clipboard" data-clipboard="{{ $value }}" />
         @endif

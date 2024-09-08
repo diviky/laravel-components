@@ -38,6 +38,10 @@ return [
         'form-date' => [
             'view' => 'laravel-components::{framework}.form-date',
         ],
+        'form-otp' => [
+            'view' => 'laravel-components::{framework}.form-otp',
+            'class' => Components\FormOtp::class,
+        ],
         'form-date-time' => [
             'view' => 'laravel-components::{framework}.form-date-time',
         ],
@@ -236,7 +240,7 @@ return [
             'class' => Components\Avatar::class,
         ],
         'tab' => [
-            'view' => 'laravel-components::{framework}.tabs.tabs',
+            'view' => 'laravel-components::{framework}.tabs.index',
         ],
         'tab.content' => [
             'view' => 'laravel-components::{framework}.tabs.content',
@@ -247,11 +251,14 @@ return [
         'tab.pane' => [
             'view' => 'laravel-components::{framework}.tabs.pane',
         ],
-        'dropmenu' => [
-            'view' => 'laravel-components::{framework}.dropmenu',
+        'dropdown' => [
+            'view' => 'laravel-components::{framework}.dropdown.index',
         ],
-        'dropmenu-item' => [
-            'view' => 'laravel-components::{framework}.dropmenu-item',
+        'dropdown.item' => [
+            'view' => 'laravel-components::{framework}.dropdown.item',
+        ],
+        'dropdown.header' => [
+            'view' => 'laravel-components::{framework}.dropdown.header',
         ],
         'icon' => [
             'view' => 'laravel-components::{framework}.icon',
@@ -310,6 +317,36 @@ return [
         ],
         'view.number' => [
             'view' => 'laravel-components::{framework}.view.number',
+        ],
+        'view.empty' => [
+            'view' => 'laravel-components::{framework}.view.empty',
+        ],
+        'view.show' => [
+            'view' => 'laravel-components::{framework}.view.show',
+        ],
+        'modal' => [
+            'view' => 'laravel-components::{framework}.modal.index',
+        ],
+        'modal.header' => [
+            'view' => 'laravel-components::{framework}.modal.header',
+        ],
+        'modal.body' => [
+            'view' => 'laravel-components::{framework}.modal.body',
+        ],
+        'modal.title' => [
+            'view' => 'laravel-components::{framework}.modal.title',
+        ],
+        'modal.footer' => [
+            'view' => 'laravel-components::{framework}.modal.footer',
+        ],
+        'modal.toggle' => [
+            'view' => 'laravel-components::{framework}.modal.toggle',
+        ],
+        'nav' => [
+            'view' => 'laravel-components::{framework}.nav.index',
+        ],
+        'nav.item' => [
+            'view' => 'laravel-components::{framework}.nav.item',
         ],
     ],
 ];

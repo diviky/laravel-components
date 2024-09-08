@@ -4,9 +4,16 @@
     'label' => null,
     'copy' => false,
     'settings' => [],
+    'format' => null,
 ])
 
-@if ($value)
+@php
+    if ($format) {
+        $settings['format'] = $format;
+    }
+@endphp
+
+@isset($value)
     <span {{ $attributes }}>
         <x-icon :name="$icon" />
         {!! $label !!}
@@ -25,4 +32,4 @@
             <x-icon name="copy" class="cursor-pointer" title="copy to clipboard" data-clipboard="{{ $value }}" />
         @endif
     </span>
-@endif
+@endisset

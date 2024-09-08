@@ -9,6 +9,7 @@
     'outline' => true,
     'striped' => false,
     'height' => '50vh',
+    'borderTop' => true,
 ])
 
 @if ($responsive)
@@ -20,8 +21,9 @@
         'text-nowrap' => $nowrap,
         'card-table' => $card,
         'table-striped' => $striped,
+        'border-top' => $borderTop,
     ])->merge([
-        'class' => 'table table-outline table-vcenter  border-top',
+        'class' => 'table table-vcenter',
     ]) !!}>
     @isset($header)
         <x-table.header :attributes="$header->attributes">{!! $header !!}</x-table.header>

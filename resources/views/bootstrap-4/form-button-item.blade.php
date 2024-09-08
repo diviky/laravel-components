@@ -8,4 +8,8 @@
         'is-invalid' => $hasError($name),
     ]) !!} {{ $extraAttributes ?? '' }} @checked($checked) />
 
-<label for="{{ $id() }}" type="button" class="btn">{!! $slot !!} {{ $label }}</label>
+<label for="{{ $id() }}" type="button"
+    @if ($attributes->has('title')) title="{{ $attributes->get('title') }}" data-toggle="tooltip" @endif
+    class="btn">{!! $slot !!}
+    {{ $label }}
+</label>

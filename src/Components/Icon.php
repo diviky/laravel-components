@@ -12,11 +12,16 @@ class Icon extends Component
     public function __construct(
         public ?string $name = null,
         public ?string $label = null,
-        public ?string $action = null
+        public ?string $action = null,
+        public ?string $size = null
     ) {}
 
     public function icon(): string|Stringable
     {
+        if (empty($this->name)) {
+            return '';
+        }
+
         $name = Str::of($this->name);
 
         return $name->contains('.') ? $name->replace('.', '-') : "ti ti-{$this->name}";
