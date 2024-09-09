@@ -8,7 +8,7 @@ return [
     'prefix' => env('LARAVEL_COMPONENTS_PREFIX', env('COMPONENTS_PREFIX')),
 
     // bootstrap-4
-    'framework' => env('LARAVEL_COMPONENTS_FRAMEWORK', env('COMPONENTS_FRAMEWORK', 'bootstrap-4')),
+    'framework' => env('LARAVEL_COMPONENTS_FRAMEWORK', env('COMPONENTS_FRAMEWORK', 'bootstrap-5')),
 
     'components' => [
         'form-switch' => [
@@ -103,11 +103,8 @@ return [
         'form-currency' => [
             'view' => 'laravel-components::{framework}.form-currency',
         ],
-        'theme.counter' => [
-            'view' => 'laravel-components::{framework}.theme-counter',
-        ],
-        'theme.modal' => [
-            'view' => 'laravel-components::{framework}.theme-modal',
+        'counter' => [
+            'view' => 'laravel-components::{framework}.counter',
         ],
         'alert-error' => [
             'view' => 'laravel-components::{framework}.alert.error',
@@ -181,24 +178,6 @@ return [
         'card.filter' => [
             'view' => 'laravel-components::{framework}.card.filter',
         ],
-        'card-header' => [
-            'view' => 'laravel-components::{framework}.card.header',
-        ],
-        'card-body' => [
-            'view' => 'laravel-components::{framework}.card.body',
-        ],
-        'card-title' => [
-            'view' => 'laravel-components::{framework}.card.title',
-        ],
-        'card-options' => [
-            'view' => 'laravel-components::{framework}.card.options',
-        ],
-        'card-footer' => [
-            'view' => 'laravel-components::{framework}.card.footer',
-        ],
-        'card-filter' => [
-            'view' => 'laravel-components::{framework}.card.filter',
-        ],
         'table' => [
             'view' => 'laravel-components::{framework}.table.index',
         ],
@@ -259,10 +238,6 @@ return [
         ],
         'dropdown.header' => [
             'view' => 'laravel-components::{framework}.dropdown.header',
-        ],
-        'icon' => [
-            'view' => 'laravel-components::{framework}.icon',
-            'class' => Components\Icon::class,
         ],
         'steps' => [
             'view' => 'laravel-components::{framework}.steps.index',

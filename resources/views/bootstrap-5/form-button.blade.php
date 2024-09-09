@@ -20,8 +20,10 @@
         'btn-square' => $attributes->has('square'),
         'btn-pill' => $attributes->has('pill'),
         'btn-block' => $attributes->has('full'),
-        'btn-primary' => !$attributes->has('class') && !$attributes->has('link'),
+        'btn-primary' => !$attributes->has('class') && !$attributes->has('link') && !$attributes->has('variant'),
         'btn-' . $attributes->get('color') => $attributes->has('color'),
+        'btn-' . $attributes->get('size') => $attributes->has('size'),
+        'btn-' . $attributes->get('variant') => $attributes->has('variant'),
     ])->except(['label']) !!} @if ($attributes->has('dropdown')) data-bs-toggle="dropdown" @endif>
 
     @if ($attributes->has('icon'))
