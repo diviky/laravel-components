@@ -8,7 +8,7 @@
     "require": {
         "php": "^8.2",
         "bepsvpt/secure-headers": "^7.5",
-        "diviky/laravel-form-components": "^1.0"
+        "diviky/laravel-form-components": "^2.0"
     },
     "require-dev": {
         "diviky/code-analysis": "^2.0"
