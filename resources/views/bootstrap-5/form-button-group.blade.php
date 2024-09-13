@@ -1,3 +1,6 @@
+@props([
+    'type' => 'checkbox',
+])
 @isset($label)
     <div class="form-group">
         <x-form-label :label="$label" />
@@ -12,8 +15,9 @@
         {!! $before ?? null !!}
 
         @forelse($options as $key => $option)
-            <x-form-button-item name="{{ $name }}" value="{{ $key }}" type="{{ $type }}">
-                {!! $option !!}
+            <x-form-button-item type="{{ $type }}" name="{{ $name }}" value="{{ $optionValue($option) }}"
+                :default="$isSelected($optionValue($option))" :disabled="$optionIsDisabled($option)">
+                {{ $optionLabel($option) }}
             </x-form-button-item>
         @empty
             {!! $slot !!}

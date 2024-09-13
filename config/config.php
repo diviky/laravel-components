@@ -38,9 +38,9 @@ return [
         'form-date' => [
             'view' => 'laravel-components::{framework}.form-date',
         ],
-        'form-otp' => [
-            'view' => 'laravel-components::{framework}.form-otp',
-            'class' => Components\FormOtp::class,
+        'form-pin' => [
+            'view' => 'laravel-components::{framework}.form-pin',
+            'class' => Components\FormPin::class,
         ],
         'form-date-time' => [
             'view' => 'laravel-components::{framework}.form-date-time',
@@ -320,8 +320,10 @@ return [
         'nav' => [
             'view' => 'laravel-components::{framework}.nav.index',
         ],
-        'nav.item' => [
+        'nav-item' => [
+            'alias' => 'nav.item',
             'view' => 'laravel-components::{framework}.nav.item',
+            'class' => Components\NavItem::class,
         ],
     ],
 ];

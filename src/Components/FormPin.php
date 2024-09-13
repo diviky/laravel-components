@@ -7,7 +7,7 @@ namespace Diviky\LaravelComponents\Components;
 use Diviky\LaravelComponents\Concerns\Renderer;
 use Diviky\LaravelFormComponents\Components\FormInput;
 
-class FormOtp extends FormInput
+class FormPin extends FormInput
 {
     use Renderer;
 }

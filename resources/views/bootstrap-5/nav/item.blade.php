@@ -1,14 +1,22 @@
-@props([
-    'route' => null,
-    'icon' => null,
-    'label' => null,
-])
-
 <div {!! $attributes->merge(['class' => 'nav-item']) !!}>
-    <a href="{{ $route ? route($route) : '#' }}" @class([
-        'active' => $route && request()->routeIs($route),
-    ])>
+    <a @if ($link) href="{{ $link }}"
+        @if ($external)
+        target="_blank" @endif
+        @endif
+        @class([
+            'active' => $active || $routeMatches(),
+        ])>
         <x-icon :name="$icon" />
-        {!! $slot !!} {{ $label }}
+        @if ($title || $slot->isNotEmpty())
+            @if ($title)
+                {{ $title }}
+
+                @if ($badge)
+                    <span class="badge badge-ghost badge-sm {{ $badgeClasses }}">{{ $badge }}</span>
+                @endif
+            @else
+                {{ $slot }}
+            @endif
+        @endif
     </a>
 </div>
