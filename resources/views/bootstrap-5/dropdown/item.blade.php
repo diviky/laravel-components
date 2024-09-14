@@ -6,9 +6,11 @@
     'active' => false,
     'disabled' => false,
     'label' => null,
+    'title' => null,
+    'enabled' => true,
 ])
 
-<x-link :href="$href"
+<x-link :href="$href" :enabled="$enabled"
     {{ $attributes->class(['active' => $active, 'disabled' => $disabled])->merge(['class' => 'dropdown-item']) }}>
 
     @if ($icon)
@@ -20,5 +22,6 @@
     @endif
 
     {{ $label }}
+    {{ $title }}
     {!! $slot ?? null !!}
 </x-link>

@@ -33,9 +33,12 @@
     @if ($attributes->has('xl')) data-styles="modal-xl" @endif
     @if ($attributes->has('id')) data-id="{{ $attributes->get('id') }}" @endif
     @if ($attributes->has('export')) ajax-export @endif @if ($slideover) tooltip="modal" @endif
-    {{ $extraAttributes ?? '' }}>
+    @if ($external) target="_blank" @endif {{ $extraAttributes ?? '' }}>
     @if ($icon)
         <x-icon :name="$icon" />
     @endif
     {{ $slot }}
+    @if ($badge)
+        <span class="badge badge-ghost badge-sm {{ $badgeClasses }}">{{ $badge }}</span>
+    @endif
 </a>

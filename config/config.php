@@ -233,8 +233,10 @@ return [
         'dropdown' => [
             'view' => 'laravel-components::{framework}.dropdown.index',
         ],
-        'dropdown.item' => [
+        'dropdown-item' => [
             'view' => 'laravel-components::{framework}.dropdown.item',
+            'alias' => 'dropdown.item',
+            //'class' => Components\DropdownItem::class,
         ],
         'dropdown.header' => [
             'view' => 'laravel-components::{framework}.dropdown.header',
@@ -293,6 +295,9 @@ return [
         'view.number' => [
             'view' => 'laravel-components::{framework}.view.number',
         ],
+        'view.rating' => [
+            'view' => 'laravel-components::{framework}.view.rating',
+        ],
         'view.empty' => [
             'view' => 'laravel-components::{framework}.view.empty',
         ],
@@ -324,6 +329,10 @@ return [
             'alias' => 'nav.item',
             'view' => 'laravel-components::{framework}.nav.item',
             'class' => Components\NavItem::class,
+        ],
+        'form-rating' => [
+            'view' => 'laravel-components::{framework}.form-rating',
+            'class' => Components\FormRating::class,
         ],
     ],
 ];

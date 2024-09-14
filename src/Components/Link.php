@@ -46,10 +46,13 @@ class Link extends Component
         bool $away = false,
         bool $slideover = false,
         bool $outline = false,
-        public bool $show = true,
         public bool $ghost = false,
         public bool $active = false,
         public ?string $icon = null,
+        public bool $enabled = true,
+        public bool $external = false,
+        public ?string $badge = null,
+        public ?string $badgeClasses = null,
         HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->action = $action;
@@ -79,6 +82,6 @@ class Link extends Component
 
     public function shouldRender(): bool
     {
-        return $this->show && $this->isAuthorized();
+        return $this->enabled && $this->isAuthorized();
     }
 }
