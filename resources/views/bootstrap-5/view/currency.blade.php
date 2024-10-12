@@ -10,7 +10,7 @@
     <span {{ $attributes }}>
         <x-icon :name="$icon" />
         {!! $label !!}
-        ${{ number_format($value) }}
+        {{ \Illuminate\Support\Number::currency($value) }}
         @if ($copy)
             <x-icon name="copy" class="cursor-pointer" title="copy to clipboard" data-clipboard="{{ $value }}" />
         @endif

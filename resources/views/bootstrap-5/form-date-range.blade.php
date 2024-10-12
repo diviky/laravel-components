@@ -8,4 +8,4 @@
     'placeholder' => 'Select Date Range',
     'date-format' => $format,
     'class' => 'date-range-picker',
-])" selector="{{ $selector }}"> {!! $slot !!} </x-form-date>
+])" selector="{{ $selector }}"> <x-slot:help>{{ $help ?? '' }}</x-slot:help> {!! $slot !!} </x-form-date>

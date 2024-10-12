@@ -54,8 +54,8 @@ class FormFile extends Component
 
     protected function convertToMimeTypes(string $accept): string
     {
-        if (strpos($accept, '/') !== false || $accept == '*.*' || $accept == '') {
-            return $accept;
+        if (strpos($accept, '/') !== false || $accept == '*.*' || $accept == '*' || $accept == '') {
+            return implode(',', ['image/*', 'text/*', 'application/*', 'audio/*', 'video/*']);
         }
 
         $extensions = collect(explode(',', str_replace('.', '', $accept)))

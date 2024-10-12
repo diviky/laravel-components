@@ -2,6 +2,7 @@
     'header' => null,
     'body' => null,
     'footer' => null,
+    'group' => null,
     'responsive' => false,
     'bordered' => true,
     'card' => true,
@@ -15,6 +16,7 @@
 @if ($responsive)
     <div class="table-responsive" style="min-height: {{ $height }} ">
 @endif
+
 <table {!! $attributes->class([
         'table-outline' => $outline,
         'table-bordered' => $bordered,
@@ -25,6 +27,11 @@
     ])->merge([
         'class' => 'table table-vcenter',
     ]) !!}>
+
+    <colgroup>
+        {!! $group !!}
+    </colgroup>
+
     @isset($header)
         <x-table.header :attributes="$header->attributes">{!! $header !!}</x-table.header>
     @endisset

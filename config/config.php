@@ -29,6 +29,9 @@ return [
         'form-button-link' => [
             'view' => 'laravel-components::{framework}.button.link',
         ],
+        'form-hidden' => [
+            'view' => 'laravel-components::{framework}.form-hidden',
+        ],
         'form-button-primary' => [
             'view' => 'laravel-components::{framework}.button.primary',
         ],
@@ -102,6 +105,9 @@ return [
         ],
         'form-currency' => [
             'view' => 'laravel-components::{framework}.form-currency',
+        ],
+        'form-colors' => [
+            'view' => 'laravel-components::{framework}.form-colors',
         ],
         'counter' => [
             'view' => 'laravel-components::{framework}.counter',
@@ -214,6 +220,18 @@ return [
         'page.title' => [
             'view' => 'laravel-components::{framework}.page.title',
         ],
+        'accordion' => [
+            'view' => 'laravel-components::{framework}.accordion.index',
+        ],
+        'accordion.item' => [
+            'view' => 'laravel-components::{framework}.accordion.item',
+        ],
+        'accordion.header' => [
+            'view' => 'laravel-components::{framework}.accordion.header',
+        ],
+        'accordion.body' => [
+            'view' => 'laravel-components::{framework}.accordion.body',
+        ],
         'avatar' => [
             'view' => 'laravel-components::{framework}.avatar',
             'class' => Components\Avatar::class,
@@ -225,7 +243,7 @@ return [
             'view' => 'laravel-components::{framework}.tabs.content',
         ],
         'tab.item' => [
-            'view' => 'laravel-components::{framework}.tabs.tab',
+            'view' => 'laravel-components::{framework}.tabs.item',
         ],
         'tab.pane' => [
             'view' => 'laravel-components::{framework}.tabs.pane',
@@ -303,6 +321,15 @@ return [
         ],
         'view.show' => [
             'view' => 'laravel-components::{framework}.view.show',
+        ],
+        'view.file' => [
+            'view' => 'laravel-components::{framework}.view.file',
+        ],
+        'view.user' => [
+            'view' => 'laravel-components::{framework}.view.user',
+        ],
+        'view.select' => [
+            'view' => 'laravel-components::{framework}.view.select',
         ],
         'modal' => [
             'view' => 'laravel-components::{framework}.modal.index',

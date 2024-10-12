@@ -1,5 +1,5 @@
 @props([
-    'icon' => 'dots-vertical',
+    'icon' => 'dots',
     'position' => 'right',
     'header' => null,
     'label' => null,

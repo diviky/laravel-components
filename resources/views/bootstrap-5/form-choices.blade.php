@@ -226,7 +226,7 @@
                                     <div @click="toggle('{{ $optionValue($child) }}')"
                                         :class="isActive('{{ $optionValue($child) }}') && 'active'"
                                         search-value="{{ $optionLabel($child) }}" class="list-group-item">
-                                        <span>{{ $optionLabel($child) }}</span>
+                                        <span>{!! $optionLabel($child) !!}</span>
                                     </div>
                                 @endforeach
                             </div>
@@ -234,16 +234,14 @@
                             <div @click="toggle('{{ $optionValue($option) }}')"
                                 :class="isActive('{{ $optionValue($option) }}') && 'active'"
                                 search-value="{{ $optionLabel($option) }}" class="list-group-item">
-                                <span>{{ $optionLabel($option) }}</span>
+                                <span>{!! $optionLabel($option) !!}</span>
                             </div>
                         @endif
                     @endforeach
                 </div>
             </div>
         </div>
-
-        @if ($hasErrorAndShow($name))
-            <x-form-errors :name="$name" />
-        @endif
+        <x-help> {!! $help ?? null !!} </x-help>
+        <x-form-errors :name="$name" />
     </div>
 </div>

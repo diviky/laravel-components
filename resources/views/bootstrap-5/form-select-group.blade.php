@@ -6,6 +6,7 @@
             'class' => 'form-selectgroup',
         ])->class([
             'form-selectgroup-pills' => $attributes->has('pills'),
+            'form-selectgroup-boxes' => $attributes->has('boxes'),
             'is-invalid' => $hasError($name),
             'd-flex' => true,
             'flex-column' => $attributes->has('full'),

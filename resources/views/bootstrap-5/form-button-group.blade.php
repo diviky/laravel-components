@@ -6,8 +6,9 @@
         <x-form-label :label="$label" />
     @endisset
     <div {!! $attributes->except(['extra-attributes'])->merge([
-            'class' => 'btn-group d-flex',
+            'class' => 'btn-group',
         ])->class([
+            'd-flex' => !$attributes->has('inline'),
             'is-invalid' => $hasError($name),
             'btn-group-vertical' => $attributes->has('vertical'),
         ]) !!} {{ $extraAttributes ?? '' }}>

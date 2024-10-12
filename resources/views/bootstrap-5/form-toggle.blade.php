@@ -27,7 +27,14 @@
             @if ($isWired()) wire:model{!! $wireModifier() !!}="{{ $name }}" @endif
             @checked($checked) {{ $extraAttributes ?? '' }} />
 
-        <span class="form-check-label">{{ $label }}</span>
+        <span class="form-check-label">
+            {{ $label }}
+            @if ($attributes->has('hint'))
+                <span title="{{ $attributes->get('hint') }}" data-toggle="tooltip">
+                    <x-icon name="help" />
+                </span>
+            @endif
+        </span>
         <span class="form-check-description">
             <x-help> {!! $help ?? null !!} </x-help>
         </span>

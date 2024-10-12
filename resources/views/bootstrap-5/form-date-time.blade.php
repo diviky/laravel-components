@@ -5,7 +5,9 @@
 ])
 
 @if ($stacked)
-    <x-form-date :extra-attributes="$extraAttributes" name="{{ $name }}" :attributes="$attributes->merge(['selector' => 'data-datetime'])" />
+    <x-form-date :extra-attributes="$extraAttributes" name="{{ $name }}" :attributes="$attributes->merge(['selector' => 'data-datetime'])">
+        <x-slot:help>{{ $help ?? '' }}</x-slot:help>
+    </x-form-date>
 @else
     <div class="row">
         <div class="col">

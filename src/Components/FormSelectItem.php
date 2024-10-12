@@ -30,7 +30,7 @@ class FormSelectItem extends Component
      * @param  mixed  $bind
      */
     public function __construct(
-        string $name,
+        string $name = '',
         string $label = '',
         $value = 1,
         $bind = null,

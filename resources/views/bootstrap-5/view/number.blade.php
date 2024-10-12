@@ -19,14 +19,18 @@
         {!! $label !!}
         @isset($settings['format'])
             @if ($settings['format'] == 'percent')
-                {{ $value }}%
+                {{ \Illuminate\Support\Number::percentage($value) }}
+            @elseif ($settings['format'] == 'abbreviate')
+                {{ \Illuminate\Support\Number::abbreviate($value) }}
+            @elseif ($settings['format'] == 'number')
+                {{ \Illuminate\Support\Number::format($value) }}
             @elseif ($settings['format'] == 'currency')
-                ${{ number_format($value) }}
+                {{ \Illuminate\Support\Number::currency($value) }}
             @elseif ($settings['format'] == 'normal')
                 {{ $value }}
             @endif
         @else
-            {{ number_format($value) }}
+            {{ \Illuminate\Support\Number::format($value) }}
         @endisset
         @if ($copy)
             <x-icon name="copy" class="cursor-pointer" title="copy to clipboard" data-clipboard="{{ $value }}" />
