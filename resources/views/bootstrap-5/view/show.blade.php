@@ -1,7 +1,7 @@
 @props([
-    'show' => true,
+    'enabled' => true,
 ])
 
-@if ($show)
+@if ($enabled)
     {!! $slot !!}
 @endif
