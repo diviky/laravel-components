@@ -1,9 +1,15 @@
 @props([
     'extraAttributes' => [],
+    'currency' => 'USD',
 ])
+
+@php
+    $currency = $currency ?? \Illuminate\Support\Number::defaultCurrency();
+@endphp
+
 <x-form-input :extra-attributes="$extraAttributes" :attributes="$attributes->merge(['type' => 'number'])">
-    @slot('icon')
-        <i class="ti ti-coin-rupee"></i>
+    @slot('prepend')
+        {{ $currency }}
     @endslot
     <x-slot:help>{{ $help ?? '' }}</x-slot:help>
     {!! $slot !!}
