@@ -331,6 +331,12 @@ return [
         'view.select' => [
             'view' => 'laravel-components::{framework}.view.select',
         ],
+        'view.url' => [
+            'view' => 'laravel-components::{framework}.view.url',
+        ],
+        'view.team' => [
+            'view' => 'laravel-components::{framework}.view.team',
+        ],
         'modal' => [
             'view' => 'laravel-components::{framework}.modal.index',
         ],

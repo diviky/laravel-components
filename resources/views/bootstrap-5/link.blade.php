@@ -37,7 +37,7 @@
     @if ($icon)
         <x-icon :name="$icon" />
     @endif
-    {{ $slot }}
+    {!! $slot !!}
     @if ($badge)
         <span class="badge badge-ghost badge-sm {{ $badgeClasses }}">{{ $badge }}</span>
     @endif
