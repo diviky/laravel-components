@@ -17,19 +17,9 @@ class LaravelServiceProvider extends BaseServiceProvider
      */
     public function boot(): void
     {
-        if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__.'/../../config/config.php' => config_path('laravel-components.php'),
-            ], 'config');
-
-            $this->publishes([
-                __DIR__.'/../../resources/views' => base_path('resources/views/vendor/laravel-components'),
-            ], 'views');
-        }
-
+        $this->bootConsole();
         $this->bootBalde();
-
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'laravel-components');
+        $this->bootViews();
     }
 
     /**
@@ -57,6 +47,28 @@ class LaravelServiceProvider extends BaseServiceProvider
                 }
             }
         );
+
+        return $this;
+    }
+
+    public function bootViews(): self
+    {
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'laravel-components');
+
+        return $this;
+    }
+
+    public function bootConsole(): self
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../../config/config.php' => config_path('laravel-components.php'),
+            ], 'config');
+
+            $this->publishes([
+                __DIR__.'/../../resources/views' => base_path('resources/views/vendor/laravel-components'),
+            ], 'views');
+        }
 
         return $this;
     }

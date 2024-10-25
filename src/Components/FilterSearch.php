@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace Diviky\LaravelComponents\Components;
 
-use Diviky\LaravelFormComponents\Concerns\HandlesDefaultAndOldValue;
-use Diviky\LaravelFormComponents\Concerns\HandlesValidationErrors;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 
 class FilterSearch extends Component
 {
-    use HandlesDefaultAndOldValue;
-    use HandlesValidationErrors;
-
     public string $name;
 
     public string $label;

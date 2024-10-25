@@ -103,11 +103,27 @@ return [
             'view' => 'laravel-components::{framework}.form-choices',
             'class' => Components\FormChoices::class,
         ],
+        'form-tags' => [
+            'view' => 'laravel-components::{framework}.form-tags',
+            'class' => Components\FormTags::class,
+        ],
+        'form-image' => [
+            'view' => 'laravel-components::{framework}.form-image',
+            'class' => Components\FormImage::class,
+        ],
         'form-currency' => [
             'view' => 'laravel-components::{framework}.form-currency',
         ],
         'form-colors' => [
             'view' => 'laravel-components::{framework}.form-colors',
+        ],
+        'form-markdown' => [
+            'view' => 'laravel-components::{framework}.form-markdown',
+            'class' => Components\FormMarkdown::class,
+        ],
+        'form-editor' => [
+            'view' => 'laravel-components::{framework}.form-editor',
+            'class' => Components\FormEditor::class,
         ],
         'counter' => [
             'view' => 'laravel-components::{framework}.counter',
@@ -309,6 +325,9 @@ return [
         ],
         'view.tag' => [
             'view' => 'laravel-components::{framework}.view.tag',
+        ],
+        'view.tags' => [
+            'view' => 'laravel-components::{framework}.view.tags',
         ],
         'view.number' => [
             'view' => 'laravel-components::{framework}.view.number',

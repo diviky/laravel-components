@@ -7,48 +7,52 @@ namespace Diviky\LaravelComponents\Components;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 
-class FormRating extends Component
+class FormImage extends Component
 {
     public string $name;
 
     public string $label;
 
-    public ?string $value;
+    public mixed $value;
 
     /**
      * Create a new component instance.
-     *
-     * @param  mixed  $value
      */
     public function __construct(
         string $name = '',
-        ?string $value = '',
+        mixed $value = '',
         string $label = '',
-        public string $size = '',
-        public string $icon = '',
         public ?string $language = null,
         mixed $bind = null,
         mixed $default = null,
-        public int $rating = 5,
-        public bool $half = false,
-        public ?array $settings = [],
+        public ?bool $hideProgress = false,
+        public ?bool $cropAfterChange = false,
+        public ?string $changeText = 'Change',
+        public ?string $cropTitleText = 'Crop image',
+        public ?string $cropCancelText = 'Cancel',
+        public ?string $cropSaveText = 'Crop',
+        public array $cropConfig = [],
         HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
 
         $this->name = $name;
         $this->value = $value;
         $this->label = $label;
-        $this->rating = isset($settings['rating']) ? intval($settings['rating']) : $rating;
-        $this->icon = $settings['icon'] ?? $icon;
-        $this->size = $settings['size'] ?? $size;
-        $this->half = isset($settings['half']) ? (bool) $settings['half'] : $half;
-
-        $this->setExtraAttributes($extraAttributes);
 
         if (! is_null($language)) {
             $this->name = "{$name}[{$language}]";
         }
 
         $this->setValue($name, $bind, $default, $language);
+        $this->setExtraAttributes($extraAttributes);
+    }
+
+    public function cropSetup(): string
+    {
+        return json_encode(array_merge([
+            'autoCropArea' => 1,
+            'viewMode' => 1,
+            'dragMode' => 'move',
+        ], $this->cropConfig));
     }
 }

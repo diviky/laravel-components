@@ -4,17 +4,19 @@
     'label' => null,
     'copy' => false,
     'settings' => [],
+    'valueField' => 'name',
+    'colorField' => 'color',
 ])
 
 @php
-    $color = $settings['color'] ?? 'primary';
+    $color = $settings[$colorField] ?? 'primary';
 @endphp
 
 @if ($value)
     @if (is_array($value) || $value instanceof \ArrayAccess)
 
         @php
-            $color = $value['color'] ?? $color;
+            $color = $value[$colorField] ?? $color;
         @endphp
 
         <span
@@ -26,11 +28,11 @@
             <x-icon :name="$icon" />
             {!! $label !!}
 
-            {{ $value['name'] }}
+            {{ $value[$valueField] }}
 
             @if ($copy)
                 <x-icon name="copy" class="cursor-pointer" title="copy to clipboard"
-                    data-clipboard="{{ $value['name'] }}" />
+                    data-clipboard="{{ $value[$valueField] }}" />
             @endif
         </span>
     @else

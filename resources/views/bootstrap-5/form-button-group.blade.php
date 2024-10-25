@@ -3,7 +3,7 @@
 ])
 @isset($label)
     <div class="form-group">
-        <x-form-label :label="$label" />
+        <x-form-label :label="$label" :required="$attributes->has('required')" :for="$attributes->get('id') ?: $id()" />
     @endisset
     <div {!! $attributes->except(['extra-attributes'])->merge([
             'class' => 'btn-group',

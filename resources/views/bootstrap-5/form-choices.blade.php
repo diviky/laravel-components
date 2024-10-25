@@ -114,9 +114,7 @@
         }
     }">
         <!-- STANDARD LABEL -->
-        @if ($label)
-            <x-form-label :label="$label" :for="$attributes->get('id') ?: $id()" />
-        @endif
+        <x-form-label :label="$label" :required="$attributes->has('required')" :for="$attributes->get('id') ?: $id()" />
 
         <div @class([
             'input-group' => isset($prepend) || isset($append),

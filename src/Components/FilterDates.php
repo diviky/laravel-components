@@ -4,14 +4,8 @@ declare(strict_types=1);
 
 namespace Diviky\LaravelComponents\Components;
 
-use Diviky\LaravelFormComponents\Concerns\HandlesBoundValues;
-use Diviky\LaravelFormComponents\Concerns\HandlesValidationErrors;
-
 class FilterDates extends Component
 {
-    use HandlesBoundValues;
-    use HandlesValidationErrors;
-
     public string $name;
 
     public string $value;
