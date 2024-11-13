@@ -86,8 +86,9 @@
         @endif
 
         <!-- FILE INPUT -->
-        <input id="{{ $id() }}" name="{{ $name }}" type="file" x-ref="file" @change="refreshImage()"
-            {{ $attributes->whereDoesntStartWith('class')->class(['fform-file form-control', 'hide' => $slot->isNotEmpty()]) }} />
+        <input accept="image/*" id="{{ $id() }}" name="{{ $name }}" type="file" x-ref="file"
+            @change="refreshImage()"
+            {{ $attributes->whereDoesntStartWith('class')->class(['form-file form-control', 'hide' => $slot->isNotEmpty()]) }} />
 
         @if ($slot->isNotEmpty())
             <!-- PREVIEW AREA -->

@@ -2,7 +2,7 @@
     <x-form-label :label="$label" :required="$attributes->has('required')" :for="$attributes->get('id') ?: $id()" />
 
     <div x-data="{
-        value: {{ json_encode($value) }},
+        value: {{ $entangle($attributes) }},
         prefix: {{ json_encode($prefix) }},
         accept: 'image/*',
         folder: '{{ $folder }}',

@@ -24,6 +24,9 @@
         'btn-' . $attributes->get('color') => $attributes->has('color'),
         'btn-' . $attributes->get('size') => $attributes->has('size'),
         'btn-' . $attributes->get('variant') => $attributes->has('variant'),
+        'btn-square' => $attributes->has('square'),
+        'btn-pill' => $attributes->has('pill'),
+        'btn-block' => $attributes->has('full'),
     ])->except(['label']) !!} @if ($attributes->has('dropdown')) data-bs-toggle="dropdown" @endif>
 
     @if ($attributes->has('icon'))

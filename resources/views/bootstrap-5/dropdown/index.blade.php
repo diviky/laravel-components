@@ -5,6 +5,7 @@
     'label' => null,
     'inline' => true,
     'link' => null,
+    'toggle' => false,
 ])
 
 <div @class([
@@ -17,9 +18,10 @@
     @else
         <x-link data-bs-toggle="dropdown"
             {{ $attributes->merge(['href' => '#'])->class([
-                'btn-link' => !$attributes->has('class'),
+                //'btn-link' => !$attributes->has('class'),
+                'dropdown-toggle' => $toggle,
             ]) }}>
-            <x-icon :name="$icon" /> {{ $label }}
+            <x-icon :name="$icon" class="me-1" /> {{ $label }}
         </x-link>
     @endisset
 

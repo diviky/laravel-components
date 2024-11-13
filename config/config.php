@@ -51,6 +51,9 @@ return [
         'form-date-range' => [
             'view' => 'laravel-components::{framework}.form-date-range',
         ],
+        'form-icon' => [
+            'view' => 'laravel-components::{framework}.form-icon',
+        ],
         'form-time' => [
             'view' => 'laravel-components::{framework}.form-time',
         ],
@@ -124,6 +127,10 @@ return [
         'form-editor' => [
             'view' => 'laravel-components::{framework}.form-editor',
             'class' => Components\FormEditor::class,
+        ],
+        'form-signature' => [
+            'view' => 'laravel-components::{framework}.form-signature',
+            'class' => Components\FormSignature::class,
         ],
         'counter' => [
             'view' => 'laravel-components::{framework}.counter',

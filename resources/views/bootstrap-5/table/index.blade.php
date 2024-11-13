@@ -11,6 +11,8 @@
     'striped' => false,
     'height' => '50vh',
     'borderTop' => true,
+    'size' => null,
+    'compact' => false,
 ])
 
 @if ($responsive)
@@ -24,6 +26,7 @@
         'card-table' => $card,
         'table-striped' => $striped,
         'border-top' => $borderTop,
+        'table-sm' => $compact || $size == 'sm',
     ])->merge([
         'class' => 'table table-vcenter',
     ]) !!}>

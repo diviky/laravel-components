@@ -10,18 +10,20 @@
     'enabled' => true,
 ])
 
-<x-link :href="$href" :enabled="$enabled"
-    {{ $attributes->class(['active' => $active, 'disabled' => $disabled])->merge(['class' => 'dropdown-item']) }}>
-
-    @if ($icon)
-        <x-icon name="{{ $icon }}" />
-    @endif
-
+@if ($enabled)
     @if ($divider || $separator)
         <div class="dropdown-divider"></div>
     @endif
 
-    {{ $label }}
-    {{ $title }}
-    {!! $slot ?? null !!}
-</x-link>
+    <x-link :href="$href"
+        {{ $attributes->class(['active' => $active, 'disabled' => $disabled])->merge(['class' => 'dropdown-item']) }}>
+
+        @if ($icon)
+            <x-icon name="{{ $icon }}" />
+        @endif
+
+        {{ $label }}
+        {{ $title }}
+        {!! $slot ?? null !!}
+    </x-link>
+@endif

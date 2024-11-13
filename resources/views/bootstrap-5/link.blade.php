@@ -20,10 +20,14 @@
         'btn-square' => $attributes->has('square'),
         'btn-pill' => $attributes->has('pill'),
         'btn-block' => $attributes->has('full'),
-    ]) !!} @if ($modal) tooltip="modal" @endif
+        'text-danger' => !$button && $attributes->has('danger'),
+        'text-success' => !$button && $attributes->has('success'),
+        'text-info' => !$button && $attributes->has('info'),
+        'text-primary' => !$button && $attributes->has('primary'),
+        'text-warning' => !$button && $attributes->has('warning'),
+    ]) !!} {{ $extraAttributes ?? '' }} @if ($modal) tooltip="modal" @endif
     @if ($attributes->has('title')) data-toggle="tooltip" @endif
-    @if ($attributes->has('rm')) data-method="delete" data-delete @endif
-    @if ($attributes->has('delete')) data-method="delete" data-delete @endif
+    @if ($attributes->has('delete') || $attributes->has('rm')) data-method="delete" data-delete @endif
     @if ($attributes->has('dropdown')) data-bs-toggle="dropdown" @endif
     @if ($attributes->has('md')) data-styles="modal-md" @endif
     @if ($attributes->has('small')) data-size="small" @endif
@@ -31,9 +35,10 @@
     @if ($attributes->has('center')) data-position="center" @endif
     @if ($attributes->has('scrollable')) data-scrollable="true" @endif
     @if ($attributes->has('xl')) data-styles="modal-xl" @endif
+    @if ($attributes->has('async')) data-pjax="{{ $attributes->get('async') }}" @endif {{-- @if (!$attributes->has('sync') && !$attributes->has('dropdown') && !$modal) data-pjax="{{ $attributes->get('async') }}" @endif --}}
     @if ($attributes->has('id')) data-id="{{ $attributes->get('id') }}" @endif
     @if ($attributes->has('export')) ajax-export @endif @if ($slideover) tooltip="modal" @endif
-    @if ($external) target="_blank" @endif {{ $extraAttributes ?? '' }}>
+    @if ($external || $attributes->has('away')) target="_blank" @endif>
     @if ($icon)
         <x-icon :name="$icon" />
     @endif

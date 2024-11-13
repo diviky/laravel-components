@@ -1,4 +1,3 @@
-<button {{ $attributes->merge(['type' => 'button', 'class' => 'btn btn-cancel'])->except(['label']) }}
-    data-modal-dismiss>
+<x-form-button cancel :attributes="$attributes">
     {{ isset($label) && $label != null ? $label : ($slot->isNotEmpty() ? $slot : __('Submit')) }}
-</button>
+</x-form-button>

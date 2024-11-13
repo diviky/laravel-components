@@ -14,7 +14,7 @@ class FormChoices extends FormSelect
     use Renderer;
 
     public function __construct(
-        string $name,
+        string $name = '',
         string $label = '',
         public array|Collection|null $options = [],
         mixed $bind = null,
@@ -22,13 +22,15 @@ class FormChoices extends FormSelect
         bool $multiple = false,
         bool $showErrors = true,
         bool $floating = false,
+        public bool $inline = false,
         string $placeholder = '',
+        public string $size = '',
         public ?string $valueField = null,
         public ?string $labelField = null,
         public ?string $disabledField = null,
         public ?string $childrenField = null,
         string|HtmlString|array|Collection|null $extraAttributes = null,
-        public bool $searchable = true,
+        public bool $searchable = false,
         public bool $compact = false,
         public ?string $compactText = 'selected',
         public ?int $minChars = 2,
@@ -39,35 +41,22 @@ class FormChoices extends FormSelect
     ) {
 
         parent::__construct(
-            $name,
-            $label,
-            $options,
-            $bind,
-            $default,
-            $multiple,
-            $showErrors,
-            $floating,
-            $placeholder,
-            $valueField,
-            $labelField,
-            $disabledField,
-            $childrenField,
-            $extraAttributes,
+            name: $name,
+            label: $label,
+            options: $options,
+            bind: $bind,
+            default: $default,
+            multiple: $multiple,
+            showErrors: $showErrors,
+            floating: $floating,
+            inline: $inline,
+            placeholder: $placeholder,
+            size: $size,
+            valueField: $valueField,
+            labelField: $labelField,
+            disabledField: $disabledField,
+            childrenField: $childrenField,
+            extraAttributes: $extraAttributes,
         );
-    }
-
-    public function isReadonly(): bool
-    {
-        return $this->attributes->has('readonly') && $this->attributes->get('readonly') == true;
-    }
-
-    public function isRequired(): bool
-    {
-        return $this->attributes->has('required') && $this->attributes->get('required') == true;
-    }
-
-    public function isDisabled(): bool
-    {
-        return $this->attributes->has('disabled') && $this->attributes->get('disabled') == true;
     }
 }

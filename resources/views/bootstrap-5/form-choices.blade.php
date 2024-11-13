@@ -1,6 +1,9 @@
-<div class="form-group form-choices" x-data="{ focused: false, selection: {{ json_encode($selectedKey) }} }">
+<div @class([
+    'form-group' => !$inline,
+    'form-choices',
+]) x-data="{ focused: false, selection: {{ $entangle($attributes) }} }">
     <div @click.outside = "clear()" @keyup.esc = "clear()" x-data="{
-        id: $id(),
+        id: {{ json_encode($id()) }},
         options: {{ json_encode($options->values()) }},
         isSingle: {{ json_encode(!$multiple) }},
         isSearchable: {{ json_encode($searchable) }},
@@ -13,7 +16,7 @@
         fetchUrl: '{{ $attributes->get('data-fetch') }}',
         fetchMethod: '{{ $attributes->get('data-method', 'GET') }}',
         formData: {{ $attributes->get('form-data', '{}') }},
-    
+
         init() {
             this.fetch();
         },
@@ -50,6 +53,11 @@
                 this.selection == null || this.selection == '' :
                 this.selection.length == 0
         },
+        isNotSelected() {
+            return this.isSingle ?
+                this.selection == null || this.selection == '' :
+                this.selection.length == 0
+        },
         selectAll() {
             this.selection = this.options.map(i => i.{{ $valueField }})
         },
@@ -62,14 +70,14 @@
             this.isSingle ?
                 this.selection = null :
                 this.selection = []
-    
+
             this.dispatchChangeEvent({ value: this.selection })
         },
         focus() {
             if (this.isReadonly || this.isDisabled) {
                 return
             }
-    
+
             this.focused = true
             this.$refs.searchInput.focus()
         },
@@ -82,7 +90,7 @@
             if (this.isReadonly || this.isDisabled) {
                 return
             }
-    
+
             if (this.isSingle) {
                 this.selection = id
                 this.focused = false
@@ -92,7 +100,7 @@
                     this.selection = this.selection.filter(i => i != id) :
                     this.selection.push(id)
             }
-    
+
             this.dispatchChangeEvent({ value: this.selection })
             this.$refs.searchInput.focus()
         },
@@ -104,13 +112,12 @@
                     child.classList.remove('hidden')
                 }
             })
-    
+
             this.noResults = Array.from(this.$refs.choicesOptions.querySelectorAll('div > .hidden')).length ==
                 Array.from(this.$refs.choicesOptions.querySelectorAll('[search-value]')).length
         },
-        dispatchChangeEvent(details) {
-            this.$refs.searchInput.dispatchEvent(new CustomEvent('choice-changed', { details }))
-            this.$refs.searchInput.dispatchEvent(new Event('change'))
+        dispatchChangeEvent(detail) {
+            this.$refs.searchInput.dispatchEvent(new CustomEvent('change', { bubbles: true, detail }))
         }
     }">
         <!-- STANDARD LABEL -->
@@ -128,7 +135,8 @@
             @endisset
 
             <!-- SELECTED OPTIONS + SEARCH INPUT -->
-            <div @click="focus();" x-ref="container" {{ $attributes->class(['form-select']) }}>
+            <div @click="focus();" x-ref="container"
+                {{ $attributes->whereDoesntStartWith('wire:')->class(['form-select', 'form-select-sm' => $size == 'sm', 'form-select-lg' => $size == 'lg']) }}>
                 <!-- ICON  -->
                 @if (isset($icon))
                     <x-icon :name="$icon" class="choice-append" />
@@ -170,7 +178,8 @@
                     <input x-ref="searchInput" x-model="search" @keyup="lookup()" @input="focus()"
                         :required="isRequired && isSelectionEmpty" :readonly="isReadonly || isDisabled || !isSearchable"
                         :class="(isReadonly || isDisabled || !isSearchable || !focused) && 'w-2'"
-                        class="choice-input w-20" placeholder="{{ $attributes->get('placeholder') }}" />
+                        class="choice-input w-10" placeholder="{{ $attributes->get('placeholder') }}"
+                        {{ $attributes->except(['class']) }} />
 
                     <template x-if="!Array.isArray(selection)">
                         <input type="hidden" x-model="selection" name="{{ $name }}" />
@@ -216,23 +225,32 @@
                     {{ $noResultText }}
                 </div>
 
-                <div x-ref="choicesOptions" class="list-group">
+                <div x-ref="choicesOptions" class="p-1 border mt-1 rounded">
                     @foreach ($options as $option)
                         @if ($optionIsOptGroup($option))
                             <div label="{{ $optionLabel($option) }}">
                                 @foreach ($optionChildren($option) as $child)
                                     <div @click="toggle('{{ $optionValue($child) }}')"
-                                        :class="isActive('{{ $optionValue($child) }}') && 'active'"
-                                        search-value="{{ $optionLabel($child) }}" class="list-group-item">
+                                        search-value="{{ $optionLabel($child) }}"
+                                        class="list-group-item rounded p-2 d-flex align-items-center">
+                                        <x-icon :name="$optionProperty($option, 'icon')" class="me-1" />
                                         <span>{!! $optionLabel($child) !!}</span>
+                                        <span :class="!isActive('{{ $optionValue($child) }}') && 'hide'"
+                                            class="ms-auto">
+                                            <x-icon name="circle-check" class="text-success" />
+                                        </span>
                                     </div>
                                 @endforeach
                             </div>
                         @else
                             <div @click="toggle('{{ $optionValue($option) }}')"
-                                :class="isActive('{{ $optionValue($option) }}') && 'active'"
-                                search-value="{{ $optionLabel($option) }}" class="list-group-item">
+                                search-value="{{ $optionLabel($option) }}"
+                                class="list-group-item rounded p-2 d-flex align-items-center">
+                                <x-icon :name="$optionProperty($option, 'icon')" class="me-1" />
                                 <span>{!! $optionLabel($option) !!}</span>
+                                <span :class="!isActive('{{ $optionValue($option) }}') && 'hide'" class="ms-auto">
+                                    <x-icon name="circle-check" class="text-success" />
+                                </span>
                             </div>
                         @endif
                     @endforeach

@@ -1,3 +1,3 @@
-<button {{ $attributes->merge(['type' => 'button', 'class' => 'btn btn-primary'])->except(['label']) }}>
+<x-form-button primary :attributes="$attributes">
     {{ isset($label) && $label != null ? $label : ($slot->isNotEmpty() ? $slot : __('Submit')) }}
-</button>
+</x-form-button>
