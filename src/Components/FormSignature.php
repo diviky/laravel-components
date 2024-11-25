@@ -2,6 +2,7 @@
 
 namespace Diviky\LaravelComponents\Components;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 

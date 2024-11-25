@@ -50,6 +50,7 @@ class Link extends Component
         public bool $active = false,
         public ?string $icon = null,
         public bool $enabled = true,
+        public bool $disabled = false,
         public bool $external = false,
         public ?string $badge = null,
         public ?string $badgeClasses = null,

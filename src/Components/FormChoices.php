@@ -13,6 +13,8 @@ class FormChoices extends FormSelect
 {
     use Renderer;
 
+    public string $uuid;
+
     public function __construct(
         string $name = '',
         string $label = '',
@@ -27,10 +29,11 @@ class FormChoices extends FormSelect
         public string $size = '',
         public ?string $valueField = null,
         public ?string $labelField = null,
+        public ?string $imageField = null,
         public ?string $disabledField = null,
         public ?string $childrenField = null,
         string|HtmlString|array|Collection|null $extraAttributes = null,
-        public bool $searchable = false,
+        public bool $searchable = true,
         public bool $compact = false,
         public ?string $compactText = 'selected',
         public ?int $minChars = 2,
@@ -38,7 +41,20 @@ class FormChoices extends FormSelect
         public ?string $allowAllText = 'Select all',
         public ?string $removeAllText = 'Remove all',
         public ?string $noResultText = 'No results found.',
+
+        public ?string $debounce = '100ms',
+        public ?string $searchFunction = null,
+
+        // slots
+        public mixed $item = null,
+        public mixed $selection = null,
     ) {
+
+        $this->uuid = uuid();
+
+        if ($searchFunction) {
+            $this->searchable = true;
+        }
 
         parent::__construct(
             name: $name,

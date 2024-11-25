@@ -1,14 +1,14 @@
 <button {!! $attributes->merge([
-        'class' => 'btn',
         'type' => 'button',
         'title' => $attributes->has('title'),
     ])->class([
+        'btn',
         'dropdown-toggle' => $attributes->has('dropdown'),
         'disabled' => $attributes->has('disabled'),
         'btn-sm' => $attributes->has('sm') || $attributes->has('small'),
         'btn-lg' => $attributes->has('lg') || $attributes->has('large'),
         'btn-link' => $attributes->has('link'),
-        'btn-' . $outline . 'primary' => $attributes->has('primary') && !$attributes->has('link'),
+        'btn-' . $outline . 'primary' => $attributes->has('primary'),
         'btn-' . $outline . 'secondary' => $attributes->has('light'),
         'btn-' . $outline . 'success' => $attributes->has('success'),
         'btn-' . $outline . 'warning' => $attributes->has('warning'),
@@ -20,13 +20,10 @@
         'btn-square' => $attributes->has('square'),
         'btn-pill' => $attributes->has('pill'),
         'btn-block' => $attributes->has('full'),
-        'btn-primary' => !$attributes->has('class') && !$attributes->has('link') && !$attributes->has('variant'),
+        'btn-bold' => $attributes->has('bold'),
         'btn-' . $attributes->get('color') => $attributes->has('color'),
         'btn-' . $attributes->get('size') => $attributes->has('size'),
         'btn-' . $attributes->get('variant') => $attributes->has('variant'),
-        'btn-square' => $attributes->has('square'),
-        'btn-pill' => $attributes->has('pill'),
-        'btn-block' => $attributes->has('full'),
     ])->except(['label']) !!} @if ($attributes->has('dropdown')) data-bs-toggle="dropdown" @endif>
 
     @if ($attributes->has('icon'))

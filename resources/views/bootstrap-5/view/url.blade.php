@@ -3,6 +3,7 @@
     'icon' => null,
     'label' => null,
     'copy' => false,
+    'target' => '_blank',
     'settings' => [],
 ])
 
@@ -10,7 +11,7 @@
     <span {{ $attributes }}>
         <x-icon :name="$icon" />
         {!! $label !!}
-        <a href="{{ $value }}" target="_blank">{{ $value }}</a>
+        <a href="{{ $value }}" target="{{ $target }}">{{ $value }}</a>
         @if ($copy)
             <x-icon name="copy" class="cursor-pointer" title="copy to clipboard" data-clipboard="{{ $value }}" />
         @endif

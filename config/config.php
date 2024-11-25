@@ -274,6 +274,15 @@ return [
         'dropdown' => [
             'view' => 'laravel-components::{framework}.dropdown.index',
         ],
+        'dropdown.menu' => [
+            'view' => 'laravel-components::{framework}.dropdown.menu',
+        ],
+        'dropdown.action' => [
+            'view' => 'laravel-components::{framework}.dropdown.action',
+        ],
+        'dropdown.toggle' => [
+            'view' => 'laravel-components::{framework}.dropdown.toggle',
+        ],
         'dropdown-item' => [
             'view' => 'laravel-components::{framework}.dropdown.item',
             'alias' => 'dropdown.item',
@@ -362,6 +371,9 @@ return [
         ],
         'view.team' => [
             'view' => 'laravel-components::{framework}.view.team',
+        ],
+        'view.array' => [
+            'view' => 'laravel-components::{framework}.view.array',
         ],
         'modal' => [
             'view' => 'laravel-components::{framework}.modal.index',

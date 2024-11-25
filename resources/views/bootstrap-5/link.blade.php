@@ -8,8 +8,8 @@
         'btn-sm' => $attributes->has('sm'),
         'btn-lg' => $attributes->has('lg'),
         'btn-link' => $attributes->has('link'),
-        'disabled' => $attributes->has('disabled'),
-        'btn-' . $outline . 'primary' => ($button || $attributes->has('primary')) && !$attributes->has('link'),
+        'disabled' => $disabled,
+        'btn-' . $outline . 'primary' => $attributes->has('primary'),
         'btn-' . $outline . 'secondary' => $attributes->has('light'),
         'btn-' . $outline . 'success' => $attributes->has('success'),
         'btn-' . $outline . 'warning' => $attributes->has('warning'),
@@ -38,7 +38,8 @@
     @if ($attributes->has('async')) data-pjax="{{ $attributes->get('async') }}" @endif {{-- @if (!$attributes->has('sync') && !$attributes->has('dropdown') && !$modal) data-pjax="{{ $attributes->get('async') }}" @endif --}}
     @if ($attributes->has('id')) data-id="{{ $attributes->get('id') }}" @endif
     @if ($attributes->has('export')) ajax-export @endif @if ($slideover) tooltip="modal" @endif
-    @if ($external || $attributes->has('away')) target="_blank" @endif>
+    @if ($external || $attributes->has('away')) target="_blank" @endif
+    @if ($disabled) disabled="disabled" @endif>
     @if ($icon)
         <x-icon :name="$icon" />
     @endif

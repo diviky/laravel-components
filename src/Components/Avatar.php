@@ -33,7 +33,6 @@ class Avatar extends Component
 
         $this->label = $label;
         $this->image = $image;
-        $this->size = $size;
         $this->stacked = $stacked;
     }
 

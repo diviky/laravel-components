@@ -5,7 +5,7 @@
     @endisset
 
     @if ($close)
-        <button type="button" class="close modal-close" data-dismiss="modal" data-bs-dismiss="modal"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     @endif
 
     {!! $slot !!}

@@ -16,7 +16,7 @@
     @endif
 
     <x-link :href="$href"
-        {{ $attributes->class(['active' => $active, 'disabled' => $disabled])->merge(['class' => 'dropdown-item']) }}>
+        {{ $attributes->class(['active' => $active, 'disabled' => $disabled])->merge(['class' => 'dropdown-item d-flex']) }}>
 
         @if ($icon)
             <x-icon name="{{ $icon }}" />

@@ -24,7 +24,8 @@
 
         @if (!empty($value['avatar']))
             <span
-                {{ $attributes->merge(['class' => 'avatar mr-1'])->class([
+                {{ $attributes->class([
+                    'avatar mr-1',
                     'rounded-circle' => $shape == 'circle',
                     'rounded' => $shape == 'rounded',
                     'avatar-' . $size => $size,
@@ -33,21 +34,22 @@
             </span>
         @else
             <span
-                {{ $attributes->merge(['class' => 'avatar mr-1'])->class([
+                {{ $attributes->class([
+                    'avatar mr-1',
                     'rounded-circle' => $shape == 'circle',
                     'rounded' => $shape == 'rounded',
                     'avatar-' . $size => $size,
                 ]) }}>
-                {{ $value['name'] ?? 'A' }}
+                {{ $value['label'] ?? 'A' }}
             </span>
         @endif
 
         @if (!$compact)
-            {!! $value['name'] !!}
+            {{ $value['name'] }}
         @endif
 
         @if ($copy)
-            <x-icon name="copy" class="cursor-pointer" title="copy to clipboard" data-clipboard="{{ $value }}" />
+            <x-icon name="copy" class="cursor-pointer" title="copy to clipboard" data-clipboard="{{ $value['name'] }}" />
         @endif
     </span>
 @endif
