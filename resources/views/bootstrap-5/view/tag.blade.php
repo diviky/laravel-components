@@ -19,11 +19,7 @@
             $color = $value[$colorField] ?? $color;
         @endphp
 
-        <span
-            {{ $attributes->class([
-                'badge' => true,
-                'bg-' . ($color = $color),
-            ]) }}>
+        <span {{ $attributes->class(['badge', 'badge-outline', 'text-' . $color => $color]) }}>
 
             <x-icon :name="$icon" />
             {!! $label !!}
@@ -36,11 +32,7 @@
             @endif
         </span>
     @else
-        <span
-            {{ $attributes->class([
-                'badge' => true,
-                'badge-' . ($color = $color),
-            ]) }}>
+        <span {{ $attributes->class(['badge', 'text-' . $color => $color]) }}>
 
             <x-icon :name="$icon" />
             {!! $label !!}

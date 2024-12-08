@@ -405,5 +405,15 @@ return [
             'view' => 'laravel-components::{framework}.form-rating',
             'class' => Components\FormRating::class,
         ],
+        'breadcrumb' => [
+            'view' => 'laravel-components::{framework}.breadcrumb.index',
+        ],
+        'breadcrumb.item' => [
+            'view' => 'laravel-components::{framework}.breadcrumb.item',
+        ],
+        'container' => [
+            'view' => 'laravel-components::{framework}.container',
+            'class' => Components\Container::class,
+        ],
     ],
 ];

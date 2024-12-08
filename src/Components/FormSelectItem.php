@@ -29,7 +29,7 @@ class FormSelectItem extends Component
         string $label = '',
         $value = 1,
         $bind = null,
-        bool $default = false,
+        ?bool $default = false,
         bool $showErrors = false,
         public string $type = 'radio',
         HtmlString|array|string|Collection|null $extraAttributes = null,
@@ -52,7 +52,7 @@ class FormSelectItem extends Component
             if (! is_null($boundValue)) {
                 $this->checked = $boundValue == $this->value;
             } else {
-                $this->checked = $default;
+                $this->checked = $default ?? false;
             }
         }
     }

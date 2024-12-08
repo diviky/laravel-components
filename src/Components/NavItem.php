@@ -15,10 +15,11 @@ class NavItem extends Component
         public ?string $icon = null,
         public ?string $link = null,
         public ?string $route = null,
-        public bool $external = false,
+        public bool $away = false,
+        public bool $tab = false,
         public ?string $badge = null,
         public ?string $badgeClasses = null,
-        public bool $active = false,
+        public ?bool $active = null,
         public bool $separator = false,
         public bool $enabled = true,
         public ?bool $exact = false,
@@ -33,7 +34,7 @@ class NavItem extends Component
 
     public function routeMatches(): bool
     {
-        if ($this->link == null) {
+        if (is_null($this->link) || ! is_null($this->active)) {
             return false;
         }
 

@@ -15,7 +15,7 @@
     'compact' => false,
 ])
 
-@if ($responsive)
+@if ($responsive && $height)
     <div class="table-responsive" style="min-height: {{ $height }} ">
 @endif
 

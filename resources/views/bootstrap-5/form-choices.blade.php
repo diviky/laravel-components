@@ -12,7 +12,7 @@
         isRequired: {{ json_encode($isRequired()) }},
         minChars: {{ $minChars }},
         noResults: false,
-        search: '',
+        keyword: '',
         fetchUrl: '{{ $attributes->get('data-fetch') }}',
         fetchMethod: '{{ $attributes->get('data-method', 'GET') }}',
         formData: {{ $attributes->get('form-data', '{}') }},
@@ -75,7 +75,7 @@
         },
         clear() {
             this.focused = false;
-            this.search = ''
+            this.keyword = ''
             this.$refs.searchInput.value = ''
         },
         reset() {
@@ -107,7 +107,7 @@
             if (this.isSingle) {
                 this.selection = id
                 this.focused = false
-                this.search = ''
+                this.keyword = ''
             } else {
                 this.selection.includes(id) ?
                     this.selection = this.selection.filter(i => i != id) :
@@ -122,7 +122,7 @@
         },
         lookup() {
             Array.from(this.$refs.choicesOptions.children).forEach(child => {
-                if (!child.getAttribute('search-value').match(new RegExp(this.search, 'i'))) {
+                if (!child.getAttribute('search-value').match(new RegExp(this.keyword, 'i'))) {
                     child.classList.add('hidden')
                 } else {
                     child.classList.remove('hidden')
@@ -164,6 +164,7 @@
             'input-group-sm' => (isset($prepend) || isset($append)) && $size == 'sm',
             'input-group-lg' => (isset($prepend) || isset($append)) && $size == 'lg',
             'input-icon' => isset($icon),
+            'position-relative',
         ])>
 
             @isset($prepend)
@@ -217,7 +218,7 @@
                         :required="isRequired && isSelectionEmpty" :readonly="isReadonly || isDisabled || !isSearchable"
                         :class="(isReadonly || isDisabled || !isSearchable || !focused) && 'w-2 ps-2'"
                         class="choice-input w-20" placeholder="{{ $attributes->get('placeholder') }}"
-                        @if ($searchable && $searchFunction) @keydown.debounce.{{ $debounce }}="search($el.value, $event)" @else x-model="search" @keyup="lookup()" @endif />
+                        @if ($searchable && $searchFunction) @keydown.debounce.{{ $debounce }}="search($el.value, $event)" @else x-model="keyword" @keyup="lookup()" @endif />
 
                     <template x-if="!Array.isArray(selection)">
                         <input type="hidden" x-model="selection" name="{{ $name }}" />

@@ -28,20 +28,22 @@
     ]) !!} {{ $extraAttributes ?? '' }} @if ($modal) tooltip="modal" @endif
     @if ($attributes->has('title')) data-toggle="tooltip" @endif
     @if ($attributes->has('delete') || $attributes->has('rm')) data-method="delete" data-delete @endif
-    @if ($attributes->has('dropdown')) data-bs-toggle="dropdown" @endif
-    @if ($attributes->has('md')) data-styles="modal-md" @endif
+    @if ($attributes->has('dropdown')) data-bs-toggle="dropdown" @endif {{-- Model related attributes --}}
+    @if ($attributes->has('md')) data-size="medium" @endif
     @if ($attributes->has('small')) data-size="small" @endif
     @if ($attributes->has('large')) data-size="large" @endif
+    @if ($attributes->has('xl')) data-size="large" @endif
     @if ($attributes->has('center')) data-position="center" @endif
-    @if ($attributes->has('scrollable')) data-scrollable="true" @endif
-    @if ($attributes->has('xl')) data-styles="modal-xl" @endif
-    @if ($attributes->has('async')) data-pjax="{{ $attributes->get('async') }}" @endif {{-- @if (!$attributes->has('sync') && !$attributes->has('dropdown') && !$modal) data-pjax="{{ $attributes->get('async') }}" @endif --}}
+    @if ($attributes->has('right')) data-position="right" @endif
+    @if ($attributes->has('position')) data-position="{{ $attributes->get('position') }}" @endif
+    @if ($attributes->has('scrollable')) data-scrollable="true" @endif {{-- Model related attributes end --}}
+    @if ($attributes->has('turbo')) data-pjax @endif
     @if ($attributes->has('id')) data-id="{{ $attributes->get('id') }}" @endif
     @if ($attributes->has('export')) ajax-export @endif @if ($slideover) tooltip="modal" @endif
     @if ($external || $attributes->has('away')) target="_blank" @endif
     @if ($disabled) disabled="disabled" @endif>
     @if ($icon)
-        <x-icon :name="$icon" />
+        <x-icon :name="$icon" class="mr-1" />
     @endif
     {!! $slot !!}
     @if ($badge)
