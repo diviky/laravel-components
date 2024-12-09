@@ -7,7 +7,7 @@
             'active' => $active || $routeMatches(),
             'nav-link' => $tab,
         ])>
-        <x-icon :name="$icon" />
+        <x-icon :name="$icon" class="me-1" />
         @if ($title || $slot->isNotEmpty())
             @if ($title)
                 {{ $title }}

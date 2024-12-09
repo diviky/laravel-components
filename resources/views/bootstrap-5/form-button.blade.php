@@ -27,7 +27,7 @@
     ])->except(['label']) !!} @if ($attributes->has('dropdown')) data-bs-toggle="dropdown" @endif>
 
     @if ($attributes->has('icon'))
-        <x-icon :name="$attributes->get('icon')" />
+        <x-icon :name="$attributes->get('icon')" class="me-1" />
     @endif
 
     {{ isset($label) ? $label : $slot }}

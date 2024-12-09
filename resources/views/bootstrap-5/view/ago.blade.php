@@ -8,7 +8,7 @@
 
 @if ($value)
     <span {{ $attributes }}>
-        <x-icon :name="$icon" />
+        <x-icon :name="$icon" class="me-1" />
         {!! $label !!}
         {{ ago($value) }}
         @if ($copy)

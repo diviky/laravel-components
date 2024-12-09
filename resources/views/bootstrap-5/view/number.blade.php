@@ -15,7 +15,7 @@
 
 @isset($value)
     <span {{ $attributes }}>
-        <x-icon :name="$icon" />
+        <x-icon :name="$icon" class="me-1"/>
         {!! $label !!}
         @isset($settings['format'])
             @if ($settings['format'] == 'percent')

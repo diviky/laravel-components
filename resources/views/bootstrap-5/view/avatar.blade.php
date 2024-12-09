@@ -16,7 +16,7 @@
         'd-flex' => true,
         'align-items-center' => true,
     ]) }}>
-        <x-icon :name="$icon" />
+        <x-icon :name="$icon" class="me-1" />
         {!! $label !!}
 
         @if (!empty($settings['image']))

@@ -8,7 +8,7 @@
 
 @if ($value)
     <span {{ $attributes->merge(['class' => 'view-date']) }}>
-        <x-icon :name="$icon" />
+        <x-icon :name="$icon" class="me-1" />
         {!! $label !!}
         {{ carbon($value, 'M d, Y') }}
         @if ($copy)

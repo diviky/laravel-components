@@ -19,7 +19,7 @@
         'd-flex' => false,
         'align-items-center' => false,
     ]) }}>
-        <x-icon :name="$icon" />
+        <x-icon :name="$icon" class="me-1" />
         {!! $label !!}
 
         @if (!empty($value['avatar']))

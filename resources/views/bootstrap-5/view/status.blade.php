@@ -6,7 +6,7 @@
     'settings' => [],
 ])
 
-<x-icon :name="$icon" />
+<x-icon :name="$icon" class="me-1" />
 {!! $label !!}
 @if ($value == 1)
     <span {{ $attributes->merge(['class' => 'badge badge-success']) }}>Active</span>

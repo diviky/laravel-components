@@ -8,7 +8,7 @@
 
 @if ($value && (is_array($value) || $value instanceof \ArrayAccess))
     <span {{ $attributes }}>
-        <x-icon :name="$icon" />
+        <x-icon :name="$icon" class="me-1" />
         {!! $label !!}
 
         @if (!empty($value['thumb']))

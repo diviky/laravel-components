@@ -43,7 +43,7 @@
     @if ($external || $attributes->has('away')) target="_blank" @endif
     @if ($disabled) disabled="disabled" @endif>
     @if ($icon)
-        <x-icon :name="$icon" class="mr-1" />
+        <x-icon :name="$icon" class="me-1" />
     @endif
     {!! $slot !!}
     @if ($badge)

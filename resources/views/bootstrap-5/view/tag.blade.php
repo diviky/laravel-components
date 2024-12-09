@@ -21,7 +21,7 @@
 
         <span {{ $attributes->class(['badge', 'badge-outline', 'text-' . $color => $color]) }}>
 
-            <x-icon :name="$icon" />
+            <x-icon :name="$icon" class="me-1" />
             {!! $label !!}
 
             {{ $value[$valueField] }}
@@ -34,7 +34,7 @@
     @else
         <span {{ $attributes->class(['badge', 'text-' . $color => $color]) }}>
 
-            <x-icon :name="$icon" />
+            <x-icon :name="$icon" class="me-1" />
             {!! $label !!}
             {{ $value }}
             @if ($copy)
