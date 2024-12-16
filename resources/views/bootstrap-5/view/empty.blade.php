@@ -1,3 +1,7 @@
+@props([
+    'title' => 'No results found',
+    'subtitle' => "Try adjusting your search or filter to find what you're looking for.",
+])
 <div class="empty">
     <div class="empty-img">
         <svg class="img" xmlns="http://www.w3.org/2000/svg" height="100" fill="none" viewBox="0 0 800 600">
@@ -136,9 +140,9 @@
                 fill="black" opacity="0.1"></path>
         </svg>
     </div>
-    <p class="empty-title">No results found</p>
+    <p class="empty-title">{{ $title }}</p>
     <p class="empty-subtitle text-secondary">
-        Try adjusting your search or filter to find what you're looking for.
+        {{ $subtitle }}
     </p>
     <div class="empty-action">
         {!! $slot !!}

@@ -1,7 +1,7 @@
 <div class="form-group">
     <x-form-label :label="$label" :required="$attributes->has('required')" :title="$attributes->get('title')" :for="$attributes->get('id') ?: $id()" />
 
-    <div class="pt-5" x-data="{
+    <div class="pt-5 ms-3" x-data="{
         rating: {{ intval($value) }},
         current: {{ intval($value) }},
         size: {{ intval($rating) }},
