@@ -1,3 +1,1 @@
-<div {{ $attributes->merge(['class' => 'alert alert-warning text-sm max-w-xl']) }}>
-    {{ $slot }}
-</div>
+<x-alert type="warning" :attributes="$attributes">{!! $slot !!}</x-alert>

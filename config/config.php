@@ -135,6 +135,9 @@ return [
         'counter' => [
             'view' => 'laravel-components::{framework}.counter',
         ],
+        'alert' => [
+            'view' => 'laravel-components::{framework}.alert.index',
+        ],
         'alert-error' => [
             'view' => 'laravel-components::{framework}.alert.error',
         ],
