@@ -4,7 +4,7 @@
 
 <x-form-input :extra-attributes="$extraAttributes" :attributes="$attributes->merge(['type' => 'text'])">
     @slot('icon')
-        <i class="ti ti-search"></i>
+        <x-icon name="search" />
     @endslot
     {!! $slot !!}
 </x-form-input>

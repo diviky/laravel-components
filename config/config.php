@@ -418,5 +418,9 @@ return [
             'view' => 'laravel-components::{framework}.container',
             'class' => Components\Container::class,
         ],
+        'spotlight' => [
+            'view' => 'laravel-components::{framework}.spotlight',
+            'class' => Components\Spotlight::class,
+        ],
     ],
 ];
