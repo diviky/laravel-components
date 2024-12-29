@@ -35,6 +35,7 @@
     @if ($attributes->has('xl')) data-size="large" @endif
     @if ($attributes->has('center')) data-position="center" @endif
     @if ($attributes->has('right')) data-position="right" @endif
+    @if ($attributes->has('size')) data-size="{{ $attributes->get('size') }}" @endif
     @if ($attributes->has('position')) data-position="{{ $attributes->get('position') }}" @endif
     @if ($attributes->has('scrollable')) data-scrollable="true" @endif {{-- Model related attributes end --}}
     @if ($attributes->has('turbo')) data-pjax @endif

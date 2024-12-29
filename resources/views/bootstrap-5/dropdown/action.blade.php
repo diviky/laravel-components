@@ -26,11 +26,13 @@
                 'dropdown-toggle' => $toggle,
             ]) }}>
             @if ($vertical)
-                <x-icon name="dots-vertical" class="me-1" />
+                <x-icon name="dots-vertical" />
             @else
-                <x-icon :name="$icon" class="me-1" />
+                <x-icon :name="$icon" />
             @endif
-            {{ $label }}
+            @if ($label)
+                <span class="ps-1">{{ $label }}</span>
+            @endif
         </x-link>
     @endisset
 
