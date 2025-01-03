@@ -19,11 +19,13 @@ class Avatar extends Component
      */
     public function __construct(
         ?string $label = null,
+        ?string $name = null,
         ?string $image = '',
         ?string $color = null,
         public ?string $size = null,
         bool $stacked = false
     ) {
+        $label = ! empty($name) ? $name : $label;
         $this->color = $color ?? $this->getColor($label);
 
         if (isset($label)) {

@@ -38,7 +38,7 @@
     @if ($attributes->has('size')) data-size="{{ $attributes->get('size') }}" @endif
     @if ($attributes->has('position')) data-position="{{ $attributes->get('position') }}" @endif
     @if ($attributes->has('scrollable')) data-scrollable="true" @endif {{-- Model related attributes end --}}
-    @if ($attributes->has('turbo')) data-pjax @endif
+    @if ($attributes->has('turbo')) data-pjax @endif @if ($attributes->has('post')) data-post @endif
     @if ($attributes->has('id')) data-id="{{ $attributes->get('id') }}" @endif
     @if ($attributes->has('export')) ajax-export @endif @if ($slideover) tooltip="modal" @endif
     @if ($external || $attributes->has('away')) target="_blank" @endif

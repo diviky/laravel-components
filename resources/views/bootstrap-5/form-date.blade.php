@@ -16,6 +16,6 @@
     {!! $slot !!}
 
     @slot('icon')
-        <i class="{{ $attributes->has('icon') ? $attributes->get('icon') : 'ti ti-calendar-month' }}"></i>
+        {{ $attributes->has('icon') ? $attributes->get('icon') : 'calendar-month' }}
     @endslot
 </x-form-input>
