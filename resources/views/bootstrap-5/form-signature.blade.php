@@ -44,7 +44,7 @@
 }" wire:ignore class="select-none touch-none">
     <div class="form-group h-auto">
         @if ($label)
-            <x-form-label :label="$label" :required="$attributes->has('required')" :for="$attributes->get('id') ?: $id()" />
+            <x-form-label :label="$label" :required="$isRequired()" :for="$attributes->get('id') ?: $id()" />
         @endif
 
         <div

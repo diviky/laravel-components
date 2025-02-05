@@ -1,6 +1,6 @@
 @isset($label)
     <div class="form-group">
-        <x-form-label :label="$label" :required="$attributes->has('required')" />
+        <x-form-label :label="$label" :required="$isRequired()" />
     @endisset
     <div {!! $attributes->except(['extra-attributes'])->merge([
             'class' => 'form-selectgroup',

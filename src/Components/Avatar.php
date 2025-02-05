@@ -25,7 +25,7 @@ class Avatar extends Component
         public ?string $size = null,
         bool $stacked = false
     ) {
-        $label = ! empty($name) ? $name : $label;
+        $label = isset($name) && ! empty($name) ? $name : $label;
         $this->color = $color ?? $this->getColor($label);
 
         if (isset($label)) {

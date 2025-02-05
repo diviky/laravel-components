@@ -60,7 +60,7 @@
 }" @keydown.escape="clear()">
     <div class="form-group">
         @if ($label)
-            <x-form-label :label="$label" :required="$attributes->has('required')" :for="$attributes->get('id') ?: $id()" />
+            <x-form-label :label="$label" :required="$isRequired()" :for="$attributes->get('id') ?: $id()" />
         @endif
 
         <!-- TAGS + SEARCH INPUT -->

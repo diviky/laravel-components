@@ -24,6 +24,7 @@ class FormMarkdown extends Component
         public ?string $prefix = '',
         public ?string $disk = '',
         public ?string $folder = 'assets',
+        public array $settings = [],
     ) {
         $this->name = $name;
         $this->label = $label;
@@ -36,6 +37,7 @@ class FormMarkdown extends Component
 
         $this->setValue($name, $bind, $default, $language);
         $this->setExtraAttributes($extraAttributes);
+        $this->mergeAttributes($settings);
     }
 
     public function setup(): string

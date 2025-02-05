@@ -47,7 +47,7 @@
         console.log('value:', this.value)
     }
 }">
-    <x-form-label :label="$label" :required="$attributes->has('required')" :title="$attributes->get('title')" :for="$attributes->get('id') ?: $id()" />
+    <x-form-label :label="$label" :required="$isRequired()" :title="$attributes->get('title')" :for="$attributes->get('id') ?: $id()" />
     <div class="row g-2 pt-2" id="pin{{ $id }}">
         @for ($i = 0; $i < $size; $i++)
             <input type="text" id="{{ $id() }}-pin-{{ $i }}"

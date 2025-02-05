@@ -15,36 +15,42 @@ class FormFile extends Component
 
     public string $label;
 
+    public mixed $value;
+
     public string $accept;
 
     /**
      * Create a new component instance.
      *
-     * @param  null|mixed  $bind
-     * @param  null|mixed  $default
      * @param  null|mixed  $language
      */
     public function __construct(
-        string $name,
+        string $name = '',
         string $label = '',
-        $bind = null,
-        $default = null,
-        $language = null,
+        public string $type = 'text',
+        public string $size = '',
+        mixed $bind = null,
+        mixed $default = null,
+        public ?string $language = null,
         bool $showErrors = true,
+        public bool $floating = false,
+        public bool $inline = false,
+        string|HtmlString|array|Collection|null $extraAttributes = null,
+        public ?array $settings = [],
         string $accept = '*.*',
-        HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->name = $name;
         $this->label = $label;
         $this->showErrors = $showErrors;
-        $this->setExtraAttributes($extraAttributes);
 
         if (isset($language)) {
             $this->name = "{$name}[{$language}]";
         }
 
         $this->accept = $this->convertToMimeTypes($accept);
+
         $this->setValue($name, $bind, $default, $language);
+        $this->setExtraAttributes($extraAttributes);
     }
 
     protected function convertToMimeTypes(string $accept): string

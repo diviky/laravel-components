@@ -1,5 +1,5 @@
 <div class="form-group">
-    <x-form-label :label="$label" :required="$attributes->has('required')" :for="$attributes->get('id') ?: $id()" />
+    <x-form-label :label="$label" :required="$isRequired()" :for="$attributes->get('id') ?: $id()" />
 
     <div x-data="{
         value: {{ $entangle($attributes) }},
@@ -22,13 +22,13 @@
                 @if ($attributes->get('disabled')) content_style: 'body { opacity: 50% }',
                 @else
                 content_style: 'img { max-width: 100%; height: auto; }', @endif
-
+    
                 setup: function(editor) {
                     editor.on('keyup', (e) => that.value = editor.getContent())
                     editor.on('change', (e) => that.value = editor.getContent())
                     editor.on('init', () => editor.setContent(that.value ?? ''))
                     editor.on('OpenWindow', (e) => tinymce.activeEditor.topLevelWindow = e.dialog)
-
+    
                     // Handles a case where people try to change contents on the fly from Livewire methods
                     $watch('value', function(newValue) {
                         if (newValue !== editor.getContent()) {
@@ -41,12 +41,12 @@
                     const input = document.createElement('input');
                     input.setAttribute('type', 'file');
                     input.click();
-
+    
                     tinymce.activeEditor.topLevelWindow.block('');
-
+    
                     input.addEventListener('change', (e) => {
                         const file = e.target.files[0];
-
+    
                         fetch(that.prefix + '/upload/signed', {
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -76,7 +76,7 @@
                                 } else {
                                     formData = file;
                                 }
-
+    
                                 fetch(response.attributes.action, {
                                         method: response.attributes.method,
                                         body: formData,

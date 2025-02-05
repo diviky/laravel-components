@@ -16,7 +16,7 @@
         fetchUrl: '{{ $attributes->get('data-fetch') }}',
         fetchMethod: '{{ $attributes->get('data-method', 'GET') }}',
         formData: {{ $attributes->get('form-data', '{}') }},
-
+    
         init() {
             this.fetch();
             // Fix weird issue when navigating back
@@ -49,14 +49,14 @@
             if (this.isSingle) {
                 return this.options.filter(i => i.{{ $valueField }} == this.selection);
             }
-
+    
             return this.selection.map(i => this.options.filter(o => o.{{ $valueField }} == i)[0])
         },
         get noResults() {
             if (!this.isSearchable || this.$refs.searchInput.value == '') {
                 return false
             }
-
+    
             return this.isSingle ?
                 (this.selection && this.options.length == 1) || (!this.selection && this.options.length == 0) :
                 this.options.length <= this.selection.length
@@ -83,14 +83,14 @@
             this.isSingle ?
                 this.selection = '' :
                 this.selection = []
-
+    
             this.dispatchChangeEvent({ value: this.selection })
         },
         focus() {
             if (this.isReadonly || this.isDisabled) {
                 return
             }
-
+    
             this.focused = true
             this.$refs.searchInput.focus()
         },
@@ -103,7 +103,7 @@
             if (this.isReadonly || this.isDisabled) {
                 return
             }
-
+    
             if (this.isSingle) {
                 this.selection = id
                 this.focused = false
@@ -113,7 +113,7 @@
                     this.selection = this.selection.filter(i => i != id) :
                     this.selection.push(id)
             }
-
+    
             this.dispatchChangeEvent({ value: this.selection })
             this.$refs.searchInput.value = ''
             if (!keepOpen) {
@@ -128,7 +128,7 @@
                     child.classList.remove('hidden')
                 }
             })
-
+    
             this.noResults = Array.from(this.$refs.choicesOptions.querySelectorAll('div > .hidden')).length ==
                 Array.from(this.$refs.choicesOptions.querySelectorAll('[search-value]')).length
         },
@@ -136,12 +136,12 @@
             if (!value || value.length < this.minChars) {
                 return
             }
-
+    
             // Prevent search for this keys
             if (event && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Shift', 'CapsLock', 'Tab'].includes(event.key)) {
                 return;
             }
-
+    
             @if($searchFunction)
             // Call search function from parent component
             // `search(value)` or `search(value, extra1, extra2 ...)`
@@ -149,14 +149,14 @@
                 ? preg_replace('/\((.*?)\)/', '(value, $1)', $searchFunction)
                 : $searchFunction . '(value)' }}
             @endif
-
+    
         },
         dispatchChangeEvent(detail) {
             this.$refs.searchInput.dispatchEvent(new CustomEvent('change', { bubbles: true, detail }))
         }
     }">
         <!-- STANDARD LABEL -->
-        <x-form-label :label="$label" :required="$attributes->has('required')" :for="$attributes->get('id') ?: $id()" />
+        <x-form-label :label="$label" :required="$isRequired()" :for="$attributes->get('id') ?: $id()" />
 
         <div @class([
             'input-group' => isset($prepend) || isset($append),
@@ -215,10 +215,14 @@
 
                     <!-- INPUT SEARCH -->
                     <input x-ref="searchInput" @keydown.arrow-down.prevent="focus()" @input="focus()"
-                        :required="isRequired && isSelectionEmpty" :readonly="isReadonly || isDisabled || !isSearchable"
+                        :readonly="isReadonly || isDisabled || !isSearchable"
                         :class="(isReadonly || isDisabled || !isSearchable || !focused) && 'w-2 ps-2'"
                         class="choice-input w-20" placeholder="{{ $attributes->get('placeholder') }}"
                         @if ($searchable && $searchFunction) @keydown.debounce.{{ $debounce }}="search($el.value, $event)" @else x-model="keyword" @keyup="lookup()" @endif />
+
+                    <!-- dummy input for javascript validation -->
+                    <input :class="(isSelectionEmpty) && 'validatehidden'" :required="isRequired && isSelectionEmpty"
+                        type="hidden" />
 
                     <template x-if="!Array.isArray(selection)">
                         <input type="hidden" x-model="selection" name="{{ $name }}" />

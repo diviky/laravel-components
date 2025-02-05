@@ -75,7 +75,7 @@
     {{ $attributes->whereStartsWith('class') }}>
     <div class="form-group">
 
-        <x-form-label :label="$label" :required="$attributes->has('required')" :for="$attributes->get('id') ?: $id()" />
+        <x-form-label :label="$label" :required="$isRequired()" :for="$attributes->get('id') ?: $id()" />
 
         <!-- PROGRESS BAR  -->
         @if (!$hideProgress && $slot->isEmpty())

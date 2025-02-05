@@ -48,7 +48,13 @@ return [
         'form-date-time' => [
             'view' => 'laravel-components::{framework}.form-date-time',
         ],
+        'form-datetime' => [
+            'view' => 'laravel-components::{framework}.form-date-time',
+        ],
         'form-date-range' => [
+            'view' => 'laravel-components::{framework}.form-date-range',
+        ],
+        'form-daterange' => [
             'view' => 'laravel-components::{framework}.form-date-range',
         ],
         'form-icon' => [
@@ -153,9 +159,26 @@ return [
         'alert-info' => [
             'view' => 'laravel-components::{framework}.alert.help',
         ],
+        'alert.error' => [
+            'view' => 'laravel-components::{framework}.alert.error',
+        ],
+        'alert.warning' => [
+            'view' => 'laravel-components::{framework}.alert.warning',
+        ],
+        'alert.danger' => [
+            'view' => 'laravel-components::{framework}.alert.danger',
+        ],
+        'alert.help' => [
+            'view' => 'laravel-components::{framework}.alert.help',
+        ],
+
+        'alert.info' => [
+            'view' => 'laravel-components::{framework}.alert.help',
+        ],
         'alert-success' => [
             'view' => 'laravel-components::{framework}.alert.success',
         ],
+
         'button.cancel' => [
             'view' => 'laravel-components::{framework}.button.cancel',
         ],
@@ -289,7 +312,7 @@ return [
         'dropdown-item' => [
             'view' => 'laravel-components::{framework}.dropdown.item',
             'alias' => 'dropdown.item',
-            //'class' => Components\DropdownItem::class,
+            // 'class' => Components\DropdownItem::class,
         ],
         'dropdown.header' => [
             'view' => 'laravel-components::{framework}.dropdown.header',

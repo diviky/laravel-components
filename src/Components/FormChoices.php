@@ -8,6 +8,7 @@ use Diviky\LaravelComponents\Concerns\Renderer;
 use Diviky\LaravelFormComponents\Components\FormSelect;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 
 class FormChoices extends FormSelect
 {
@@ -50,9 +51,9 @@ class FormChoices extends FormSelect
         public mixed $selection = null,
     ) {
 
-        $this->uuid = uuid();
+        $this->uuid = (string) Str::uuid();
 
-        if ($searchFunction) {
+        if (isset($searchFunction)) {
             $this->searchable = true;
         }
 
