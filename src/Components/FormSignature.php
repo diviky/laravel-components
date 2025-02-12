@@ -11,7 +11,7 @@ class FormSignature extends Component
     public mixed $value;
 
     public function __construct(
-        public string $name = '',
+        string $name = '',
         public string $label = '',
         public ?string $icon = '',
         mixed $bind = null,
@@ -41,7 +41,7 @@ class FormSignature extends Component
     {
         $config = Arr::wrap($this->config);
 
-        return json_encode(array_merge([
+        return (string) json_encode(array_merge([
             'penColor' => 'var(--tblr-body-color)',
         ], $config));
     }

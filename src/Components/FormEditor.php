@@ -10,7 +10,7 @@ class FormEditor extends Component
     public mixed $value;
 
     public function __construct(
-        public string $name = '',
+        string $name = '',
         public string $label = '',
         public ?string $icon = '',
         mixed $bind = null,
@@ -57,6 +57,6 @@ class FormEditor extends Component
 
         $setup['plugins'] = str('advlist autolink lists link image table quickbars code')->append($this->config['plugins'] ?? '');
 
-        return str(json_encode($setup))->trim('{}')->replace('"', "'")->toString();
+        return str((string) json_encode($setup))->trim('{}')->replace('"', "'")->toString();
     }
 }

@@ -6,7 +6,7 @@
     ])->class([
         'btn-check' => true,
         'is-invalid' => $hasError($name),
-    ]) !!} {{ $extraAttributes ?? '' }} @checked($checked) />
+    ]) !!} {{ $extraAttributes ?? '' }} @checked($checked) {{ $wire() }} />
 
 <label for="{{ $id() }}" type="button"
     @if ($attributes->has('title')) title="{{ $attributes->get('title') }}" data-toggle="tooltip" @endif

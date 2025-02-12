@@ -9,8 +9,6 @@ use Illuminate\Support\HtmlString;
 
 class FormImage extends Component
 {
-    public string $name;
-
     public string $label;
 
     public mixed $value;
@@ -49,7 +47,7 @@ class FormImage extends Component
 
     public function cropSetup(): string
     {
-        return json_encode(array_merge([
+        return (string) json_encode(array_merge([
             'autoCropArea' => 1,
             'viewMode' => 1,
             'dragMode' => 'move',

@@ -11,8 +11,6 @@ use Symfony\Component\Mime\MimeTypes;
 
 class FormFile extends Component
 {
-    public string $name;
-
     public string $label;
 
     public mixed $value;

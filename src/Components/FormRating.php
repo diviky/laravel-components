@@ -9,8 +9,6 @@ use Illuminate\Support\HtmlString;
 
 class FormRating extends Component
 {
-    public string $name;
-
     public string $label;
 
     public ?string $value;

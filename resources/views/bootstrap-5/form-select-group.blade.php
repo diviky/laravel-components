@@ -1,10 +1,12 @@
+@props([
+    'type' => 'checkbox',
+])
 @isset($label)
     <div class="form-group">
         <x-form-label :label="$label" :required="$isRequired()" />
     @endisset
-    <div {!! $attributes->except(['extra-attributes'])->merge([
-            'class' => 'form-selectgroup',
-        ])->class([
+    <div {!! $attributes->except(['extra-attributes'])->class([
+            'form-selectgroup',
             'form-selectgroup-pills' => $attributes->has('pills'),
             'form-selectgroup-boxes' => $attributes->has('boxes'),
             'is-invalid' => $hasError($name),
@@ -13,9 +15,9 @@
         ])->except('pills') !!} {{ $extraAttributes ?? '' }}>
 
         @forelse($options as $key => $option)
-            <x-form-select-item name="{{ $name }}" value="{{ $key }}" type="{{ $type }}"
-                :show="$attributes->has('show')">
-                {!! $option !!}
+            <x-form-select-item name="{{ $name }}" :attributes="$attributes->whereStartsWith('wire:')" value="{{ $optionValue($option) }}"
+                type="{{ $type }}" :show="$attributes->has('show')">
+                {!! $optionLabel($option) !!}
             </x-form-select-item>
         @empty
             {!! $slot !!}
@@ -23,10 +25,7 @@
 
         {!! $help ?? null !!}
 
-        @if ($hasErrorAndShow($name))
-            <x-form-errors :name="$name" />
-        @endif
-
+        <x-form-errors :name="$name" />
     </div>
     @isset($label)
     </div>

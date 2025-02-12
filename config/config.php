@@ -40,6 +40,7 @@ return [
         ],
         'form-date' => [
             'view' => 'laravel-components::{framework}.form-date',
+            'class' => Components\FormDate::class,
         ],
         'form-pin' => [
             'view' => 'laravel-components::{framework}.form-pin',
@@ -47,21 +48,19 @@ return [
         ],
         'form-date-time' => [
             'view' => 'laravel-components::{framework}.form-date-time',
+            'class' => Components\FormDateTime::class,
         ],
-        'form-datetime' => [
-            'view' => 'laravel-components::{framework}.form-date-time',
-        ],
+
         'form-date-range' => [
             'view' => 'laravel-components::{framework}.form-date-range',
         ],
-        'form-daterange' => [
-            'view' => 'laravel-components::{framework}.form-date-range',
-        ],
+
         'form-icon' => [
             'view' => 'laravel-components::{framework}.form-icon',
         ],
         'form-time' => [
             'view' => 'laravel-components::{framework}.form-time',
+            'class' => Components\FormTime::class,
         ],
         'form-select-group' => [
             'view' => 'laravel-components::{framework}.form-select-group',

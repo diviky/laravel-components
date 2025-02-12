@@ -13,7 +13,7 @@ class FormTags extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public string $name = '',
+        string $name = '',
         public string $label = '',
         public ?string $icon = '',
         mixed $bind = null,

@@ -11,14 +11,6 @@ grumphp:
   fixer:
     enabled: true
     fix_by_default: true
-  testsuites:
-    style:
-      tasks:
-        - composer
-        - laravel_pint
-    static:
-      tasks:
-        - psalm
   tasks:
     composer:
       metadata: { priority: 700 }

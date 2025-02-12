@@ -10,7 +10,7 @@ class FormMarkdown extends Component
     public mixed $value;
 
     public function __construct(
-        public string $name = '',
+        string $name = '',
         public string $label = '',
         public ?string $icon = '',
         mixed $bind = null,
@@ -59,7 +59,7 @@ class FormMarkdown extends Component
         // Here is a workaround
         $table = "{ 'title' : 'Table', 'name' : 'myTable', 'action' : EasyMDE.drawTable, 'className' : 'fa fa-table' }";
 
-        return str(json_encode($setup))
+        return str((string) json_encode($setup))
             ->replace('"', "'")
             ->trim('{}')
             ->replace("'table'", $table)

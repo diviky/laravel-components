@@ -9,8 +9,6 @@ use Illuminate\Support\HtmlString;
 
 class FilterSearch extends Component
 {
-    public string $name;
-
     public string $label;
 
     public string $type;

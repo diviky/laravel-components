@@ -8,12 +8,7 @@
             'name' => $name,
             'id' => $id(),
             'value' => $value,
-            'class' => 'form-selectgroup-input',
-        ])->class([
-            'is-invalid' => $hasError($name),
-        ]) !!} {{ $extraAttributes ?? '' }}
-        @if ($isWired()) wire:model{!! $wireModifier() !!}="{{ $name }}" @endif
-        @checked($checked) />
+        ])->class(['form-selectgroup-input', 'is-invalid' => $hasError($name)]) !!} {{ $extraAttributes ?? '' }} {{ $wire() }} @checked($checked) />
 
     <span class="form-selectgroup-label d-flex align-items-center">
         @if ($show)

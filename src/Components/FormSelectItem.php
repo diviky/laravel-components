@@ -9,8 +9,6 @@ use Illuminate\Support\HtmlString;
 
 class FormSelectItem extends Component
 {
-    public string $name;
-
     public string $label;
 
     /**
