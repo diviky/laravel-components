@@ -212,25 +212,25 @@
         },
         {
             "name": "diviky/laravel-form-components",
-            "version": "v2.0.11",
+            "version": "v2.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diviky/laravel-form-components.git",
-                "reference": "d2ac9e1fc5cb1e03f7178c728220de70e4dff11a"
+                "reference": "95e11d0b8aa13a80c5ec7d056480c174d84c4780"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diviky/laravel-form-components/zipball/d2ac9e1fc5cb1e03f7178c728220de70e4dff11a",
-                "reference": "d2ac9e1fc5cb1e03f7178c728220de70e4dff11a",
+                "url": "https://api.github.com/repos/diviky/laravel-form-components/zipball/95e11d0b8aa13a80c5ec7d056480c174d84c4780",
+                "reference": "95e11d0b8aa13a80c5ec7d056480c174d84c4780",
                 "shasum": ""
             },
             "require": {
                 "illuminate/support": "^10.0|^11.0",
-                "php": "^8.2",
+                "php": "^8.3",
                 "symfony/http-foundation": "^6.0|^7.0"
             },
             "require-dev": {
-                "diviky/code-analysis": "^2.0",
+                "diviky/code-analysis": "^3.0",
                 "livewire/livewire": "^3.4",
                 "spatie/laravel-translatable": "^6.0",
                 "symfony/dom-crawler": "^6.0"
@@ -284,9 +284,9 @@
             ],
             "support": {
                 "issues": "https://github.com/diviky/laravel-form-components/issues",
-                "source": "https://github.com/diviky/laravel-form-components/tree/v2.0.11"
+                "source": "https://github.com/diviky/laravel-form-components/tree/v2.0.13"
             },
-            "time": "2025-02-12T06:27:46+00:00"
+            "time": "2025-02-13T09:10:10+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -1134,16 +1134,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v11.42.0",
+            "version": "v11.42.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "006375ba67e830e87daa7b52ab65163ba3508d26"
+                "reference": "ff392f42f6c55cc774ce75553a11c6b031da67f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/006375ba67e830e87daa7b52ab65163ba3508d26",
-                "reference": "006375ba67e830e87daa7b52ab65163ba3508d26",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/ff392f42f6c55cc774ce75553a11c6b031da67f8",
+                "reference": "ff392f42f6c55cc774ce75553a11c6b031da67f8",
                 "shasum": ""
             },
             "require": {
@@ -1345,7 +1345,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-02-11T17:17:56+00:00"
+            "time": "2025-02-12T20:58:18+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -7985,20 +7985,20 @@
         },
         {
             "name": "jasonmccreary/laravel-test-assertions",
-            "version": "v2.5.0",
+            "version": "v2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jasonmccreary/laravel-test-assertions.git",
-                "reference": "185a3ad9699505c53b7466a1dfa73a76d8daeeee"
+                "reference": "f87707d4520246c8628dce4d5c23f6d72fd5f8d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jasonmccreary/laravel-test-assertions/zipball/185a3ad9699505c53b7466a1dfa73a76d8daeeee",
-                "reference": "185a3ad9699505c53b7466a1dfa73a76d8daeeee",
+                "url": "https://api.github.com/repos/jasonmccreary/laravel-test-assertions/zipball/f87707d4520246c8628dce4d5c23f6d72fd5f8d9",
+                "reference": "f87707d4520246c8628dce4d5c23f6d72fd5f8d9",
                 "shasum": ""
             },
             "require": {
-                "illuminate/testing": "^10.0|^11.0|^12.0",
+                "illuminate/testing": "^11.0|^12.0",
                 "mockery/mockery": "^1.4.4",
                 "php": "^8.1",
                 "phpunit/phpunit": "^10.1|^11.0"
@@ -8029,9 +8029,9 @@
             "description": "A set of helpful assertions when testing Laravel applications.",
             "support": {
                 "issues": "https://github.com/jasonmccreary/laravel-test-assertions/issues",
-                "source": "https://github.com/jasonmccreary/laravel-test-assertions/tree/v2.5.0"
+                "source": "https://github.com/jasonmccreary/laravel-test-assertions/tree/v2.6.0"
             },
-            "time": "2025-02-11T16:56:31+00:00"
+            "time": "2025-02-13T01:16:32+00:00"
         },
         {
             "name": "jrmadsen67/laravel-route-coverage-test",
@@ -8793,16 +8793,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.12.1",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "123267b2c49fbf30d78a7b2d333f6be754b94845"
+                "reference": "024473a478be9df5fdaca2c793f2232fe788e414"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/123267b2c49fbf30d78a7b2d333f6be754b94845",
-                "reference": "123267b2c49fbf30d78a7b2d333f6be754b94845",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/024473a478be9df5fdaca2c793f2232fe788e414",
+                "reference": "024473a478be9df5fdaca2c793f2232fe788e414",
                 "shasum": ""
             },
             "require": {
@@ -8841,7 +8841,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.12.1"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.0"
             },
             "funding": [
                 {
@@ -8849,7 +8849,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-08T17:47:46+00:00"
+            "time": "2025-02-12T12:17:51+00:00"
         },
         {
             "name": "netresearch/jsonmapper",

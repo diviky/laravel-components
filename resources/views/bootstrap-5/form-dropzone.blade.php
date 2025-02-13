@@ -12,8 +12,6 @@
         <div class="progress-bar bg-info" role="progressbar" style="width: 0%"></div>
     </div>
 
-    @if ($hasErrorAndShow($name))
-        <x-form-errors :name="$name" />
-    @endif
+    <x-form-errors :name="$name" />
     {!! $help ?? null !!}
 </div>

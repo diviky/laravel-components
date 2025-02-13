@@ -46,7 +46,6 @@
             }
         },
         get selectedOptions() {
-            console.log('selected options', JSON.stringify(this.options), this.selection);
             if (this.isSingle) {
                 return this.options.filter(i => i.{{ $valueField }} == this.selection) || {};
             }
@@ -55,10 +54,6 @@
         },
         updateOptions(newOptions) {
             this.options = [...newOptions];
-
-            this.$nextTick(() => {
-                console.log('Options updated after nextTick:', this.options);
-            });
         },
         get noResults() {
             if (!this.isSearchable || this.$refs.searchInput.value == '') {
@@ -128,9 +123,6 @@
             if (!keepOpen) {
                 this.$refs.searchInput.focus()
             }
-
-            console.log('selected', JSON.stringify(this.options), this.selection);
-
         },
         lookup() {
             Array.from(this.$refs.choicesOptions.children).forEach(child => {
