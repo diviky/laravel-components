@@ -42,7 +42,7 @@
             new tempusDominus.TempusDominus(this.$refs.container, data);
         }
     }">
-        <x-form-input name="{{ $name }}" :default="$defaultDate()" :extra-attributes="$extraAttributes" :attributes="$attributes->merge([
+        <x-form-input name="{{ $name }}" :label="$label" :default="$defaultDate()" :extra-attributes="$extraAttributes" :attributes="$attributes->merge([
             'placeholder' => 'Select Date',
             'type' => $type,
             'class' => 'date',

@@ -12,6 +12,8 @@ class FormDate extends FormInput
 {
     use Renderer;
 
+    protected string $format = 'F d Y';
+
     public function restrictions(): array
     {
         $settings = $this->settings;
@@ -52,8 +54,8 @@ class FormDate extends FormInput
         }
 
         return array_filter([
-            'minDate' => $minDate ? $minDate->format('F d Y') : '',
-            'maxDate' => $maxDate ? $maxDate->format('F d Y') : '',
+            'minDate' => $minDate ? $minDate->format($this->format) : '',
+            'maxDate' => $maxDate ? $maxDate->format($this->format) : '',
             'disabledDates' => [],
             'enabledDates' => [],
             'daysOfWeekDisabled' => when(isset($settings['weekdays']) && $settings['weekdays'], function () {
@@ -67,6 +69,6 @@ class FormDate extends FormInput
 
     public function defaultDate(): string
     {
-        return ($this->default) ? Carbon::parse($this->default)->format('F d Y') : '';
+        return ($this->default) ? Carbon::parse($this->default)->format($this->format) : '';
     }
 }
