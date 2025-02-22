@@ -52,6 +52,7 @@ class NavItem extends Component
         return ! $this->exact && $this->link != '/' && Str::startsWith($route, $link);
     }
 
+    #[\Override]
     public function shouldRender()
     {
         return $this->enabled;

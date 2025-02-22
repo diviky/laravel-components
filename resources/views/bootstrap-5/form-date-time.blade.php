@@ -1,53 +1,32 @@
 @props([
-    'extraAttributes' => [],
-    'name' => null,
-    'stacked' => true,
+    'stacked' => false,
 ])
 
-@if ($stacked)
+@if ($stacked || (isset($settings['stacked']) && $settings['stacked']))
     <div x-data="{
         init() {
-            let restrictions = {
-                minDate: undefined,
-                maxDate: undefined,
-                disabledDates: [],
-                enabledDates: [],
-                daysOfWeekDisabled: [],
-                disabledTimeIntervals: [],
-                disabledHours: [],
-                enabledHours: []
-            };
-    
             let data = {
-                keepInvalid: true,
-                restrictions: { ...restrictions, ...{{ json_encode($restrictions()) }} },
-                @if ($defaultDate()) defaultDate: {{ json_encode($defaultDate()) }}, @endif
-                display: {
-                    icons: {
-                        time: 'ti ti-clock',
-                        date: 'ti ti-calendar-month',
-                        up: 'ti ti-arrow-up',
-                        down: 'ti ti-arrow-down',
-                        previous: 'ti ti-chevron-left',
-                        next: 'ti ti-chevron-right',
-                        today: 'ti ti-calendar',
-                        clear: 'ti ti-x',
-                        close: 'ti ti-square-x',
-                    },
-                },
-                localization: {
-                    format: 'MMMM d yyyy hh:mm T',
-                },
+                {{ $setup() }}
             };
-            new tempusDominus.TempusDominus(this.$refs.container, data);
+            const picker = new tempusDominus.TempusDominus(this.$refs.container, data);
+    
+            this.$refs.container.addEventListener('change.td', (event) => {
+                const date = picker.dates.lastPicked ? picker.dates.formatInput(picker.dates.lastPicked) : '';
+    
+                this.$refs.container.dispatchEvent(new CustomEvent('picked', {
+                    detail: { value: date },
+                    bubbles: true
+                }));
+            });
         }
     }">
-        <x-form-input name="{{ $name }}" :label="$label" :default="$defaultDate()" :extra-attributes="$extraAttributes" :attributes="$attributes->merge([
-            'placeholder' => 'Select Date',
-            'type' => $type,
-            'class' => 'date',
-            'x-ref' => 'container',
-        ])">
+        <x-form-input name="{{ $name }}" :label="$label" :default="$defaultValue()" :value="$defaultValue()" :settings="$settings"
+            :extra-attributes="$properties" :attributes="$attributes->merge([
+                'placeholder' => 'Select Date',
+                'type' => $type,
+                'class' => 'date',
+                'x-ref' => 'container',
+            ])">
             {!! $slot !!}
 
             <x-slot:help>{{ $help ?? '' }}</x-slot:help>
@@ -59,14 +38,33 @@
     </div>
 @else
     <div class="row" x-data="{
-        current: ''
+        dateValue: '{{ $defaultDate() }}',
+        timeValue: '{{ $defaultTime() }}',
+        current: '{{ $defaultValue() }}',
+        updateDate(event) {
+            if (event.detail && event.detail.value) {
+                this.dateValue = event.detail.value;
+            }
+            this.updateCurrent();
+        },
+        updateTime(event) {
+            if (event.detail && event.detail.value) {
+                this.timeValue = event.detail.value;
+            }
+            this.updateCurrent();
+        },
+        updateCurrent() {
+            this.current = `${this.dateValue} ${this.timeValue}`.trim();
+        }
     }">
         <div class="col">
-            <x-form-date name="{{ $name }}[date]" :extra-attributes="$extraAttributes" :attributes="$attributes" />
+            <x-form-date :default="$defaultDate()" :value="$defaultDate()" :settings="$settings" :label="$label"
+                @picked="updateDate($event)" :extra-attributes="$properties" :attributes="$attributes" x-model="dateValue" />
         </div>
         <div class="col-4">
-            <x-form-time name="{{ $name }}[time]" :extra-attributes="$extraAttributes" :attributes="$attributes" />
+            <x-form-time :default="$defaultTime()" :value="$defaultTime()" :settings="$settings" label="Time" x-model="timeValue"
+                @picked="updateTime($event)" :extra-attributes="$properties" :attributes="$attributes" />
         </div>
-        <x-form-hidden name="{{ $name }}" x-model="current" :default="$default" />
+        <x-form-hidden name="{{ $name }}" x-model="current" :attributes="$attributes" :default="$defaultValue()" />
     </div>
 @endif

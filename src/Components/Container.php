@@ -13,6 +13,7 @@ class Container extends Component
         $this->enabled = $enabled;
     }
 
+    #[\Override]
     public function shouldRender()
     {
         return $this->enabled;

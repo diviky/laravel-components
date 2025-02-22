@@ -81,6 +81,7 @@ class Link extends Component
         }
     }
 
+    #[\Override]
     public function shouldRender(): bool
     {
         return $this->enabled && $this->isAuthorized();

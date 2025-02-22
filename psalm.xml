@@ -30,6 +30,11 @@
                 <directory name="src"/>
             </errorLevel>
         </PossiblyUnusedProperty>
+        <ClassMustBeFinal>
+            <errorLevel type="suppress">
+                <directory name="src"/>
+            </errorLevel>
+        </ClassMustBeFinal>
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
                 <directory name="src"/>

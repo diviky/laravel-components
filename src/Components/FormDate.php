@@ -67,8 +67,84 @@ class FormDate extends FormInput
         ]);
     }
 
-    public function defaultDate(): string
+    protected function config(): array
     {
-        return ($this->default) ? Carbon::parse($this->default)->format($this->format) : '';
+        return [];
+    }
+
+    public function setup(): string
+    {
+        $settings = $this->settings;
+        $stepping = isset($settings['stepping']) && $settings['stepping'] > 0 ? intval($settings['stepping']) : 1;
+
+        $setup = [
+            'keepInvalid' => true,
+            'multipleDates' => false,
+            'stepping' => $stepping,
+            'multipleDatesSeparator' => ' - ',
+            'promptTimeOnDateChange' => false,
+            'promptTimeOnDateChangeTransitionDelay' => 200,
+            'dateRange' => false,
+            'display' => [
+                'sideBySide' => false,
+                'viewMode' => 'calendar',
+                'components' => [
+                    'calendar' => true,
+                    'date' => true,
+                    'month' => true,
+                    'year' => true,
+                    'decades' => true,
+                    'clock' => false,
+                    'hours' => false,
+                    'minutes' => false,
+                    'seconds' => false,
+                ],
+                'icons' => [
+                    'time' => 'ti ti-clock',
+                    'date' => 'ti ti-calendar-month',
+                    'up' => 'ti ti-arrow-up',
+                    'down' => 'ti ti-arrow-down',
+                    'previous' => 'ti ti-chevron-left',
+                    'next' => 'ti ti-chevron-right',
+                    'today' => 'ti ti-calendar',
+                    'clear' => 'ti ti-x',
+                    'close' => 'ti ti-square-x',
+                ],
+            ],
+            'restrictions' => [
+                'minDate' => 'undefined',
+                'maxDate' => 'undefined',
+                'disabledDates' => [],
+                'enabledDates' => [],
+                'daysOfWeekDisabled' => [],
+                'disabledTimeIntervals' => [],
+                'disabledHours' => [],
+                'enabledHours' => [],
+            ],
+            'localization' => [
+                'format' => 'MMMM d yyyy',
+            ],
+        ];
+
+        if ($this->defaultValue()) {
+            $setup['defaultDate'] = $this->defaultValue();
+        }
+
+        $setup['restrictions'] = array_merge($setup['restrictions'], $this->restrictions());
+
+        $setup = array_merge($setup, $this->config());
+
+        return str((string) json_encode($setup))
+            ->trim('{}')
+            ->replace('"', "'")
+            ->replace("'undefined'", 'undefined')
+            ->toString();
+    }
+
+    public function defaultValue(): string
+    {
+        $value = $this->value ? $this->value : $this->default;
+
+        return ($value) ? Carbon::parse($value)->format($this->format) : '';
     }
 }

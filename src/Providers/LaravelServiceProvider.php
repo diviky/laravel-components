@@ -25,6 +25,7 @@ class LaravelServiceProvider extends BaseServiceProvider
     /**
      * Register the application services.
      */
+    #[\Override]
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'laravel-components');
