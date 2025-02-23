@@ -1,6 +1,6 @@
 @props([
     'extraAttributes' => [],
-    'size' => 6,
+    'length' => 6,
 ])
 
 <div class="form-group" x-data="{
@@ -11,8 +11,8 @@
         document.getElementById('pin{{ $id() }}').addEventListener('paste', (e) => {
             const paste = (e.clipboardData || window.clipboardData).getData('text');
 
-            for (var i = 0; i < {{ $size }}; i++) {
-                this.inputs[i] = paste[i];
+            for (var i = 0; i < {{ $length }}; i++) {
+                this.inputs[i] = paste[i]
             }
 
             e.preventDefault()
@@ -43,13 +43,11 @@
     handlePin() {
         this.value = this.inputs.join('')
         $refs.source.value = this.value
-
-        console.log('value:', this.value)
     }
 }">
     <x-form-label :label="$label" :required="$isRequired()" :title="$attributes->get('title')" :for="$attributes->get('id') ?: $id()" />
-    <div class="row g-2 pt-2" id="pin{{ $id }}">
-        @for ($i = 0; $i < $size; $i++)
+    <div class="row g-2 pt-2 d-flex align-content-center justify-content-center" id="pin{{ $id }}">
+        @for ($i = 0; $i < $length; $i++)
             <input type="text" id="{{ $id() }}-pin-{{ $i }}"
                 class="form-control form-control-lg w-14 mr-1 inline text-center py-3" maxlength="1"
                 x-model="inputs[{{ $i }}]" @keydown.space.prevent
