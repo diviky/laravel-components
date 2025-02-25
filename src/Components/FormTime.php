@@ -76,16 +76,21 @@ class FormTime extends FormInput
         $setup['restrictions'] = array_merge($setup['restrictions'], $this->restrictions());
 
         return str((string) json_encode($setup))
-            ->trim('{}')
+            // ->trim('{}')
             ->replace('"', "'")
             ->replace("'undefined'", 'undefined')
             ->toString();
     }
 
-    public function defaultValue(): string
+    public function defaultValue(): ?string
     {
         $value = $this->value ? $this->value : $this->default;
 
-        return ($value) ? Carbon::parse($value)->format($this->format) : '';
+        try {
+            return ($value) ? Carbon::parse($value)?->format($this->format) : '';
+
+        } catch (\Exception $e) {
+            return '';
+        }
     }
 }

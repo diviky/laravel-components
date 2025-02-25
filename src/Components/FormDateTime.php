@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Diviky\LaravelComponents\Components;
 
-use Carbon\Carbon;
-
 class FormDateTime extends FormDate
 {
     protected string $format = 'F d Y h:m A';
@@ -36,17 +34,17 @@ class FormDateTime extends FormDate
         ];
     }
 
-    public function defaultDate(): string
+    public function defaultDate(): ?string
     {
         $value = $this->value ? $this->value : $this->default;
 
-        return ($value) ? Carbon::parse($value)->format('F d Y') : '';
+        return ($value) ? $this->parse($value)?->format('F d Y') : '';
     }
 
-    public function defaultTime(): string
+    public function defaultTime(): ?string
     {
         $value = $this->value ? $this->value : $this->default;
 
-        return ($value) ? Carbon::parse($value)->format('h:m A') : '';
+        return ($value) ? $this->parse($value)?->format('h:m A') : '';
     }
 }

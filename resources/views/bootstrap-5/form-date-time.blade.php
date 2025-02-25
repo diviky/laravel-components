@@ -5,9 +5,7 @@
 @if ($stacked || (isset($settings['stacked']) && $settings['stacked']))
     <div x-data="{
         init() {
-            let data = {
-                {{ $setup() }}
-            };
+            let data = {{ $setup() }};
             const picker = new tempusDominus.TempusDominus(this.$refs.container, data);
     
             this.$refs.container.addEventListener('change.td', (event) => {

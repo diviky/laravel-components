@@ -48,8 +48,8 @@ class FormDate extends FormInput
             if ($settings['allowed'] == 'specific' && ! empty($settings['range'])) {
                 [$minDate, $maxDate] = explode('-', $settings['range']);
 
-                $minDate = Carbon::parse($minDate);
-                $maxDate = Carbon::parse($maxDate);
+                $minDate = $this->parse($minDate);
+                $maxDate = $this->parse($maxDate);
             }
         }
 
@@ -135,16 +135,30 @@ class FormDate extends FormInput
         $setup = array_merge($setup, $this->config());
 
         return str((string) json_encode($setup))
-            ->trim('{}')
+            // ->trim('{}')
             ->replace('"', "'")
             ->replace("'undefined'", 'undefined')
             ->toString();
     }
 
-    public function defaultValue(): string
+    public function defaultValue(): ?string
     {
         $value = $this->value ? $this->value : $this->default;
 
-        return ($value) ? Carbon::parse($value)->format($this->format) : '';
+        try {
+            return ($value) ? $this->parse($value)?->format($this->format) : '';
+
+        } catch (\Exception $e) {
+            return '';
+        }
+    }
+
+    protected function parse(string $value): ?Carbon
+    {
+        try {
+            return carbon($value);
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 }
