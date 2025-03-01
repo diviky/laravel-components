@@ -7,12 +7,12 @@
             'avatar',
             'rounded-circle' => $attributes->has('circle'),
             'rounded' => $attributes->has('rounded'),
-            'avatar-' . $size => $size,
             'avatar-xs' => $attributes->has('xs'),
             'avatar-sm' => $attributes->has('sm'),
             'avatar-lg' => $attributes->has('lg'),
             'avatar-xl' => $attributes->has('xl'),
             'avatar-md' => $attributes->has('md'),
+            'avatar-' . $size => $size,
             $color => $color,
         ]) }}
         style="background-image: url({{ $image }})">
@@ -22,7 +22,6 @@
     <span
         {{ $attributes->class([
             'avatar',
-            'avatar-' . $size => $size,
             'rounded-circle' => $attributes->has('circle'),
             'rounded' => $attributes->has('rounded'),
             'avatar-xs' => $attributes->has('xs'),
@@ -30,6 +29,7 @@
             'avatar-lg' => $attributes->has('lg'),
             'avatar-xl' => $attributes->has('xl'),
             'avatar-md' => $attributes->has('md'),
+            'avatar-' . $size => $size,
             $color => $color,
         ]) }}>
         {{ $label }}

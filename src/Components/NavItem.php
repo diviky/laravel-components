@@ -34,7 +34,7 @@ class NavItem extends Component
 
     public function routeMatches(): bool
     {
-        if (is_null($this->link) || ! is_null($this->active)) {
+        if (is_null($this->link) || $this->link == '#' || ! is_null($this->active)) {
             return false;
         }
 

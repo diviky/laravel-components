@@ -14,7 +14,7 @@
         'alert-danger' => $type == 'danger',
         'alert-dismissible' => $dismissible,
     ]) }}>
-    <div class="d-flex">
+    <div @class(['d-flex' => $icon])>
         @if ($icon)
             <div>
                 <x-icon :name="$icon" class="me-2" />

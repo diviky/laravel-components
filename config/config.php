@@ -268,6 +268,9 @@ return [
         'page.title' => [
             'view' => 'laravel-components::{framework}.page.title',
         ],
+        'page.subtitle' => [
+            'view' => 'laravel-components::{framework}.page.subtitle',
+        ],
         'accordion' => [
             'view' => 'laravel-components::{framework}.accordion.index',
         ],
