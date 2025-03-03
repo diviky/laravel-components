@@ -153,7 +153,7 @@ class FormDate extends FormInput
         }
     }
 
-    protected function parse(string $value): ?Carbon
+    protected function parse(mixed $value): ?Carbon
     {
         try {
             return carbon($value);
