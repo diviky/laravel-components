@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Diviky\LaravelComponents\Components;
 
+use Diviky\LaravelComponents\Concerns\Authorize;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 class NavItem extends Component
 {
+    use Authorize;
+
     public function __construct(
         public ?string $title = null,
         public ?string $icon = null,
@@ -23,12 +26,17 @@ class NavItem extends Component
         public bool $separator = false,
         public bool $enabled = true,
         public ?bool $exact = false,
+        public null|string|bool $can = null,
         HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->setExtraAttributes($extraAttributes);
 
         if (isset($route)) {
             $this->link = route($route);
+        }
+
+        if (is_bool($can) && $route) {
+            $this->can = 'name:'.$route;
         }
     }
 
@@ -53,8 +61,8 @@ class NavItem extends Component
     }
 
     #[\Override]
-    public function shouldRender()
+    public function shouldRender(): bool
     {
-        return $this->enabled;
+        return $this->enabled && $this->isAuthorized() && $this->isCan();
     }
 }

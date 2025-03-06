@@ -1,9 +1,9 @@
-<a {!! $attributes->merge($defaults)->merge([
+<a href="{{ $href }}" {!! $attributes->merge($defaults)->merge([
         'class' => 'cursor-pointer',
         'id' => $id(),
     ])->class([
         'btn' => $button,
-        'active' => $active,
+        'active' => $active || $routeMatches(),
         'btn-' . $attributes->get('color') => $attributes->has('color'),
         'btn-sm' => $attributes->has('sm'),
         'btn-lg' => $attributes->has('lg'),
@@ -25,7 +25,8 @@
         'text-info' => !$button && $attributes->has('info'),
         'text-primary' => !$button && $attributes->has('primary'),
         'text-warning' => !$button && $attributes->has('warning'),
-    ]) !!} {{ $extraAttributes ?? '' }} @if ($modal) tooltip="modal" @endif
+    ]) !!} {{ $extraAttributes ?? '' }}
+    @if ($modal) tooltip="modal" @endif
     @if ($attributes->has('title')) data-toggle="tooltip" @endif
     @if ($attributes->has('delete') || $attributes->has('rm')) data-method="delete" data-delete @endif
     @if ($attributes->has('dropdown')) data-bs-toggle="dropdown" @endif {{-- Model related attributes --}}

@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Diviky\LaravelComponents\Components;
 
+use Diviky\LaravelComponents\Concerns\Authorize;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\HtmlString;
-use InvalidArgumentException;
+use Illuminate\Support\Str;
 
 class Link extends Component
 {
+    use Authorize;
+
     public array $defaults = [];
 
     public string $action = '';
@@ -26,17 +28,6 @@ class Link extends Component
     public bool $button = false;
 
     public bool $slideover = false;
-
-    protected array $allowedAction = [
-        'show' => 'read-only',
-        'view' => 'read-only',
-        'create' => 'create-only',
-        'update' => 'update-only',
-        'import' => 'update-only',
-        'delete' => 'delete-only',
-        'export' => 'read-only',
-        'download' => 'read-only',
-    ];
 
     public function __construct(
         string $action = '',
@@ -54,6 +45,10 @@ class Link extends Component
         public bool $external = false,
         public ?string $badge = null,
         public ?string $badgeClasses = null,
+        public null|string|bool $can = null,
+        public ?string $route = null,
+        public ?string $href = null,
+        public ?bool $exact = false,
         HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->action = $action;
@@ -63,27 +58,46 @@ class Link extends Component
         $this->slideover = $slideover;
         $this->button = $button;
         $this->icon = $icon;
+
+        if (is_null($href)) {
+            $this->href = '#';
+        }
+
+        if (isset($route)) {
+            $this->href = route($route);
+        }
+
+        if (is_bool($can) && $route) {
+            $this->can = 'name:'.$route;
+        }
+
         $this->outline = $outline ? 'outline-' : ($ghost ? 'ghost-' : '');
         $this->setExtraAttributes($extraAttributes);
-
-        $this->validateActions();
     }
 
-    private function isAuthorized(): bool
+    public function routeMatches(): bool
     {
-        return (empty($this->action) || ! Auth::user()->isPermissionRevoked($this->allowedAction[$this->action])) ? true : false;
-    }
-
-    private function validateActions(): void
-    {
-        if (! empty($this->action) && ! isset($this->allowedAction[$this->action])) {
-            throw new InvalidArgumentException("Invalid action: $this->action. Link action must be one of: ".implode(', ', array_keys($this->allowedAction)));
+        if (is_null($this->href) || $this->href == '#' || ! is_null($this->active)) {
+            return false;
         }
+
+        if (! is_null($this->route)) {
+            return request()->routeIs($this->route);
+        }
+
+        $href = url($this->href);
+        $route = url(request()->url());
+
+        if ($href == $route) {
+            return true;
+        }
+
+        return ! $this->exact && $this->href != '/' && Str::startsWith($route, $href);
     }
 
     #[\Override]
     public function shouldRender(): bool
     {
-        return $this->enabled && $this->isAuthorized();
+        return $this->enabled && $this->isAuthorized() && $this->isCan();
     }
 }
