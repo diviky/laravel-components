@@ -1,8 +1,15 @@
 @props([
     'pills' => false,
     'card' => false,
+    'segmented' => false,
 ])
 
-<div {!! $attributes->class(['nav', 'nav-pills' => $pills, 'card-header-pills' => $card, 'text-nowrap flex-nowrap']) !!}>
+<nav {!! $attributes->class([
+    'nav',
+    'nav-segmented' => $segmented,
+    'nav-pills' => $pills,
+    'card-header-pills' => $card,
+    'text-nowrap flex-nowrap',
+]) !!} role="tablist">
     {!! $slot !!}
-</div>
+</nav>

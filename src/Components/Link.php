@@ -49,6 +49,7 @@ class Link extends Component
         public ?string $route = null,
         public ?string $href = null,
         public ?bool $exact = false,
+        ?array $params = [],
         HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->action = $action;
@@ -64,7 +65,7 @@ class Link extends Component
         }
 
         if (isset($route)) {
-            $this->href = route($route);
+            $this->href = route($route, $params);
         }
 
         if (is_bool($can) && $route) {
