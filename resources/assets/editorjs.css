@@ -1,0 +1,29 @@
+.editor-js-container {
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+    min-height: 200px;
+    background-color: #fff;
+}
+
+.editor-js-container .ce-block__content,
+.editor-js-container .ce-toolbar__content {
+    max-width: 100%;
+}
+
+.editor-js-container .ce-block--selected .ce-block__content {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.editor-js-container .codex-editor--narrow .codex-editor__redactor {
+    margin-right: 0;
+}
+
+.editor-js-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+}

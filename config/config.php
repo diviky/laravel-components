@@ -35,6 +35,9 @@ return [
         'alert.error' => [
             'view' => 'laravel-components::{framework}.alert.error',
         ],
+        'alert.success' => [
+            'view' => 'laravel-components::{framework}.alert.success',
+        ],
         'alert.help' => [
             'view' => 'laravel-components::{framework}.alert.help',
         ],
@@ -177,7 +180,7 @@ return [
             'class' => Components\FormDropzone::class,
         ],
         'form-editor' => [
-            'view' => 'laravel-components::{framework}.form-editor',
+            'view' => 'laravel-components::{framework}.editor.tinymce',
             'class' => Components\FormEditor::class,
         ],
         'form-email' => [
@@ -198,7 +201,7 @@ return [
             'class' => Components\FormImage::class,
         ],
         'form-markdown' => [
-            'view' => 'laravel-components::{framework}.form-markdown',
+            'view' => 'laravel-components::{framework}.editor.easymde',
             'class' => Components\FormMarkdown::class,
         ],
         'form-number' => [
@@ -297,6 +300,40 @@ return [
             'view' => 'laravel-components::{framework}.nav.item',
             'class' => Components\NavItem::class,
         ],
+        'editor-quill' => [
+            'alias' => 'editor.quill',
+            'view' => 'laravel-components::{framework}.editor.quill',
+            'class' => Components\EditorQuill::class,
+        ],
+        'editor-tiptap' => [
+            'alias' => 'editor.tiptap',
+            'view' => 'laravel-components::{framework}.editor.tiptap',
+            'class' => Components\EditorTiptap::class,
+        ],
+        'editor-lexical' => [
+            'alias' => 'editor.lexical',
+            'view' => 'laravel-components::{framework}.editor.lexical',
+            'class' => Components\EditorLexical::class,
+        ],
+        'editor-grapesjs' => [
+            'alias' => 'editor.grapesjs',
+            'view' => 'laravel-components::{framework}.editor.grapesjs',
+            'class' => Components\EditorGrapesjs::class,
+        ],
+        'editor-js' => [
+            'alias' => 'editor.js',
+            'view' => 'laravel-components::{framework}.editor.editorjs',
+            'class' => Components\EditorJs::class,
+        ],
+        'editor-easymde' => [
+            'alias' => 'editor.easymde',
+            'view' => 'laravel-components::{framework}.editor.easymde',
+            'class' => Components\EditorEasymde::class,
+        ],
+        'editor-tinymce' => [
+            'view' => 'laravel-components::{framework}.editor.tinymce',
+            'class' => Components\EditorTinymce::class,
+        ],
         'page' => [
             'view' => 'laravel-components::{framework}.page.index',
         ],
@@ -379,9 +416,6 @@ return [
         'table.header' => [
             'view' => 'laravel-components::{framework}.table.header',
         ],
-        'table.heading' => [
-            'view' => 'laravel-components::{framework}.table.heading',
-        ],
         'table.row' => [
             'view' => 'laravel-components::{framework}.table.row',
         ],
@@ -456,6 +490,9 @@ return [
         ],
         'view.user' => [
             'view' => 'laravel-components::{framework}.view.user',
+        ],
+        'view.badge' => [
+            'view' => 'laravel-components::{framework}.view.badge',
         ],
     ],
 ];

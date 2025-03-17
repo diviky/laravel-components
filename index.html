@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrapeJS Editor Development</title>
+</head>
+
+<body>
+    <div id="grapesjs-editor-dev"></div>
+    <script type="module" src="/resources/assets/js/grapesjs-editor.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.GrapesJSEditor) {
+                const editor = new GrapesJSEditor({
+                    containerId: 'grapesjs-editor-dev',
+                    inputId: 'test-input',
+                    value: '<div>Testing GrapeJS Editor</div>',
+                    editorConfig: {
+                        container: '#grapesjs-editor-dev',
+                        height: '500px',
+                        fromElement: true,
+                        storageManager: false
+                    }
+                });
+                editor.init();
+            }
+        });
+    </script>
+</body>
+
+</html>

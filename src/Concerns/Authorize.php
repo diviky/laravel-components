@@ -25,11 +25,11 @@ trait Authorize
 
         $user = Auth::user();
 
-        if (!$user) {
+        if (! $user) {
             return true;
         }
 
-        if (!isset($this->allowedAction[$this->action])) {
+        if (! isset($this->allowedAction[$this->action])) {
             return true;
         }
 
@@ -44,7 +44,7 @@ trait Authorize
 
         $user = Auth::user();
 
-        if (!$user) {
+        if (! $user) {
             return true;
         }
 
