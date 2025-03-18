@@ -180,8 +180,8 @@ return [
             'class' => Components\FormDropzone::class,
         ],
         'form-editor' => [
-            'view' => 'laravel-components::{framework}.editor.tinymce',
-            'class' => Components\FormEditor::class,
+            'view' => 'laravel-components::{framework}.editor.quill',
+            'class' => Components\EditorQuill::class,
         ],
         'form-email' => [
             'view' => 'laravel-components::{framework}.form-email',
@@ -202,7 +202,7 @@ return [
         ],
         'form-markdown' => [
             'view' => 'laravel-components::{framework}.editor.easymde',
-            'class' => Components\FormMarkdown::class,
+            'class' => Components\EditorEasymde::class,
         ],
         'form-number' => [
             'view' => 'laravel-components::{framework}.form-number',
@@ -331,6 +331,7 @@ return [
             'class' => Components\EditorEasymde::class,
         ],
         'editor-tinymce' => [
+            'alias' => 'editor.tinymce',
             'view' => 'laravel-components::{framework}.editor.tinymce',
             'class' => Components\EditorTinymce::class,
         ],

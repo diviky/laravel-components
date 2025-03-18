@@ -223,9 +223,11 @@
                         </template>
                     @endif
 
-                    <span class="form-choices-element tag !h-auto" x-show="isSelectionEmpty">
-                        {{ $placeholder }}
-                    </span>
+                    @if ($placeholder)
+                        <span class="form-choices-element tag !h-auto" x-show="isSelectionEmpty">
+                            {{ $placeholder }}
+                        </span>
+                    @endif
                 </span>
 
                 <!-- INPUT SEARCH -->
