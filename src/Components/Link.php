@@ -48,6 +48,7 @@ class Link extends Component
         public null|string|bool $can = null,
         public ?string $route = null,
         public ?string $href = null,
+        public ?string $match = null,
         public ?bool $exact = false,
         ?array $params = [],
         HtmlString|array|string|Collection|null $extraAttributes = null,
@@ -69,7 +70,7 @@ class Link extends Component
         }
 
         if (is_bool($can) && $route) {
-            $this->can = 'name:'.$route;
+            $this->can = 'name:' . $route;
         }
 
         $this->outline = $outline ? 'outline-' : ($ghost ? 'ghost-' : '');
@@ -78,11 +79,19 @@ class Link extends Component
 
     public function routeMatches(): bool
     {
-        if (is_null($this->href) || $this->href == '#' || ! is_null($this->active)) {
+        if (is_null($this->href)
+            || $this->href == '#'
+        || $this->href == '/'
+        || !is_null($this->active)
+        ) {
             return false;
         }
 
-        if (! is_null($this->route)) {
+        if (!is_null($this->match)) {
+            return request()->routeIs($this->match);
+        }
+
+        if (!is_null($this->route)) {
             return request()->routeIs($this->route);
         }
 
@@ -93,7 +102,7 @@ class Link extends Component
             return true;
         }
 
-        return ! $this->exact && $this->href != '/' && Str::startsWith($route, $href);
+        return !$this->exact && Str::startsWith($route, $href);
     }
 
     #[\Override]

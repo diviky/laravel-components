@@ -3,7 +3,7 @@
     'body' => null,
     'footer' => null,
     'group' => null,
-    'responsive' => false,
+    'responsive' => true,
     'bordered' => true,
     'card' => true,
     'nowrap' => true,
@@ -15,8 +15,8 @@
     'compact' => false,
 ])
 
-@if ($responsive && $height)
-    <div class="table-responsive" style="min-height: {{ $height }} ">
+@if ($responsive)
+    <div class="table-responsive" @if ($height) style="min-height: {{ $height }}" @endif>
 @endif
 
 <table {!! $attributes->class([
