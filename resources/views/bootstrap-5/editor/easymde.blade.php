@@ -6,7 +6,8 @@
     folder = '{{ $folder }}';
     csrfToken = {{ json_encode(csrf_token()) }};
     uploadUrl = '{{ $uploadUrl }}';
-    setup = {{ $setup() }};" wire:ignore x-on:livewire:navigating.window="destroyEditor()">
+    setup = {{ $setup() }};" wire:ignore x-on:livewire:navigating.window="destroyEditor()"
+        x-on:livewire:update.window="if(editor) { destroyEditor(); $nextTick(() => initEditor()); }">
 
         <div class="relative disabled" :class="uploading && 'pointer-events-none opacity-50'">
             <textarea id="{{ $id() }}" {{ $attributes->except(['extra-attributes', 'settings']) }} {{ $extraAttributes }}

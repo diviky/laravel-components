@@ -11,6 +11,7 @@
         csrfToken: {{ json_encode(csrf_token()) }},
         uploadUrl: '{{ $uploadUrl }}',
         uploading: false,
+        isUpdating: false,
         init() {
             // Create QuillEditor instance
             this.quillEditor = new QuillEditor({
@@ -27,10 +28,14 @@
     
             // Handles a case where people try to change contents on the fly from Livewire methods
             this.$watch('value', (newValue) => {
-                if (newValue !== this.quillEditor.getContents()) {
-                    this.value = newValue || '';
-                    this.destroyEditor();
-                    this.initEditor();
+                if (this.isUpdating) return;
+    
+                if (this.editor && newValue !== this.quillEditor.getContents()) {
+                    this.isUpdating = true;
+                    // Instead of destroying/recreating the editor, just set the content
+                    this.quillEditor.setContents(newValue || '');
+                    $refs.hiddenInput{{ $id() }}.value = newValue || '';
+                    this.isUpdating = false;
                 }
             });
         },
@@ -40,9 +45,13 @@
     
             // Update value when content changes
             this.quillEditor.onChange((content) => {
+                if (this.isUpdating) return;
+    
+                this.isUpdating = true;
                 this.value = content;
                 // Update hidden field
                 $refs.hiddenInput{{ $id() }}.value = content;
+                this.isUpdating = false;
             });
         },
         destroyEditor() {
