@@ -21,11 +21,10 @@ class EditorEasymde extends Editor
 
         // Table default CSS class `.table` breaks the layout.
         // Here is a workaround
-        $table = "{ 'title' : 'Table', 'name' : 'myTable', 'action' : EasyMDE.drawTable, 'className' : 'fa fa-table' }";
+        $table = "{ 'title' : 'Table', 'name' : 'myTable', 'action' : EasyMDE.drawTable, 'className' : 'fe fe-table' }";
 
         return str((string) json_encode($setup))
             ->replace('"', "'")
-            ->trim('{}')
             ->replace("'table'", $table)
             ->toString();
     }
