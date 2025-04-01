@@ -10,8 +10,7 @@
         "diviky/laravel-form-components": "^2.0"
     },
     "require-dev": {
-        "diviky/code-analysis": "^3.0",
-        "laravel/framework": "^11.28"
+        "diviky/code-analysis": "^3.0"
     },
     "autoload": {
         "psr-4": {
