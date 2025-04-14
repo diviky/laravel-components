@@ -27,12 +27,13 @@ class NavItem extends Component
         public bool $enabled = true,
         public ?bool $exact = false,
         public null|string|bool $can = null,
+        public array $params = [],
         HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
         $this->setExtraAttributes($extraAttributes);
 
         if (isset($route)) {
-            $this->link = route($route);
+            $this->link = route($route, $params);
         }
 
         if (is_bool($can) && $route) {

@@ -27,7 +27,7 @@
         'text-warning' => !$button && $attributes->has('warning'),
     ]) !!} {{ $extraAttributes ?? '' }}
     @if ($modal) tooltip="modal" @endif
-    @if ($attributes->has('title')) data-toggle="tooltip" @endif
+    @if ($attributes->has('title')) data-bs-toggle="tooltip" @endif
     @if ($attributes->has('delete') || $attributes->has('rm')) data-method="delete" data-delete @endif
     @if ($attributes->has('dropdown')) data-bs-toggle="dropdown" @endif {{-- Model related attributes --}}
     @if ($attributes->has('md')) data-size="medium" @endif
@@ -42,6 +42,7 @@
     @if ($attributes->has('turbo')) data-pjax @endif @if ($attributes->has('post')) data-post @endif
     @if ($attributes->has('id')) data-id="{{ $attributes->get('id') }}" @endif
     @if ($attributes->has('export')) ajax-export @endif @if ($slideover) tooltip="modal" @endif
+    @if ($attributes->has('dialog')) tooltip="modal" data-position="center" @endif
     @if ($external || $attributes->has('away')) target="_blank" @endif
     @if ($disabled) disabled="disabled" @endif>
     @if ($icon)

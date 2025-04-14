@@ -30,7 +30,7 @@
         <span class="form-check-label">
             {{ $label }}
             @if ($attributes->has('hint'))
-                <span title="{{ $attributes->get('hint') }}" data-toggle="tooltip">
+                <span title="{{ $attributes->get('hint') }}" data-bs-toggle="tooltip">
                     <x-icon name="help" />
                 </span>
             @endif

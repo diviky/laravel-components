@@ -17,6 +17,9 @@
             </div>
         @endif
         <div class="form-selectgroup-label-content d-flex align-items-center">
+            @if ($attributes->has('icon'))
+                <x-icon :name="$attributes->get('icon')" class="me-1" />
+            @endif
             {!! $slot !!} {{ $label }}
         </div>
     </span>
