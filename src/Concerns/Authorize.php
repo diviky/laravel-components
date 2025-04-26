@@ -50,4 +50,19 @@ trait Authorize
 
         return $user->can($this->can);
     }
+
+    private function hasRole(): bool
+    {
+        if (empty($this->role)) {
+            return true;
+        }
+
+        $user = Auth::user();
+
+        if (! $user) {
+            return true;
+        }
+
+        return $user->hasAnyRole($this->role);
+    }
 }

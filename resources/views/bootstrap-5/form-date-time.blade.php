@@ -7,10 +7,10 @@
         init() {
             let data = {{ $setup() }};
             const picker = new tempusDominus.TempusDominus(this.$refs.container, data);
-    
+
             this.$refs.container.addEventListener('change.td', (event) => {
                 const date = picker.dates.lastPicked ? picker.dates.formatInput(picker.dates.lastPicked) : '';
-    
+
                 this.$refs.container.dispatchEvent(new CustomEvent('picked', {
                     detail: { value: date },
                     bubbles: true
@@ -57,12 +57,12 @@
     }">
         <div class="col">
             <x-form-date :default="$defaultDate()" :value="$defaultDate()" :settings="$settings" :label="$label"
-                @picked="updateDate($event)" :extra-attributes="$properties" :attributes="$attributes" x-model="dateValue" />
+                @picked="updateDate($event)" :extra-attributes="$properties" :attributes="$attributes" x-modal="dateValue" />
         </div>
         <div class="col-4">
-            <x-form-time :default="$defaultTime()" :value="$defaultTime()" :settings="$settings" label="Time" x-model="timeValue"
+            <x-form-time :default="$defaultTime()" :value="$defaultTime()" :settings="$settings" label="Time" x-modal="timeValue"
                 @picked="updateTime($event)" :extra-attributes="$properties" :attributes="$attributes" />
         </div>
-        <x-form-hidden name="{{ $name }}" x-model="current" :attributes="$attributes" :default="$defaultValue()" />
+        <x-form-hidden name="{{ $name }}" x-modal="current" :attributes="$attributes" :default="$defaultValue()" />
     </div>
 @endif

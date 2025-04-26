@@ -46,8 +46,10 @@ class Link extends Component
         public ?string $badge = null,
         public ?string $badgeClasses = null,
         public null|string|bool $can = null,
+        public ?string $role = null,
         public ?string $route = null,
         public ?string $href = null,
+        public ?string $url = null,
         public ?string $match = null,
         public ?bool $exact = false,
         ?array $params = [],
@@ -67,6 +69,10 @@ class Link extends Component
 
         if (isset($route)) {
             $this->href = route($route, $params);
+        }
+
+        if (isset($url)) {
+            $this->href = url($url);
         }
 
         if (is_bool($can) && $route) {
@@ -108,6 +114,6 @@ class Link extends Component
     #[\Override]
     public function shouldRender(): bool
     {
-        return $this->enabled && $this->isAuthorized() && $this->isCan();
+        return $this->enabled && $this->isAuthorized() && $this->isCan() && $this->hasRole();
     }
 }

@@ -36,7 +36,7 @@
             @endif
         </span>
         <span class="form-check-description">
-            <x-help> {!! $help ?? null !!} </x-help>
+            <x-help> {!! $help ?? $attributes->get('help') !!} </x-help>
         </span>
     </label>
 

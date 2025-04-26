@@ -9,7 +9,7 @@
             this.$nextTick(() => {
                 this.initEditor();
             });
-    
+
             // Handle Livewire updates
             this.$watch('value', (newValue) => {
                 // Only reinitialize if the value changes externally
@@ -21,7 +21,7 @@
         },
         initEditor() {
             const config = {{ $setup() }};
-    
+
             // Create EditorJS component
             this.editorInstance = new EditorJsComponent({
                 container: $refs.editorContainer{{ $id() }},
@@ -36,7 +36,7 @@
                 folder: '{{ $folder }}',
                 hiddenInput: $refs.hiddenInput{{ $id() }}
             }).init();
-    
+
             // Set up custom image uploader
             if (config.tools && config.tools.image) {
                 // The image tool will be properly configured in the instance
@@ -86,5 +86,5 @@
 
     <x-form-errors :name="$name" />
 
-    <x-help> {!! $help ?? null !!} </x-help>
+    <x-help> {!! $help ?? $attributes->get('help') !!} </x-help>
 </div>

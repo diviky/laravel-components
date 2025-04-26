@@ -22,5 +22,5 @@
 
     <x-form-errors :name="$name" />
 
-    <x-help> {!! $help ?? null !!} </x-help>
+    <x-help> {!! $help ?? $attributes->get('help') !!} </x-help>
 </div>

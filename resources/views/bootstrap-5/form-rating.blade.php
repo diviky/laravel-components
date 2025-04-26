@@ -35,6 +35,6 @@
                 </span>
             @endif
         </template>
-        <input type="hidden" name="{{ $name }}" x-model="rating" />
+        <input type="hidden" name="{{ $name }}" x-modal="rating" />
     </div>
 </div>

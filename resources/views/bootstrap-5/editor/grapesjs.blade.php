@@ -5,7 +5,7 @@
         value: {{ $entangle($attributes) }},
         prefix: {{ json_encode($prefix) }},
         uploading: false,
-    
+
         init() {
             // Initialize the editor after ensuring the required module is loaded
             if (window.GrapesJSEditor) {
@@ -26,7 +26,7 @@
                     }
                 });
             }
-    
+
             // Watch for value changes
             this.$watch('value', (newValue) => {
                 if (this.grapesjsEditor && newValue !== this.getValue()) {
@@ -35,10 +35,10 @@
                 }
             });
         },
-    
+
         initEditor() {
             const containerId = 'grapesjs-editor-{{ $id() }}';
-    
+
             this.grapesjsEditor = new GrapesJSEditor({
                 containerId: containerId,
                 inputId: '{{ $id() }}',
@@ -49,14 +49,14 @@
                 prefix: this.prefix,
                 folder: '{{ $folder }}'
             });
-    
+
             this.grapesjsEditor.init();
         },
-    
+
         getValue() {
             return this.grapesjsEditor ? this.grapesjsEditor.editor.getHtml() : '';
         },
-    
+
         destroyEditor() {
             if (this.grapesjsEditor) {
                 this.grapesjsEditor.destroy();
@@ -79,5 +79,5 @@
 
     <x-form-errors :name="$name" />
 
-    <x-help> {!! $help ?? null !!} </x-help>
+    <x-help> {!! $help ?? $attributes->get('help') !!} </x-help>
 </div>
