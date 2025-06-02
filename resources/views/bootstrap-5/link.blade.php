@@ -8,6 +8,7 @@
         'btn-sm' => $attributes->has('sm'),
         'btn-lg' => $attributes->has('lg'),
         'btn-link' => $attributes->has('link'),
+        'nav-link' => $attributes->has('nav'),
         'disabled' => $disabled,
         'btn-' . $outline . 'primary' => $attributes->has('primary'),
         'btn-' . $outline . 'secondary' => $attributes->has('light'),
@@ -49,7 +50,7 @@
         @if ($slot->isEmpty())
             <x-icon :name="$icon" />
         @else
-            <x-icon :name="$icon" class="me-1" />
+            <x-icon :name="$icon" @class(['me-1', 'nav-link-icon icon' => $attributes->has('nav')]) />
         @endif
     @endif
     {!! $slot !!}

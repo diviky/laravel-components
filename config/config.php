@@ -116,6 +116,9 @@ return [
         'dropdown.toggle' => [
             'view' => 'laravel-components::{framework}.dropdown.toggle',
         ],
+        'dropdown.divider' => [
+            'view' => 'laravel-components::{framework}.dropdown.divider',
+        ],
         'divider' => [
             'view' => 'laravel-components::{framework}.divider',
         ],
@@ -384,6 +387,9 @@ return [
             'view' => 'laravel-components::{framework}.style',
             'class' => Components\Style::class,
         ],
+        'mention' => [
+            'view' => 'laravel-components::{framework}.mention',
+        ],
         'tab' => [
             'view' => 'laravel-components::{framework}.tabs.index',
         ],
@@ -462,8 +468,10 @@ return [
         'view.select' => [
             'view' => 'laravel-components::{framework}.view.select',
         ],
-        'view.show' => [
+        'show' => [
             'view' => 'laravel-components::{framework}.view.show',
+            'class' => Components\Show::class,
+            'alias' => 'view.show',
         ],
         'view.status' => [
             'view' => 'laravel-components::{framework}.view.status',

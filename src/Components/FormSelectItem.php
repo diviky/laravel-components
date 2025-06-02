@@ -27,6 +27,7 @@ class FormSelectItem extends Component
         string $label = '',
         $value = 1,
         $bind = null,
+        string $bindKey = '',
         ?bool $default = false,
         bool $showErrors = false,
         public string $type = 'radio',
@@ -44,10 +45,10 @@ class FormSelectItem extends Component
             $this->checked = old($inputName) == $value;
         }
 
-        if (! session()->hasOldInput() && $this->isNotWired()) {
-            $boundValue = $this->getBoundValue($bind, $inputName);
+        if (!session()->hasOldInput() && $this->isNotWired()) {
+            $boundValue = $this->getBoundValue($bind, $inputName, $bindKey);
 
-            if (! is_null($boundValue)) {
+            if (!is_null($boundValue)) {
                 $this->checked = $boundValue == $this->value;
             } else {
                 $this->checked = $default ?? false;
@@ -61,6 +62,6 @@ class FormSelectItem extends Component
     #[\Override]
     protected function generateIdByName(): string
     {
-        return 'auto_id_'.$this->name.'_'.$this->value;
+        return 'auto_id_' . $this->name . '_' . $this->value;
     }
 }

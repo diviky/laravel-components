@@ -96,113 +96,55 @@ Class: `src/Components/FormDate.php`
 
 #### Additional Attributes
 
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| format | string | 'YYYY-MM-DD' | Date format | 'MM/DD/YYYY' |
-| min | string | null | Minimum date | '2023-01-01' |
-| max | string | null | Maximum date | '2023-12-31' |
+| Name    | Type   | Default      | Description                                                                 | Example           |
+|---------|--------|--------------|-----------------------------------------------------------------------------|-------------------|
+| format  | string | 'YYYY-MM-DD' | Date format                                                                 | 'MM/DD/YYYY'      |
+| min     | string | null         | Minimum date                                                                | '2023-01-01'      |
+| max     | string | null         | Maximum date                                                                | '2023-12-31'      |
+| allowed | string | null         | Restrict to 'future', 'past', or 'specific' dates                           | 'future'          |
+| buffer  | int    | null         | Number of days to buffer from today (for min/max in 'future'/'past' modes)  | 2                 |
+| rolling | int    | null         | Number of days for rolling window (with allowed 'future'/'past')            | 30                |
+| range   | string | null         | Specific date range (with allowed 'specific'), format: 'YYYY-MM-DD-YYYY-MM-DD' | '2023-01-01-2023-12-31' |
 
-#### Usage Example
+#### Dynamic Date Restriction Logic
+
+- **allowed = 'future'**: Only allow dates from today (plus optional buffer) forward. Optionally limit with a rolling window.
+- **allowed = 'past'**: Only allow dates up to today (minus optional buffer). Optionally limit with a rolling window.
+- **allowed = 'specific'**: Only allow dates within a specific range (use `range`).
+- **buffer**: Adds/subtracts days from the min/max date for 'future'/'past' modes.
+- **rolling**: Sets a rolling window for how far in the future or past is selectable.
+- **range**: For 'specific', provide a range as 'YYYY-MM-DD-YYYY-MM-DD'.
+
+#### Usage Examples
 
 ```blade
+<!-- Only allow future dates, starting 2 days from now, up to 30 days ahead -->
 <x-form-date 
-    name="birthdate" 
-    label="Date of Birth"
-    format="MM/DD/YYYY"
+    name="appointment" 
+    label="Appointment Date"
+    allowed="future"
+    buffer="2"
+    rolling="30"
+/>
+
+<!-- Only allow past dates, up to 7 days ago, with a 2-day buffer before today -->
+<x-form-date 
+    name="history" 
+    label="History Date"
+    allowed="past"
+    buffer="2"
+    rolling="7"
+/>
+
+<!-- Only allow dates in a specific range -->
+<x-form-date 
+    name="event" 
+    label="Event Date"
+    allowed="specific"
+    range="2023-01-01-2023-12-31"
 />
 ```
 
 ### Form Time
 
-Location: `resources/views/bootstrap-5/form-time.blade.php`
-Class: `src/Components/FormTime.php`
-
-#### Usage Example
-
-```blade
-<x-form-time 
-    name="meeting_time" 
-    label="Meeting Time"
-/>
-```
-
-### Form Date Time
-
-Location: `resources/views/bootstrap-5/form-date-time.blade.php`
-Class: `src/Components/FormDateTime.php`
-
-#### Usage Example
-
-```blade
-<x-form-date-time 
-    name="event_datetime" 
-    label="Event Date and Time"
-/>
-```
-
-### Form Editor
-
-Location: `resources/views/bootstrap-5/editor/tinymce.blade.php`
-Class: `src/Components/FormEditor.php`
-
-#### Usage Example
-
-```blade
-<x-form-editor 
-    name="content" 
-    label="Article Content"
-    value="<p>Initial content</p>"
-/>
-```
-
-### Form Tags
-
-Location: `resources/views/bootstrap-5/form-tags.blade.php`
-Class: `src/Components/FormTags.php`
-
-#### Usage Example
-
-```blade
-<x-form-tags 
-    name="keywords" 
-    label="Keywords"
-    placeholder="Add keywords"
-/>
-```
-
-### Form Switch
-
-Location: `resources/views/bootstrap-5/form-switch.blade.php`
-Class: `src/Components/FormSwitch.php`
-
-#### Usage Example
-
-```blade
-<x-form-switch 
-    name="notifications" 
-    label="Enable Notifications"
-    value="1"
-/>
-```
-
-### Form File
-
-Location: `resources/views/bootstrap-5/form-file.blade.php`
-Class: `src/Components/FormFile.php`
-
-#### Additional Attributes
-
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| accept | string | null | Accepted file types | '.pdf,.doc,.docx' |
-| multiple | boolean | false | Allow multiple files | true |
-
-#### Usage Example
-
-```blade
-<x-form-file 
-    name="document" 
-    label="Upload Document"
-    accept=".pdf,.doc"
-/>
-```
+Location: `

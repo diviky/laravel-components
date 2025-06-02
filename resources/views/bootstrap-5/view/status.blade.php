@@ -17,7 +17,7 @@
 
 @php
     $optionValue = $options[$value] ?? null;
-    $badgeClass = 'status';
+    $badgeClass = 'status text-small';
     $badgeText = '';
 
     if (is_array($optionValue)) {
@@ -30,16 +30,14 @@
         $badgeClass .= $value == 1 ? ' status-success' : ' status-warning';
     }
 
-    if ($dot) {
-        $badgeClass .= ' status-dot';
-    }
-
-    if ($animated) {
-        $badgeClass .= ' status-dot-animated';
-    }
 @endphp
 
-<span {{ $attributes->merge(['class' => $badgeClass]) }}>{{ $badgeText }}</span>
+<span {{ $attributes->merge(['class' => $badgeClass]) }}>
+    @if ($dot || $animated)
+        <span @class(['status-dot', 'status-dot-animated' => $animated])></span>
+    @endif
+    {{ $badgeText }}
+</span>
 
 @if ($copy)
     <x-icon name="copy" class="cursor-pointer" title="copy to clipboard" data-clipboard="{{ $value }}" />

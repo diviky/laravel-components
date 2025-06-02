@@ -97,12 +97,12 @@
             <input id="{{ $id() }}" class="outline-none mt-1 bg-transparent"
                 placeholder="{{ $attributes->whereStartsWith('placeholder')->first() }}" type="text"
                 enterkeyhint="done" x-ref="searchInput" :class="(isReadonly || !focused) && 'w-1'"
-                :required="isRequired" :readonly="isReadonly" x-modal="tag" @input="focus()" @click.outside="clear()"
+                :required="isRequired" :readonly="isReadonly" x-model="tag" @input="focus()" @click.outside="clear()"
                 @keydown.enter.prevent="push()" @keydown.tab.prevent="push()"
                 @keyup.prevent="if (event.key === ',') { push() }" />
 
             <template x-if="!Array.isArray(tags)">
-                <input type="hidden" x-modal="tags" name="{{ $name }}" />
+                <input type="hidden" x-model="tags" name="{{ $name }}" />
             </template>
 
             <template x-if="Array.isArray(tags) && tags.length <= 0">

@@ -133,6 +133,8 @@
                 }
             })
 
+            console.log(this.keyword)
+
             this.noResults = Array.from(this.$refs.choicesOptions.querySelectorAll('div > .hidden')).length ==
                 Array.from(this.$refs.choicesOptions.querySelectorAll('[search-value]')).length
         },
@@ -235,14 +237,14 @@
                     :readonly="isReadonly || isDisabled || !isSearchable"
                     :class="(isReadonly || isDisabled || !isSearchable || !focused) && 'w-2 ps-2'"
                     class="choice-input w-20"
-                    @if ($searchable && $searchFunction) @keydown.debounce.{{ $debounce }}="search($el.value, $event)" @else x-modal="keyword" @keyup="lookup()" @endif />
+                    @if ($searchable && $searchFunction) @keydown.debounce.{{ $debounce }}="search($el.value, $event)" @else x-model="keyword" @keyup="lookup()" @endif />
 
                 <!-- dummy input for javascript validation -->
                 <input :class="(isSelectionEmpty) && 'validatehidden'" :required="isRequired && isSelectionEmpty"
                     type="hidden" />
 
                 <template x-if="!Array.isArray(selection)">
-                    <input type="hidden" x-modal="selection" name="{{ $name }}" />
+                    <input type="hidden" x-model="selection" name="{{ $name }}" />
                 </template>
 
                 <template x-if="Array.isArray(selection) && selection.length <= 0">

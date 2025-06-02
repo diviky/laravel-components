@@ -65,7 +65,7 @@ class FormTime extends FormInput
                 'enabledHours' => [],
             ],
             'localization' => [
-                'format' => 'h:mm T',
+                'format' => 'hh:mm T',
             ],
         ]);
 

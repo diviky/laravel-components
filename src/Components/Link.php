@@ -6,6 +6,8 @@ namespace Diviky\LaravelComponents\Components;
 
 use Diviky\LaravelComponents\Concerns\Authorize;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
@@ -52,6 +54,8 @@ class Link extends Component
         public ?string $url = null,
         public ?string $match = null,
         public ?bool $exact = false,
+        public ?string $title = null,
+        public bool $tab = false,
         ?array $params = [],
         HtmlString|array|string|Collection|null $extraAttributes = null,
     ) {
@@ -85,30 +89,31 @@ class Link extends Component
 
     public function routeMatches(): bool
     {
-        if (is_null($this->href)
-            || $this->href == '#'
-        || $this->href == '/'
-        || !is_null($this->active)
-        ) {
+        if (is_null($this->href) || $this->href == '#' || $this->href == '/') {
             return false;
         }
 
+        $route = Request::route();
+
         if (!is_null($this->match)) {
-            return request()->routeIs($this->match);
+            $name = $route->getName();
+
+            return Str::is($this->match, $name);
         }
 
         if (!is_null($this->route)) {
-            return request()->routeIs($this->route);
+            return Request::routeIs($this->route);
         }
 
-        $href = url($this->href);
-        $route = url(request()->url());
+        $currentUrl = Request::url();
+        $linkUrl = URL::to($this->href);
 
-        if ($href == $route) {
+        // Exact match check
+        if ($currentUrl === $linkUrl) {
             return true;
         }
 
-        return !$this->exact && Str::startsWith($route, $href);
+        return !$this->exact && Str::startsWith($currentUrl, $linkUrl);
     }
 
     #[\Override]

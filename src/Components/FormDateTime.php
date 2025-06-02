@@ -29,7 +29,7 @@ class FormDateTime extends FormDate
             ],
             'promptTimeOnDateChange' => true,
             'localization' => [
-                'format' => 'MMMM d yyyy h:mm T',
+                'format' => 'MMMM d yyyy hh:mm T',
             ],
         ];
     }

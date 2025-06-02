@@ -9,7 +9,7 @@
     'active' => $active || $routeMatches(),
     'disabled' => $disabled,
 ]) !!}>
-    <a @if ($link) href="{{ $link }}"
+    <a @if ($href) href="{{ $href }}"
         @if ($away) target="_blank" @endif
         @endif
         @if ($dropdown) data-bs-toggle="dropdown" @endif

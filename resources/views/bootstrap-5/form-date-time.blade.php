@@ -4,20 +4,47 @@
 
 @if ($stacked || (isset($settings['stacked']) && $settings['stacked']))
     <div x-data="{
-        init() {
+        picker: null,
+        initPicker() {
+            // Clean up existing picker if it exists
+            if (this.picker) {
+                try {
+                    this.picker.dispose();
+                } catch (e) {
+                    // Ignore disposal errors
+                }
+            }
+
             let data = {{ $setup() }};
-            const picker = new tempusDominus.TempusDominus(this.$refs.container, data);
+            this.picker = new tempusDominus.TempusDominus(this.$refs.container, data);
 
-            this.$refs.container.addEventListener('change.td', (event) => {
-                const date = picker.dates.lastPicked ? picker.dates.formatInput(picker.dates.lastPicked) : '';
+            // Store reference to this context
+            const self = this;
 
-                this.$refs.container.dispatchEvent(new CustomEvent('picked', {
+            // Remove existing event listeners to prevent duplicates
+            this.$refs.container.removeEventListener('change.td', this.boundHandleChange);
+
+            // Create bound event handler
+            this.boundHandleChange = (event) => {
+                const date = self.picker.dates.lastPicked ? self.picker.dates.formatInput(self.picker.dates.lastPicked) : '';
+
+                self.$refs.container.dispatchEvent(new CustomEvent('picked', {
                     detail: { value: date },
                     bubbles: true
                 }));
-            });
+            };
+
+            // Add event listener
+            this.$refs.container.addEventListener('change.td', this.boundHandleChange);
         }
-    }">
+    }" x-init="initPicker();
+
+    // Reinitialize after Livewire updates
+    $nextTick(() => {
+        Livewire.hook('morph.updated', () => {
+            $nextTick(() => initPicker());
+        });
+    });" x-on:livewire:navigated.window="initPicker()">
         <x-form-input name="{{ $name }}" :label="$label" :default="$defaultValue()" :value="$defaultValue()" :settings="$settings"
             :extra-attributes="$properties" :attributes="$attributes->merge([
                 'placeholder' => 'Select Date',
@@ -57,12 +84,12 @@
     }">
         <div class="col">
             <x-form-date :default="$defaultDate()" :value="$defaultDate()" :settings="$settings" :label="$label"
-                @picked="updateDate($event)" :extra-attributes="$properties" :attributes="$attributes" x-modal="dateValue" />
+                @picked="updateDate($event)" :extra-attributes="$properties" :attributes="$attributes" x-model="dateValue" />
         </div>
         <div class="col-4">
-            <x-form-time :default="$defaultTime()" :value="$defaultTime()" :settings="$settings" label="Time" x-modal="timeValue"
+            <x-form-time :default="$defaultTime()" :value="$defaultTime()" :settings="$settings" label="Time" x-model="timeValue"
                 @picked="updateTime($event)" :extra-attributes="$properties" :attributes="$attributes" />
         </div>
-        <x-form-hidden name="{{ $name }}" x-modal="current" :attributes="$attributes" :default="$defaultValue()" />
+        <x-form-hidden name="{{ $name }}" x-model="current" :attributes="$attributes" :default="$defaultValue()" />
     </div>
 @endif

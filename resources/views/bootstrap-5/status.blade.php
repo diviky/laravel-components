@@ -7,9 +7,10 @@
 <span {{ $attributes->class([
     'status' => true,
     'status-' . $color => $color,
+    'text-small',
 ]) }}>
 
-    @if ($dot)
+    @if ($dot || $animated)
         <span @class(['status-dot', 'status-dot-animated' => $animated])></span>
     @endif
 

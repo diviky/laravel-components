@@ -25,15 +25,15 @@ trait Authorize
 
         $user = Auth::user();
 
-        if (! $user) {
+        if (!$user) {
             return true;
         }
 
-        if (! isset($this->allowedAction[$this->action])) {
+        if (!isset($this->allowedAction[$this->action])) {
             return true;
         }
 
-        return $user->isAuthorizationRevoked([$this->allowedAction[$this->action]]);
+        return !$user->isAuthorizationRevoked([$this->allowedAction[$this->action]]);
     }
 
     private function isCan(): bool
@@ -44,7 +44,7 @@ trait Authorize
 
         $user = Auth::user();
 
-        if (! $user) {
+        if (!$user) {
             return true;
         }
 
@@ -59,7 +59,7 @@ trait Authorize
 
         $user = Auth::user();
 
-        if (! $user) {
+        if (!$user) {
             return true;
         }
 
