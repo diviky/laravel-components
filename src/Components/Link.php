@@ -40,7 +40,7 @@ class Link extends Component
         bool $slideover = false,
         bool $outline = false,
         public bool $ghost = false,
-        public bool $active = false,
+        public ?bool $active = false,
         public ?string $icon = null,
         public bool $enabled = true,
         public bool $disabled = false,

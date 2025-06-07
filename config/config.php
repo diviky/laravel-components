@@ -84,6 +84,9 @@ return [
         'card.header' => [
             'view' => 'laravel-components::{framework}.card.header',
         ],
+        'card.actions' => [
+            'view' => 'laravel-components::{framework}.card.actions',
+        ],
         'card.options' => [
             'view' => 'laravel-components::{framework}.card.options',
         ],

@@ -12,11 +12,13 @@
     <a @if ($href) href="{{ $href }}"
         @if ($away) target="_blank" @endif
         @endif
+        @if ($attributes->has('turbo')) data-pjax @endif
         @if ($dropdown) data-bs-toggle="dropdown" @endif
         @class([
             'active' => $active || $routeMatches(),
             'nav-link' => $tab,
             'nav-link dropdown-toggle' => $dropdown,
+            'data-pjax' => $attributes->has('turbo'),
         ])>
         <x-icon :name="$icon" class="me-1" />
         @if ($title || $slot->isNotEmpty())
