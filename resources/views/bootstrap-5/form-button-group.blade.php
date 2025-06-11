@@ -1,5 +1,7 @@
 @props([
     'type' => 'checkbox',
+    'inline' => false,
+    'vertical' => false,
 ])
 
 @if ($label)
@@ -7,13 +9,7 @@
         <x-form-label :label="$label" :required="$isRequired()" :for="$attributes->get('id') ?: $id()" />
 @endif
 
-<div {!! $attributes->except(['extra-attributes'])->merge([
-        'class' => 'btn-group',
-    ])->class([
-        'd-flex' => !$attributes->has('inline'),
-        'is-invalid' => $hasError($name),
-        'btn-group-vertical' => $attributes->has('vertical'),
-    ]) !!} {{ $extraAttributes ?? '' }}>
+<div {!! $attributes->except(['extra-attributes'])->class(['btn-group', 'd-flex' => !$inline, 'is-invalid' => $hasError($name), 'btn-group-vertical' => $vertical]) !!} {{ $extraAttributes ?? '' }}>
 
     {!! $before ?? null !!}
 
