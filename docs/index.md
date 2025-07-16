@@ -18,15 +18,44 @@ php artisan vendor:publish --tag=laravel-components-config
 
 ## Available Components
 
+### Core Form Components
+- [Form](form.md) - Main form wrapper with CSRF, validation, and behaviors
+- [Form Input](form-input.md) - Text inputs with icons, validation, and types
+- [Form Select](form-select.md) - Dropdown selects with multiple options and data binding
+- [Form Textarea](form-textarea.md) - Multi-line text input with character limits
+- [Form Checkbox](form-checkbox.md) - Checkbox inputs with validation
+- [Form Switch](form-switch.md) - Toggle switches for boolean values
+- [Form Submit](form-submit.md) - Submit buttons with loading states
+- [Form File](form-file.md) - File upload inputs
+- [Form Radio](form-radio.md) - Radio button inputs
+- [Form Range](form-range.md) - Range slider inputs
+- [Form Hidden](form-hidden.md) - Hidden input fields
+
+### Advanced Form Components
+- [Form Button Group](form-button-group.md) - Button group for form selections
+- [Form Select Group](form-select-group.md) - Grouped select options
+- [Form Date](form-date.md) - Date picker inputs
+- [Form Time](form-time.md) - Time picker inputs
+- [Form DateTime](form-datetime.md) - Combined date and time pickers
+- [Form Tags](form-tags.md) - Tag input with autocomplete
+- [Form Rating](form-rating.md) - Star rating inputs
+- [Form Signature](form-signature.md) - Digital signature capture
+- [Form Image](form-image.md) - Image upload with preview
+- [Form Dropzone](form-dropzone.md) - Drag and drop file uploads
+- [Form Pin](form-pin.md) - PIN/OTP input fields
+- [Form Toggle](form-toggle.md) - Toggle button inputs
+- [Form Colors](form-colors.md) - Color picker inputs
+- [Form Currency](form-currency.md) - Currency input with formatting
+
 ### Layout Components
-- [Accordion](accordion.md) - Collapsible content containers
-- [Card](card.md) - Flexible content container with header, body, and footer
+- [Card](card.md) - Feature-rich content container with status, ribbons, and images
+- [Page](page-enhanced.md) - Complete page layout with header, body, and footer
 - [Container](container.md) - Responsive container element
-- [Divider](divider.md) - Section divider with optional label
 - [Grid](grid.md) - Grid layout system
 - [Modal](modal.md) - Dialog popup window
-- [Page](page.md) - Page layout with header, body and footer sections
+- [Accordion](accordion.md) - Collapsible content containers
 - [Tab](tab.md) - Tabbed interface
+- [Divider](divider.md) - Section divider with optional label
 
 ### Navigation Components
 - [Breadcrumb](breadcrumb.md) - Navigation hierarchy trail
@@ -34,10 +63,17 @@ php artisan vendor:publish --tag=laravel-components-config
 - [Nav](nav.md) - Navigation menu and tabs
 - [Spotlight](spotlight.md) - Command palette/search interface
 
-### Form Components
-- [Form Input Components](form-components.md) - Text inputs, selects, checkboxes, etc.
-- [Filter Components](filter-components.md) - Search and date range filters
+### Editor Components
 - [Editor Components](editor-components.md) - Rich text editors (TinyMCE, Markdown, Quill)
+- [Editor TinyMCE](editor-tinymce.md) - TinyMCE rich text editor
+- [Editor Quill](editor-quill.md) - Quill editor integration
+- [Editor Markdown](editor-markdown.md) - Markdown editor with preview
+- [Editor Code](editor-code.md) - Code editor with syntax highlighting
+
+### Filter Components
+- [Filter Components](filter-components.md) - Search and date range filters
+- [Filter Search](filter-search.md) - Search input with auto-submit
+- [Filter Dates](filter-dates.md) - Date range filtering
 
 ### Display Components
 - [Alert](alert.md) - Contextual feedback messages
