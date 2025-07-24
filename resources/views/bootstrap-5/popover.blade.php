@@ -17,7 +17,7 @@
     <!-- CONTENT -->
     <div x-show="open" x-anchor.{{ $position }}.offset.{{ $offset }}="$refs.myTrigger" @mouseover="show()"
         @mouseout="hide()"
-        {{ $content->attributes->class(['z-[1] shadow-xl border w-fit p-3 rounded-md bg-base-100']) }}>
+        {{ $content->attributes->class(['z-1 shadow-xl border w-fit p-3 rounded-md bg-base-100']) }}>
         {{ $content }}
     </div>
 </div>

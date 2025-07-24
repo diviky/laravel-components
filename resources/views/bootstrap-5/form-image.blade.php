@@ -107,7 +107,7 @@
             <!-- CROP MODAL -->
             <div @click.prevent="" x-ref="crop" wire:ignore>
                 <x-modal id="componentCrop{{ $id() }}" x-ref="componentCrop" :title="$cropTitleText" separator
-                    class="backdrop-blur-sm" persistent @keydown.window.esc.prevent="">
+                    class="backdrop-blur-xs" persistent @keydown.window.esc.prevent="">
                     <img src="" />
                     <x-modal.footer>
                         <x-form-button :label="$cropCancelText" @click="close()" />

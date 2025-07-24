@@ -67,7 +67,7 @@
                 {{ $extraAttributes }} name="{{ $name }}" x-ref="hiddenInput{{ $id() }}"
                 :value="value">
 
-            <div class="absolute top-1/2 start-1/2 !opacity-100 text-center hidden" :class="uploading && '!block'">
+            <div class="absolute top-1/2 start-1/2 opacity-100! text-center hidden" :class="uploading && 'block!'">
                 <div>Uploading</div>
                 <div class="loading loading-dots"></div>
             </div>

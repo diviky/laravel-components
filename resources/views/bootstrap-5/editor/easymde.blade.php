@@ -13,7 +13,7 @@
             <textarea id="{{ $id() }}" {{ $attributes->except(['extra-attributes', 'settings']) }} {{ $extraAttributes }}
                 name="{{ $name }}" x-ref="textarea"></textarea>
 
-            <div class="absolute top-1/2 start-1/2 !opacity-100 text-center hidden" :class="uploading && '!block'">
+            <div class="absolute top-1/2 start-1/2 opacity-100! text-center hidden" :class="uploading && 'block!'">
                 <div>Uploading</div>
                 <div class="loading loading-dots"></div>
             </div>

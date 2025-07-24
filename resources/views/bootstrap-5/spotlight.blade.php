@@ -96,8 +96,8 @@
             </div>
 
             <!-- PROGRESS  -->
-            <div class="h-[2px] border-t-[1px] border-t-base-200 dark:border-t-base-300">
-                <progress class="progress hidden h-[1px]" :class="elapsed > elapsedMax && '!h-[2px] !block'"></progress>
+            <div class="h-[2px] border-t border-t-base-200 dark:border-t-base-300">
+                <progress class="progress hidden h-px" :class="elapsed > elapsedMax && 'h-[2px]! block!'"></progress>
             </div>
 
             <!-- SLOT -->

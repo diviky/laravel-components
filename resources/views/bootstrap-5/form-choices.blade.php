@@ -202,7 +202,7 @@
                 <span class="tags-list d-inline-flex" wire:key="selected-options-{{ $uuid }}">
                     @if ($compact)
                         <div class="compact-text">
-                            <span class="tag !h-auto">
+                            <span class="tag h-auto!">
                                 {{ $compactText }}
                                 <span class="badge badge-sm bg-primary tag-badge" x-text="selectedOptions.length">
                                 </span>
@@ -210,7 +210,7 @@
                         </div>
                     @else
                         <template x-for="(option, index) in selectedOptions" :key="index">
-                            <div class="form-choices-element tag !h-auto">
+                            <div class="form-choices-element tag h-auto!">
                                 <!-- SELECTION SLOT -->
                                 @if (isset($selection))
                                     <span
@@ -226,7 +226,7 @@
                     @endif
 
                     @if ($placeholder)
-                        <span class="form-choices-element tag !h-auto" x-show="isSelectionEmpty">
+                        <span class="form-choices-element tag h-auto!" x-show="isSelectionEmpty">
                             {{ $placeholder }}
                         </span>
                     @endif
@@ -270,7 +270,7 @@
         <!-- OPTIONS LIST -->
         <div x-show="focused" x-cloak class="choice-list" wire:key="options-list-main-{{ $id() }}">
             <div wire:key="options-list-{{ $id() }}"
-                class="choice-items {{ $height }} cursor-pointer overflow-y-auto border p-1 mt-1 rounded"
+                class="choice-items {{ $height }} cursor-pointer overflow-y-auto border p-1 mt-1 rounded-sm"
                 x-anchor.bottom-start="$refs.container">
 
                 <!-- PROGRESS -->
@@ -279,7 +279,7 @@
 
                 <!-- SELECT ALL -->
                 @if ($multiple)
-                    <div class="fw-bold rounded" wire:key="allow-all-{{ rand() }}">
+                    <div class="fw-bold rounded-sm" wire:key="allow-all-{{ rand() }}">
                         <div x-show="!isAllSelected" @click="selectAll()" class="p-1">
                             {{ $allowAllText }}
                         </div>
@@ -304,7 +304,7 @@
                                         @keydown.enter="toggle('{{ $optionValue($child) }}', true)"
                                         wire:key="option-{{ $optionValue($child) }}"
                                         search-value="{{ $optionLabel($child) }}"
-                                        class="list-group-item rounded p-1 mb-1"
+                                        class="list-group-item rounded-sm p-1 mb-1"
                                         :class="isActive('{{ $optionValue($child) }}') && 'active'" tabindex="0">
                                         <!-- ITEM SLOT -->
                                         @if ($item)
@@ -339,7 +339,7 @@
                             <div @click="toggle('{{ $optionValue($option) }}', true)"
                                 @keydown.enter="toggle('{{ $optionValue($option) }}', true)"
                                 wire:key="option-{{ $optionValue($option) }}"
-                                search-value="{{ $optionLabel($option) }}" class="list-group-item mb-1 rounded p-1"
+                                search-value="{{ $optionLabel($option) }}" class="list-group-item mb-1 rounded-sm p-1"
                                 :class="isActive('{{ $optionValue($option) }}') && 'active'" tabindex="0">
                                 <!-- ITEM SLOT -->
                                 @if ($item)

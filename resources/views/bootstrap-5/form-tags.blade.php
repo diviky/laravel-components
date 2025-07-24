@@ -94,7 +94,7 @@
             </span>
 
             <!-- INPUT -->
-            <input id="{{ $id() }}" class="outline-none mt-1 bg-transparent"
+            <input id="{{ $id() }}" class="outline-hidden mt-1 bg-transparent"
                 placeholder="{{ $attributes->whereStartsWith('placeholder')->first() }}" type="text"
                 enterkeyhint="done" x-ref="searchInput" :class="(isReadonly || !focused) && 'w-1'"
                 :required="isRequired" :readonly="isReadonly" x-model="tag" @input="focus()" @click.outside="clear()"

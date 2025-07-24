@@ -8,7 +8,7 @@
 <div
     {{ $attributes->class([
         'dropdown-menu',
-        'overflow-x-visible !max-h-none' => $visible,
+        'overflow-x-visible max-h-none!' => $visible,
         'dropdown-menu-' . $position => $position,
         'show' => $show,
     ]) }}>

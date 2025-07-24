@@ -54,7 +54,7 @@
         <div class="relative" :class="uploading && 'pointer-events-none opacity-50'">
             <!-- Toolbar -->
             <div x-ref="toolbar{{ $id() }}"
-                class="lexical-toolbar bg-light border p-1 mb-1 rounded d-flex flex-wrap gap-1">
+                class="lexical-toolbar bg-light border p-1 mb-1 rounded-sm d-flex flex-wrap gap-1">
                 <!-- Text formatting -->
                 <button type="button" class="btn btn-sm btn-outline-secondary" data-action="format" data-format="bold">
                     <i class="fas fa-bold"></i>
@@ -119,7 +119,7 @@
             </div>
 
             <!-- Editor content area -->
-            <div x-ref="editorContainer{{ $id() }}" class="lexical-editor border rounded p-2 min-h-[200px]">
+            <div x-ref="editorContainer{{ $id() }}" class="lexical-editor border rounded-sm p-2 min-h-[200px]">
             </div>
 
             <!-- Hidden input to store HTML content -->
@@ -128,8 +128,8 @@
                 :value="value">
 
             <!-- Upload indicator -->
-            <div class="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 !opacity-100 text-center hidden"
-                :class="uploading && '!block'">
+            <div class="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100! text-center hidden"
+                :class="uploading && 'block!'">
                 <div>Uploading</div>
                 <div class="spinner-border spinner-border-sm" role="status">
                     <span class="visually-hidden">Loading...</span>

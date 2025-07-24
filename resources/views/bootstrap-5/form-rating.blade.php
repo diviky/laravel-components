@@ -13,7 +13,7 @@
             @if ($icon == 'number')
                 <span @click="rate(star)" @mouseover="current = star" @mouseleave="current = rating"
                     @class([
-                        'rounded-sm text-gray-400 fill-current w-8 m-0 cursor-pointer' => true,
+                        'rounded-xs text-gray-400 fill-current w-8 m-0 cursor-pointer' => true,
                         'badge h-5 me-1' => $icon == 'number',
                     ])
                     :class="{
@@ -25,7 +25,7 @@
             @else
                 <span @click="rate(star)" @mouseover="current = star" @mouseleave="current = rating"
                     @class([
-                        'rounded-sm fill-current w-8 m-0 cursor-pointer' => true,
+                        'rounded-xs fill-current w-8 m-0 cursor-pointer' => true,
                     ])
                     :class="{
                         'text-primary': current >= star,

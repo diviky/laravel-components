@@ -77,7 +77,7 @@
                 {{ $extraAttributes }} name="{{ $name }}" x-ref="hiddenInput{{ $id() }}"
                 :value="JSON.stringify(value)">
 
-            <div class="editor-js-loading hidden" :class="uploading && '!block'">
+            <div class="editor-js-loading hidden" :class="uploading && 'block!'">
                 <div>Uploading</div>
                 <div class="loading loading-dots"></div>
             </div>
