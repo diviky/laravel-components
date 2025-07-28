@@ -26,7 +26,7 @@
         this.value = this.signature.toDataURL();
     },
     getStoredTheme() {
-        return localStorage.getItem('theme');
+        return localStorage.getItem('appearance');
     },
     getPreferredTheme() {
         const storedTheme = this.getStoredTheme();

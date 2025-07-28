@@ -3,7 +3,7 @@
 ])
 
 <div x-data="{ show: true }">
-    <x-form-input flat ::type="show ? 'password' : 'text'" :extra-attributes="$extraAttributes" :attributes="$attributes->merge(['type' => 'password'])">
+    <x-form-input ::type="show ? 'password' : 'text'" :extra-attributes="$extraAttributes" :attributes="$attributes->merge(['type' => 'password'])">
         {!! $slot !!}
         <x-slot:append>
             <a href="#" class="input-group-link hidden" :class="{ 'hidden': !show, 'block': show }"
