@@ -4,7 +4,7 @@
     ])->class([
         'btn',
         'dropdown-toggle' => $attributes->has('dropdown'),
-        'disabled' => $attributes->has('disabled'),
+        'disabled' => $disabled,
         'btn-sm' => $attributes->has('sm') || $attributes->has('small'),
         'btn-lg' => $attributes->has('lg') || $attributes->has('large'),
         'btn-link' => $attributes->has('link'),
