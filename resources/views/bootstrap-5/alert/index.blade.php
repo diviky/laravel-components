@@ -3,7 +3,21 @@
     'dismissible' => false,
     'icon' => null,
     'title' => null,
+    'message' => null,
 ])
+
+@php
+    if (empty($icon)) {
+        $icons = [
+            'info' => 'info-circle',
+            'help' => 'help',
+            'success' => 'rosette-discount-check',
+            'warning' => 'alert-triangle',
+            'danger' => 'alert-hexagon',
+        ];
+        $icon = $icons[$type] ?? null;
+    }
+@endphp
 
 <div role="alert"
     {{ $attributes->merge(['class' => 'alert text-sm max-w-xl'])->class([
@@ -24,7 +38,11 @@
             @if ($title)
                 <h4 class="alert-title">{{ $title }}</h4>
             @endif
-            {!! $slot !!}
+            @if ($message)
+                <p class="mb-0">{!! $message !!}</p>
+            @else
+                {!! $slot !!}
+            @endif
         </div>
     </div>
     @if ($dismissible)
