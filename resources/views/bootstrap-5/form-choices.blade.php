@@ -4,7 +4,7 @@
 ]) x-data="{ focused: false, selection: {{ $entangle($attributes) }} }">
     <div @click.outside = "clear()" @keyup.esc = "clear()" x-data="{
         id: {{ json_encode($id()) }},
-        options: {{ json_encode($options->values()) }},
+        options: {{ json_encode($options) }},
         isSingle: {{ json_encode(!$multiple) }},
         isSearchable: {{ json_encode($searchable) }},
         isReadonly: {{ json_encode($isReadonly()) }},
@@ -16,7 +16,7 @@
         fetchUrl: '{{ $attributes->get('data-fetch') }}',
         fetchMethod: '{{ $attributes->get('data-method', 'GET') }}',
         formData: {{ $attributes->get('form-data', '{}') }},
-    
+
         init() {
             this.fetch();
             // Fix weird issue when navigating back
@@ -45,109 +45,130 @@
                     });
             }
         },
+        get allSelectableOptions() {
+            // Helper to get all selectable options (including children from optgroups)
+            let allOptions = [];
+            this.options.forEach(option => {
+                if (option.children && Array.isArray(option.children)) {
+                    // This is an optgroup, add its children
+                    allOptions.push(...option.children);
+                } else {
+                    // This is a regular option
+                    allOptions.push(option);
+                }
+            });
+            return allOptions;
+        },
         get selectedOptions() {
+            const allOptions = this.allSelectableOptions;
+
             if (this.isSingle) {
-                return this.options.filter(i => i.{{ $valueField }} == this.selection) || {};
+                return allOptions.filter(i => i.{{ $valueField }} == this.selection) || {};
             }
-    
-            return this.selection.map(i => this.options.find(o => o.{{ $valueField }} == i) || {});
+
+            return this.selection.map(i => allOptions.find(o => o.{{ $valueField }} == i) || {});
         },
         updateOptions(newOptions) {
             this.options = [...newOptions];
         },
         get noResults() {
             if (!this.isSearchable || this.$refs.searchInput.value == '') {
-                return false
+                return false;
             }
-    
+
+            const selectableOptions = this.allSelectableOptions;
             return this.isSingle ?
-                (this.selection && this.options.length == 1) || (!this.selection && this.options.length == 0) :
-                this.options.length <= this.selection.length
+                (this.selection && selectableOptions.length == 1) || (!this.selection && selectableOptions.length == 0) :
+                selectableOptions.length <= this.selection.length;
         },
         get isAllSelected() {
-            return this.selection == null ? false : this.options.length == this.selection.length
+            const selectableOptions = this.allSelectableOptions;
+            return this.selection == null ? false : selectableOptions.length == this.selection.length;
         },
         get isSelectionEmpty() {
             return this.isSingle ?
                 this.selection == null || this.selection == '' :
-                this.selection.length == 0
+                this.selection.length == 0;
         },
         selectAll() {
-            this.selection = this.options.map(i => i.{{ $valueField }})
-            this.dispatchChangeEvent({ value: this.selection })
+            const allOptions = this.allSelectableOptions;
+            this.selection = allOptions.map(i => i.{{ $valueField }});
+            this.dispatchChangeEvent({ value: this.selection });
         },
         clear() {
             this.focused = false;
-            this.keyword = ''
-            this.$refs.searchInput.value = ''
+            this.keyword = '';
+            this.$refs.searchInput.value = '';
         },
         reset() {
             this.clear();
-            this.isSingle ?
-                this.selection = '' :
-                this.selection = []
-    
-            this.dispatchChangeEvent({ value: this.selection })
+            if (this.isSingle) {
+                this.selection = '';
+            } else {
+                this.selection = [];
+            }
+
+            this.dispatchChangeEvent({ value: this.selection });
         },
         focus() {
             if (this.isReadonly || this.isDisabled) {
-                return
+                return;
             }
-    
-            this.focused = true
-            this.$refs.searchInput.focus()
+
+            this.focused = true;
+            this.$refs.searchInput.focus();
         },
         isActive(id) {
             return this.isSingle ?
                 this.selection == id :
-                this.selection.includes(id)
+                this.selection.includes(id);
         },
         toggle(id, keepOpen = false) {
             if (this.isReadonly || this.isDisabled) {
-                return
+                return;
             }
-    
+
             if (this.isSingle) {
-                this.selection = id
-                this.focused = false
-                this.keyword = ''
+                this.selection = id;
+                this.focused = false;
+                this.keyword = '';
             } else {
-                this.selection.includes(id) ?
-                    this.selection = this.selection.filter(i => i != id) :
-                    this.selection.push(id)
+                if (this.selection.includes(id)) {
+                    this.selection = this.selection.filter(i => i != id);
+                } else {
+                    this.selection.push(id);
+                }
             }
-    
-            this.dispatchChangeEvent({ value: this.selection })
-            this.$refs.searchInput.value = ''
-    
+
+            this.dispatchChangeEvent({ value: this.selection });
+            this.$refs.searchInput.value = '';
+
             if (!keepOpen) {
-                this.$refs.searchInput.focus()
+                this.$refs.searchInput.focus();
             }
         },
         lookup() {
             Array.from(this.$refs.choicesOptions.children).forEach(child => {
                 if (!child.getAttribute('search-value').match(new RegExp(this.keyword, 'i'))) {
-                    child.classList.add('hidden')
+                    child.classList.add('hidden');
                 } else {
-                    child.classList.remove('hidden')
+                    child.classList.remove('hidden');
                 }
-            })
-    
-            console.log(this.keyword)
-    
+            });
+
             this.noResults = Array.from(this.$refs.choicesOptions.querySelectorAll('div > .hidden')).length ==
-                Array.from(this.$refs.choicesOptions.querySelectorAll('[search-value]')).length
+                Array.from(this.$refs.choicesOptions.querySelectorAll('[search-value]')).length;
         },
         search(value, event) {
             if (!value || value.length < this.minChars) {
-                return
+                return;
             }
-    
+
             // Prevent search for this keys
             if (event && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Shift', 'CapsLock', 'Tab'].includes(event.key)) {
                 return;
             }
-    
+
             @if($searchFunction)
             // Call search function from parent component
             // `search(value)` or `search(value, extra1, extra2 ...)`
@@ -155,10 +176,10 @@
                 ? preg_replace('/\((.*?)\)/', '(value, $1)', $searchFunction)
                 : $searchFunction . '(value)' }}
             @endif
-    
+
         },
         dispatchChangeEvent(detail) {
-            this.$refs.searchInput.dispatchEvent(new CustomEvent('change', { bubbles: true, detail }))
+            this.$refs.searchInput.dispatchEvent(new CustomEvent('change', { bubbles: true, detail }));
         }
     }" @keydown.up="$focus.previous()"
         @keydown.down="$focus.next()">
@@ -298,14 +319,18 @@
                 <div x-ref="choicesOptions">
                     @foreach ($options as $option)
                         @if ($optionIsOptGroup($option))
-                            <div label="{{ $optionLabel($option) }}">
+                            <div label="{{ $optionLabel($option) }}" class="ms-2">
+                                <div class="text-muted text-bold mb-2">
+                                    {{ $optionLabel($option) }}
+                                </div>
                                 @foreach ($optionChildren($option) as $child)
-                                    <div @click="toggle('{{ $optionValue($child) }}', true)"
-                                        @keydown.enter="toggle('{{ $optionValue($child) }}', true)"
+                                    <div @click="toggle({{ json_encode($optionValue($child)) }}, true)"
+                                        @keydown.enter="toggle({{ json_encode($optionValue($child)) }}, true)"
                                         wire:key="option-{{ $optionValue($child) }}"
                                         search-value="{{ $optionLabel($child) }}"
                                         class="list-group-item rounded-sm p-1 mb-1"
-                                        :class="isActive('{{ $optionValue($child) }}') && 'active'" tabindex="0">
+                                        :class="isActive({{ json_encode($optionValue($child)) }}) && 'active'"
+                                        tabindex="0">
                                         <!-- ITEM SLOT -->
                                         @if ($item)
                                             {{ $item($child) }}
@@ -318,7 +343,8 @@
 
                                                 <x-icon :name="$optionProperty($child, 'icon')" class="me-1" />
                                                 <span>{!! $optionLabel($child) !!}</span>
-                                                <span :class="!isActive('{{ $optionValue($child) }}') && 'hide'"
+                                                <span
+                                                    :class="!isActive({{ json_encode($optionValue($child)) }}) && 'hide'"
                                                     class="ms-auto">
                                                     <x-icon name="circle-check" class="text-success" />
                                                 </span>
@@ -336,11 +362,11 @@
                                 @endforeach
                             </div>
                         @else
-                            <div @click="toggle('{{ $optionValue($option) }}', true)"
-                                @keydown.enter="toggle('{{ $optionValue($option) }}', true)"
+                            <div @click="toggle({{ json_encode($optionValue($option)) }}, true)"
+                                @keydown.enter="toggle({{ json_encode($optionValue($option)) }}, true)"
                                 wire:key="option-{{ $optionValue($option) }}"
                                 search-value="{{ $optionLabel($option) }}" class="list-group-item mb-1 rounded-sm p-1"
-                                :class="isActive('{{ $optionValue($option) }}') && 'active'" tabindex="0">
+                                :class="isActive({{ json_encode($optionValue($option)) }}) && 'active'" tabindex="0">
                                 <!-- ITEM SLOT -->
                                 @if ($item)
                                     {{ $item($option) }}
@@ -354,7 +380,7 @@
 
                                         <x-icon :name="$optionProperty($option, 'icon')" class="me-1" />
                                         <span>{!! $optionLabel($option) !!}</span>
-                                        <span :class="!isActive('{{ $optionValue($option) }}') && 'hide'"
+                                        <span :class="!isActive({{ json_encode($optionValue($option)) }}) && 'hide'"
                                             class="ms-auto">
                                             <x-icon name="circle-check" class="text-success" />
                                         </span>

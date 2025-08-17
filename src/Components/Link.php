@@ -80,7 +80,7 @@ class Link extends Component
         }
 
         if (is_bool($can) && $route) {
-            $this->can = 'name:' . $route;
+            $this->can = 'name:'.$route;
         }
 
         $this->outline = $outline ? 'outline-' : ($ghost ? 'ghost-' : '');
@@ -95,13 +95,13 @@ class Link extends Component
 
         $route = Request::route();
 
-        if (!is_null($this->match)) {
+        if (! is_null($this->match)) {
             $name = $route->getName();
 
             return Str::is($this->match, $name);
         }
 
-        if (!is_null($this->route)) {
+        if (! is_null($this->route)) {
             return Request::routeIs($this->route);
         }
 
@@ -113,7 +113,7 @@ class Link extends Component
             return true;
         }
 
-        return !$this->exact && Str::startsWith($currentUrl, $linkUrl);
+        return ! $this->exact && Str::startsWith($currentUrl, $linkUrl);
     }
 
     #[\Override]

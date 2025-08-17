@@ -24,27 +24,27 @@ class FormDate extends FormInput
         if (isset($settings['allowed'])) {
             if ($settings['allowed'] == 'future') {
                 $minDate = now();
-                if (!empty($settings['buffer'])) {
+                if (! empty($settings['buffer'])) {
                     $minDate = $minDate->copy()->addDays(intval($settings['buffer']));
                 }
 
-                if (isset($settings['future']) && $settings['future'] == 'rolling' && !empty($settings['rolling'])) {
+                if (isset($settings['future']) && $settings['future'] == 'rolling' && ! empty($settings['rolling'])) {
                     $maxDate = now()->copy()->addDays(intval($settings['rolling']));
                 }
             }
 
             if ($settings['allowed'] == 'past') {
                 $maxDate = now();
-                if (!empty($settings['buffer'])) {
+                if (! empty($settings['buffer'])) {
                     $maxDate = $maxDate->copy()->subDays(intval($settings['buffer']));
                 }
 
-                if (isset($settings['past']) && $settings['past'] == 'rolling' && !empty($settings['rolling'])) {
+                if (isset($settings['past']) && $settings['past'] == 'rolling' && ! empty($settings['rolling'])) {
                     $minDate = $maxDate->copy()->subDays(intval($settings['rolling']));
                 }
             }
 
-            if ($settings['allowed'] == 'specific' && !empty($settings['range'])) {
+            if ($settings['allowed'] == 'specific' && ! empty($settings['range'])) {
                 [$min, $max] = explode('-', $settings['range']);
                 $minDate = $this->parse($min);
                 $maxDate = $this->parse($max);
