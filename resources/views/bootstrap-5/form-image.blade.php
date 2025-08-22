@@ -92,8 +92,8 @@
 
         @if ($slot->isNotEmpty())
             <!-- PREVIEW AREA -->
-            <div x-ref="preview" class="relative flex">
-                <div wire:ignore @click="change()" :class="processing && 'opacity-50 pointer-events-none'"
+            <div x-ref="preview" class="relative text-center">
+                <div @click="change()" :class="processing && 'opacity-50 pointer-events-none'"
                     class="cursor-pointer hover:scale-105 transition-all" data-bs-toggle="tooltip"
                     title="{{ $changeText }}">
                     {{ $slot }}
