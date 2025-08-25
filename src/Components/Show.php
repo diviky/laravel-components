@@ -11,7 +11,7 @@ class Show extends Component
     use Authorize;
 
     public function __construct(
-        public bool $enabled = true,
+        public mixed $enabled = true,
         public null|string|bool $can = null,
         public ?string $action = null,
     ) {}

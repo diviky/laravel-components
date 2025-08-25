@@ -42,7 +42,7 @@ class Link extends Component
         public bool $ghost = false,
         public ?bool $active = false,
         public ?string $icon = null,
-        public bool $enabled = true,
+        public mixed $enabled = true,
         public bool $disabled = false,
         public bool $external = false,
         public ?string $badge = null,
