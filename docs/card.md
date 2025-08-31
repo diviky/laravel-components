@@ -1,330 +1,443 @@
 # Card Component
 
-A flexible and feature-rich container component with multiple sections, styling options, and advanced features like status indicators, ribbons, and image support.
+A feature-rich content container with status indicators, ribbons, images, and comprehensive styling options.
 
-## View File
+## Overview
 
-Location: `vendor/diviky/laravel-components/resources/views/bootstrap-5/card/index.blade.php`
+**Component Type:** Layout  
+**Framework Support:** Bootstrap 5 (default), Bootstrap 4  
+**Livewire Compatible:** Yes  
+**Dependencies:** None
 
-## Arguments & Attributes
+## Files
+
+- **PHP Class:** None (view-only component)
+- **View File:** `resources/views/bootstrap-5/card/index.blade.php`
+- **Sub-components:** `card/header.blade.php`, `card/body.blade.php`, `card/footer.blade.php`, etc.
+- **Documentation:** `docs/card.md`
+- **Tests:** `tests/Components/CardTest.php`
+
+## Basic Usage
+
+```blade
+<x-card>
+    <x-slot:body>
+        Simple card content
+    </x-slot:body>
+</x-card>
+```
+
+## Attributes & Properties
+
+### Optional Attributes
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
-| title | string | null | Card title | 'User Profile' |
-| subtitle | string | null | Card subtitle | 'Personal Information' |
-| status | string | null | Status indicator color | 'primary', 'success', 'warning', 'danger' |
-| statusSide | string | 'top' | Status indicator position | 'top', 'bottom', 'left', 'right' |
-| ribbon | array | null | Ribbon configuration | ['text' => 'New', 'color' => 'primary'] |
-| image | string | null | Image URL for card | 'https://example.com/image.jpg' |
-| imagePosition | string | 'top' | Image position | 'top', 'bottom' |
-| borderColor | string | null | Border color | 'primary', 'secondary', 'success' |
-| textColor | string | null | Text color | 'primary', 'secondary', 'muted' |
-| bgColor | string | null | Background color | 'light', 'dark', 'primary' |
-| size | string | null | Card size variant | 'sm', 'lg' |
-| stacked | boolean | false | Stacked card style | true |
-| class | string | null | Additional CSS classes | 'shadow' |
-| id | string | null | Card ID | 'profile-card' |
+| status | string | null | Status color stripe (success, danger, warning, info) | `'success'` |
+| statusSide | string | 'top' | Status stripe position (top, bottom, start, end) | `'start'` |
+| ribbon | array | null | Ribbon overlay with text and color | `['text' => 'New', 'color' => 'primary']` |
+| title | string | null | Card title text | `'User Profile'` |
+| subtitle | string | null | Card subtitle text | `'Administrator'` |
+| image | string | null | Card image URL | `'/images/card-bg.jpg'` |
+| imagePosition | string | 'top' | Image position (top, bottom) | `'bottom'` |
+| borderColor | string | null | Border color variant | `'primary'` |
+| textColor | string | null | Text color variant | `'white'` |
+| bgColor | string | null | Background color variant | `'dark'` |
+| size | string | null | Background size variant | `'sm'` |
 
-## Slot Properties
+### Hidden/Advanced Attributes
 
-| Slot | Description | Example |
-|------|-------------|---------|
-| header | Card header content | `<x-slot:header>Header Content</x-slot:header>` |
-| body | Card body content | `<x-slot:body>Body Content</x-slot:body>` |
-| footer | Card footer content | `<x-slot:footer>Footer Content</x-slot:footer>` |
-| filters | Card filters section | `<x-slot:filters>Filter Content</x-slot:filters>` |
+| Name | Type | Default | Description | Example |
+|------|------|---------|-------------|---------|
+| stacked | boolean | false | Enable stacked card layout | `true` |
+
+## Slots
+
+### Named Slots
+
+#### `header`
+- **Purpose:** Card header content with optional actions
+- **Required:** No
+- **Content:** HTML/Components
+
+#### `body`
+- **Purpose:** Main card content area
+- **Required:** Recommended
+- **Content:** HTML/Components  
+
+#### `footer`
+- **Purpose:** Card footer with actions or info
+- **Required:** No
+- **Content:** HTML/Components
+
+#### `filters`
+- **Purpose:** Filter controls in card header area
+- **Required:** No
+- **Content:** Filter components
+
+### Default Slot
+- **Purpose:** Additional content between body and footer
+- **Content Type:** HTML/Components
+- **Required:** No
 
 ## Usage Examples
 
-### Basic Card
+### Basic Card with Content
 ```blade
-<x-card title="User Profile" subtitle="Personal Information">
-    <x-card.body>
-        <p>This is the card content.</p>
-    </x-card.body>
+<x-card>
+    <x-slot:header>
+        <h3 class="card-title">User Profile</h3>
+    </x-slot:header>
+    
+    <x-slot:body>
+        <p>User information and details go here.</p>
+    </x-slot:body>
+    
+    <x-slot:footer>
+        <button class="btn btn-primary">Edit Profile</button>
+    </x-slot:footer>
 </x-card>
 ```
 
 ### Card with Status Indicator
 ```blade
-<x-card title="Server Status" status="success" statusSide="top">
-    <x-card.body>
-        Server is running normally.
-    </x-card.body>
+<x-card 
+    status="success" 
+    statusSide="start"
+    title="Success Card"
+    subtitle="Operation completed">
+    
+    <x-slot:body>
+        Your operation was completed successfully.
+    </x-slot:body>
 </x-card>
 ```
 
 ### Card with Ribbon
 ```blade
-<x-card title="Premium Plan" :ribbon="['text' => 'Popular', 'color' => 'primary']">
-    <x-card.body>
-        Premium features included.
-    </x-card.body>
+<x-card :ribbon="['text' => 'Featured', 'color' => 'red']">
+    <x-slot:body>
+        This is a featured card with a ribbon overlay.
+    </x-slot:body>
 </x-card>
 ```
 
 ### Card with Image
 ```blade
-<x-card title="Product Card" image="/images/product.jpg" imagePosition="top">
-    <x-card.body>
-        <p>Product description here.</p>
-    </x-card.body>
+<x-card 
+    image="/images/landscape.jpg"
+    imagePosition="top"
+    title="Beautiful Landscape"
+    subtitle="Nature photography">
+    
+    <x-slot:body>
+        A stunning view of mountains and lakes captured during sunset.
+    </x-slot:body>
 </x-card>
 ```
 
-### Card with Custom Colors
+### Advanced Styled Card
 ```blade
-<x-card title="Custom Card" borderColor="primary" bgColor="light" textColor="primary">
-    <x-card.body>
-        Custom styled card content.
-    </x-card.body>
-</x-card>
-```
-
-### Stacked Card
-```blade
-<x-card title="Stacked Card" stacked>
-    <x-card.body>
-        This card has a stacked appearance.
-    </x-card.body>
-</x-card>
-```
-
-### Card with Slots
-```blade
-<x-card>
+<x-card 
+    borderColor="primary"
+    textColor="white"
+    bgColor="dark"
+    stacked
+    class="shadow-lg">
+    
     <x-slot:header>
-        <h5>Custom Header</h5>
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Dark Theme Card</h4>
+            <x-card.options>
+                <x-dropdown>
+                    <!-- Options menu -->
+                </x-dropdown>
+            </x-card.options>
+        </div>
     </x-slot:header>
     
     <x-slot:body>
-        <p>Card body content</p>
+        This card uses dark theme styling with custom colors.
     </x-slot:body>
-    
-    <x-slot:footer>
-        <button class="btn btn-primary">Action</button>
-    </x-slot:footer>
 </x-card>
 ```
 
 ### Card with Filters
 ```blade
-<x-card title="Data Table">
+<x-card>
     <x-slot:filters>
-        <div class="row">
-            <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Search...">
-            </div>
-            <div class="col-md-6">
-                <select class="form-select">
-                    <option>All Categories</option>
-                </select>
-            </div>
-        </div>
+        <x-filter-search name="search" placeholder="Search users..." />
+        <x-filter-dates name="date_range" />
     </x-slot:filters>
     
     <x-slot:body>
-        Table content here...
+        <!-- Filtered content -->
+        <x-table>
+            <!-- Table content -->
+        </x-table>
     </x-slot:body>
 </x-card>
 ```
 
-### Full-Featured Card
+### Livewire Integration
 ```blade
-<x-card 
-    title="Advanced Card" 
-    subtitle="With all features"
-    status="warning"
-    statusSide="left"
-    :ribbon="['text' => 'Beta', 'color' => 'warning']"
-    image="/images/banner.jpg"
-    borderColor="warning"
-    class="shadow-lg">
-    
+<x-card wire:loading.class="opacity-50">
     <x-slot:header>
-        <div class="d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Custom Header</h5>
-            <div class="card-actions">
-                <button class="btn btn-sm btn-outline-primary">Edit</button>
-            </div>
-        </div>
+        <h4>{{ $title }}</h4>
     </x-slot:header>
     
     <x-slot:body>
-        <p>This card demonstrates all available features.</p>
+        @if($loading)
+            <div class="spinner-border" role="status"></div>
+        @else
+            {{ $content }}
+        @endif
     </x-slot:body>
     
     <x-slot:footer>
-        <div class="d-flex justify-content-between">
-            <small class="text-muted">Last updated: {{ now()->format('M j, Y') }}</small>
-            <div>
-                <button class="btn btn-sm btn-secondary">Cancel</button>
-                <button class="btn btn-sm btn-primary">Save</button>
-            </div>
-        </div>
+        <button wire:click="refresh" class="btn btn-secondary">
+            Refresh
+        </button>
     </x-slot:footer>
 </x-card>
 ```
 
-## Real Project Examples
+## Sub-components
 
-### From Dashboard
+### Card Header (`<x-card.header>`)
 ```blade
-<x-card title="Statistics" status="success">
-    <x-card.body>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="text-center">
-                    <h3>1,234</h3>
-                    <p class="text-muted">Total Users</p>
-                </div>
-            </div>
-        </div>
-    </x-card.body>
+<x-card.header class="d-flex justify-content-between">
+    <h4>{{ $title }}</h4>
+    <x-card.options>
+        <!-- Dropdown or action buttons -->
+    </x-card.options>
+</x-card.header>
+```
+
+### Card Body (`<x-card.body>`)
+```blade
+<x-card.body class="p-4">
+    <!-- Main content -->
+</x-card.body>
+```
+
+### Card Footer (`<x-card.footer>`)
+```blade
+<x-card.footer class="text-end">
+    <button class="btn btn-secondary">Cancel</button>
+    <button class="btn btn-primary">Save</button>
+</x-card.footer>
+```
+
+### Card Title (`<x-card.title>`)
+```blade
+<x-card.title tag="h3" class="text-primary">
+    {{ $cardTitle }}
+</x-card.title>
+```
+
+### Card Actions (`<x-card.actions>`)
+```blade
+<x-card.actions>
+    <button class="btn btn-sm btn-outline-primary">Edit</button>
+    <button class="btn btn-sm btn-outline-danger">Delete</button>
+</x-card.actions>
+```
+
+## Features
+
+### Status Indicators
+- Four-sided status stripes (top, bottom, start, end)
+- Color variants: success, danger, warning, info, primary
+- Visual feedback for card states
+
+### Ribbon Overlays
+- Decorative ribbon with custom text
+- Color customization
+- Perfect for "Featured", "New", "Sale" labels
+
+### Image Integration
+- Top or bottom image placement
+- Responsive image sizing
+- Alt text support
+
+### Flexible Styling
+- Border, text, and background color variants
+- Stacked layout support
+- Custom CSS class support
+
+## Common Patterns
+
+### Dashboard Cards
+```blade
+<div class="row">
+    <div class="col-md-4">
+        <x-card status="success" title="Total Users" subtitle="1,234">
+            <x-slot:body>
+                <h2 class="text-success">1,234</h2>
+                <small class="text-muted">+12% from last month</small>
+            </x-slot:body>
+        </x-card>
+    </div>
+</div>
+```
+
+### Form Cards
+```blade
+<x-card>
+    <x-slot:header>
+        <h4>Edit Profile</h4>
+    </x-slot:header>
+    
+    <x-slot:body>
+        <x-form wire:submit.prevent="save">
+            <!-- Form fields -->
+        </x-form>
+    </x-slot:body>
 </x-card>
 ```
 
-### From User Profile
+### Data Cards
 ```blade
-<x-card title="Profile Information" :ribbon="['text' => 'Verified', 'color' => 'success']">
-    <x-card.body>
-        <div class="row">
-            <div class="col-md-8">
-                <h5>{{ $user->name }}</h5>
-                <p class="text-muted">{{ $user->email }}</p>
-            </div>
-        </div>
-    </x-card.body>
+<x-card>
+    <x-slot:filters>
+        <x-filter-search />
+        <x-filter-dates />
+    </x-slot:filters>
+    
+    <x-slot:body>
+        <x-table>
+            <!-- Data table -->
+        </x-table>
+    </x-slot:body>
+    
+    <x-slot:footer>
+        {{ $pagination->links() }}
+    </x-slot:footer>
 </x-card>
 ```
+
+## Configuration
+
+### Component Configuration
+```php
+// config/laravel-components.php
+'components' => [
+    'card' => [
+        'view' => 'laravel-components::{framework}.card.index',
+    ],
+    'card.header' => [
+        'view' => 'laravel-components::{framework}.card.header',
+    ],
+    // ... other card sub-components
+],
+```
+
+## Accessibility
+
+### ARIA Attributes
+- Proper heading hierarchy in headers
+- Image alt texts for card images
+- Semantic structure with appropriate roles
+
+### Best Practices
+- Use meaningful titles and subtitles
+- Ensure sufficient color contrast
+- Provide alternative text for images
+- Use semantic HTML in card content
+
+## Browser Compatibility
+
+- **Supported Browsers:** All modern browsers
+- **JavaScript Dependencies:** None (purely CSS-based)
+- **CSS Framework Requirements:** Bootstrap 4+ or equivalent grid system
+
+## Troubleshooting
+
+### Common Issues
+
+#### Status Stripe Not Showing
+**Problem:** Status color not appearing
+**Solution:** Ensure valid color name (success, danger, warning, info, primary)
+
+#### Ribbon Not Positioned Correctly
+**Problem:** Ribbon appears in wrong location
+**Solution:** Verify ribbon array structure: `['text' => 'Label', 'color' => 'primary']`
+
+#### Image Not Responsive
+**Problem:** Card image overflows or doesn't scale
+**Solution:** Use proper Bootstrap image classes or ensure image has appropriate dimensions
+
+#### Slots Not Rendering
+**Problem:** Named slots appear empty
+**Solution:** Use correct slot syntax: `<x-slot:name>content</x-slot:name>`
 
 ## Related Components
 
-### Card Header
+- **Modal:** Similar container structure for overlays
+- **Accordion:** Collapsible card-like containers
+- **Alert:** For status messaging
+- **Table:** Often used within card bodies
+- **Form:** Frequently wrapped in cards
 
-Location: `vendor/diviky/laravel-components/resources/views/bootstrap-5/card/header.blade.php`
+## Performance Considerations
 
-#### Arguments & Attributes
+- Use image optimization for card images
+- Consider lazy loading for image-heavy card layouts
+- Minimize CSS class combinations for better performance
 
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| title | string | null | Header title | 'Settings' |
-| subtitle | string | null | Header subtitle | 'Configure your preferences' |
-| class | string | null | Additional CSS classes | 'bg-light' |
+## Examples Gallery
 
-### Card Body
-
-Location: `vendor/diviky/laravel-components/resources/views/bootstrap-5/card/body.blade.php`
-
-#### Arguments & Attributes
-
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| class | string | null | Additional CSS classes | 'p-4' |
-
-### Card Footer
-
-Location: `vendor/diviky/laravel-components/resources/views/bootstrap-5/card/footer.blade.php`
-
-#### Arguments & Attributes
-
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| class | string | null | Additional CSS classes | 'text-end' |
-
-### Card Title
-
-Location: `vendor/diviky/laravel-components/resources/views/bootstrap-5/card/title.blade.php`
-
-#### Arguments & Attributes
-
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| subtitle | string | null | Optional subtitle | 'Additional information' |
-| class | string | null | Additional CSS classes | 'fw-bold' |
-
-### Card Actions
-
-Location: `vendor/diviky/laravel-components/resources/views/bootstrap-5/card/actions.blade.php`
-
-#### Arguments & Attributes
-
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| class | string | null | Additional CSS classes | 'text-end' |
-
-### Card Options
-
-Location: `vendor/diviky/laravel-components/resources/views/bootstrap-5/card/options.blade.php`
-
-#### Arguments & Attributes
-
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| class | string | null | Additional CSS classes | 'dropdown' |
-
-### Card Filter
-
-Location: `vendor/diviky/laravel-components/resources/views/bootstrap-5/card/filter.blade.php`
-
-#### Arguments & Attributes
-
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| class | string | null | Additional CSS classes | 'card-header' |
-
-## Advanced Features
-
-### Status Indicators
-Cards can display status indicators on any side:
+### E-commerce Product Card
 ```blade
-<x-card status="primary" statusSide="top">...</x-card>
-<x-card status="success" statusSide="left">...</x-card>
-<x-card status="danger" statusSide="right">...</x-card>
+<x-card 
+    image="/products/laptop.jpg"
+    :ribbon="['text' => 'Sale', 'color' => 'danger']"
+    class="h-100">
+    
+    <x-slot:body>
+        <h5>Gaming Laptop</h5>
+        <p class="text-muted">High-performance laptop for gaming</p>
+        <h4 class="text-primary">$1,299</h4>
+    </x-slot:body>
+    
+    <x-slot:footer>
+        <button class="btn btn-primary w-100">Add to Cart</button>
+    </x-slot:footer>
+</x-card>
 ```
 
-### Ribbon Badges
-Add attention-grabbing ribbons:
+### User Profile Card
 ```blade
-<x-card :ribbon="['text' => 'New Feature', 'color' => 'success']">...</x-card>
+<x-card class="text-center">
+    <x-slot:body>
+        <x-avatar image="/users/john.jpg" size="xl" class="mb-3" />
+        <h4>John Doe</h4>
+        <p class="text-muted">Software Developer</p>
+        <div class="d-flex justify-content-center">
+            <x-badge color="primary">PHP</x-badge>
+            <x-badge color="secondary">Laravel</x-badge>
+        </div>
+    </x-slot:body>
+    
+    <x-slot:footer>
+        <button class="btn btn-outline-primary">View Profile</button>
+    </x-slot:footer>
+</x-card>
 ```
 
-### Image Integration
-Cards support images at the top or bottom:
-```blade
-<x-card image="/path/to/image.jpg" imagePosition="top">...</x-card>
-```
+## Changelog
 
-### Color Customization
-Full control over card colors:
-```blade
-<x-card borderColor="primary" bgColor="light" textColor="dark">...</x-card>
-```
+### Version 2.0.0
+- Added ribbon overlay support
+- Enhanced status indicator positioning
+- Improved image positioning options
+- Added stacked layout capability
 
-## Styling Classes
+## Contributing
 
-The component applies these CSS classes based on props:
-
-- `card` - Base card styling
-- `card-stacked` - Stacked appearance
-- `border-{color}` - Border color variants
-- `text-{color}` - Text color variants
-- `bg-{color}` - Background color variants
-- `card-status-{side}` - Status indicator positioning
-- `ribbon` - Ribbon badge styling
-
-## Accessibility Features
-
-- Proper semantic HTML structure
-- ARIA labels and roles where appropriate
-- Keyboard navigation support
-- Screen reader friendly content
-- Focus management for interactive elements
-
-## Best Practices
-
-1. **Consistent Spacing**: Use consistent padding and margins
-2. **Clear Hierarchy**: Maintain clear visual hierarchy with titles and content
-3. **Responsive Design**: Ensure cards work well on all screen sizes
-4. **Meaningful Status**: Use status indicators meaningfully
-5. **Accessible Content**: Ensure all content is accessible to screen readers
+To contribute to this component:
+1. Update the view file: `resources/views/bootstrap-5/card/index.blade.php`
+2. Update sub-component views in `resources/views/bootstrap-5/card/`
+3. Add/update tests in `tests/Components/CardTest.php`
+4. Update this documentation

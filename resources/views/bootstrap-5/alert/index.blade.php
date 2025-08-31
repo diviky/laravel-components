@@ -28,13 +28,13 @@
         'alert-danger' => $type == 'danger',
         'alert-dismissible' => $dismissible,
     ]) }}>
-    <div @class(['d-flex' => $icon])>
+    <div @class(['d-flex align-items-center' => $icon])>
         @if ($icon)
             <div>
-                <x-icon :name="$icon" class="me-2" />
+                <x-icon :name="$icon" size="md" class="me-2" />
             </div>
         @endif
-        <div>
+        <div class="flex-grow-1">
             @if ($title)
                 <h4 class="alert-title">{{ $title }}</h4>
             @endif
