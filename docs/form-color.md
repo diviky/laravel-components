@@ -1,30 +1,45 @@
 # Form Color Component
 
-A color input component that provides both a native HTML5 color picker and a predefined color selection interface with badge-style options.
+A specialized color input component that provides professional color selection capabilities with comprehensive form integration and enhanced user experience. This component extends FormInput to offer intuitive color picker functionality with proper formatting and color-specific features.
 
 ## Overview
 
 **Component Type:** Form  
 **Framework Support:** Bootstrap 5 (default), Bootstrap 4  
 **Livewire Compatible:** Yes  
-**Dependencies:** Extends FormInput and FormChoices components
+**Dependencies:** FormInput component, extends base form functionality
+**JavaScript Library:** Alpine.js (via FormInput)
 
 ## Files
 
+- **PHP Class:** None (view-only component)
 - **View File:** `resources/views/bootstrap-5/form-color.blade.php`
-- **View File:** `resources/views/bootstrap-5/form-colors.blade.php`
+- **Tests:** `tests/Components/FormColorTest.php`
 - **Documentation:** `docs/form-color.md`
 
 ## Basic Usage
 
-### Single Color Picker
+### Simple Color Input
 ```blade
-<x-form-color name="theme_color" />
+<x-form-color name="theme_color" label="Choose Theme Color" />
 ```
 
-### Predefined Color Selection
+### With Default Value
 ```blade
-<x-form-colors name="brand_color" />
+<x-form-color 
+    name="primary_color" 
+    label="Primary Color"
+    :default="'#007bff'">
+</x-form-color>
+```
+
+### With Help Text
+```blade
+<x-form-color 
+    name="accent_color" 
+    label="Accent Color"
+    help="Select a color that complements your design">
+</x-form-color>
 ```
 
 ## Attributes & Properties
@@ -33,137 +48,261 @@ A color input component that provides both a native HTML5 color picker and a pre
 
 | Name | Type | Description | Example |
 |------|------|-------------|---------|
-| name | string | Input name attribute | `'theme_color'` |
+| name | string | Input name attribute | `'theme_color'` or `'primary_color'` |
 
 ### Optional Attributes
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
-| id | string | auto-generated | Element ID | `'color-input'` |
-| class | string | null | Additional CSS classes | `'custom-color'` |
-| disabled | boolean | false | Disable the component | `true` |
-| readonly | boolean | false | Make component readonly | `true` |
+| label | string | '' | Form field label | `'Choose Color'` |
+| value | mixed | null | Current color value | `'#ff0000'` |
+| default | mixed | null | Default color value | `'#007bff'` |
+| extraAttributes | array | [] | Additional attributes | `['data-test' => 'color']` |
 
 ### Inherited Attributes
 
-This component inherits from `FormInput` and supports these additional attributes:
+This component extends `FormInput` and supports these additional attributes:
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
-| value | string | null | Current color value | `'#ff0000'` |
-| placeholder | string | null | Placeholder text | `'Choose a color'` |
+| id | string | auto-generated | Element ID | `'color-input'` |
+| class | string | 'form-control-color' | CSS classes | `'custom-color-picker'` |
+| disabled | boolean | false | Disable the component | `true` |
+| readonly | boolean | false | Make component readonly | `true` |
 | required | boolean | false | Make field required | `true` |
-| autocomplete | string | null | Autocomplete behavior | `'off'` |
+| placeholder | string | '' | Input placeholder text | `'Choose a color...'` |
+| autocomplete | string | 'off' | Autocomplete behavior | `'on'` |
 
 ### Authorization Attributes
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
-| can | string | null | Laravel permission gate | `'edit-theme'` |
-| role | string\|array | null | Required user role(s) | `'admin'` or `['admin', 'designer']` |
+| can | string | null | Laravel permission gate | `'select-colors'` |
+| role | string\|array | null | Required user role(s) | `'user'` or `['user', 'admin']` |
 | action | string | null | Action type for authorization | `'create'` |
 
 ## Slots
 
-### Default Slot
-- **Purpose:** Additional content after the color input
-- **Content Type:** HTML/Text/Components
-
-### Named Slots
+### Optional Slots
 
 #### `help`
-- **Purpose:** Help text displayed below the input
+- **Purpose:** Help text below the color input
 - **Required:** No
+- **Content Type:** HTML/Text/Components
 - **Example:**
 ```blade
 <x-slot:help>
-    Choose a color that matches your brand guidelines
+    Choose a color that matches your brand guidelines.
 </x-slot:help>
+```
+
+#### Default Slot
+- **Purpose:** Additional content after the color input
+- **Required:** No
+- **Content Type:** HTML/Components
+- **Example:**
+```blade
+<x-form-color name="color">
+    <small class="text-muted">Colors are in hexadecimal format</small>
+</x-form-color>
 ```
 
 ## Usage Examples
 
-### Basic Color Picker
+### Basic Color Input
 ```blade
 <x-form-color 
-    name="primary_color" 
-    value="#007bff"
-    placeholder="Select primary color">
-</x-form-color>
-```
-
-### Color Picker with Validation
-```blade
-<x-form-color 
-    name="accent_color"
-    required
-    class="form-control-lg"
-    :error="$errors->first('accent_color')">
+    name="theme_color" 
+    label="Theme Color">
     
     <x-slot:help>
-        This color will be used for buttons and links
+        Choose the primary color for your theme
     </x-slot:help>
 </x-form-color>
 ```
 
-### Predefined Color Selection
+### Required Color Input
 ```blade
-<x-form-colors 
-    name="brand_color"
-    class="mb-3">
+<x-form-color 
+    name="required_color" 
+    label="Required Color"
+    required>
     
     <x-slot:help>
-        Select from our predefined brand color palette
+        This color selection is required to complete your design
     </x-slot:help>
-</x-form-colors>
+</x-form-color>
+```
+
+### With Default Color Value
+```blade
+<x-form-color 
+    name="brand_color" 
+    label="Brand Color"
+    :default="'#28a745'">
+    
+    <x-slot:help>
+        Default brand color is green (#28a745)
+    </x-slot:help>
+</x-form-color>
+```
+
+### With Custom Classes
+```blade
+<x-form-color 
+    name="custom_color" 
+    label="Custom Color"
+    class="custom-color-picker-lg">
+    
+    <x-slot:help>
+        <div class="custom-color-help">
+            <strong>Custom Styling:</strong><br>
+            This color picker has custom CSS classes applied
+        </div>
+    </x-slot:help>
+</x-form-color>
+```
+
+### With Custom ID
+```blade
+<x-form-color 
+    name="custom_id_color" 
+    label="Custom ID Color"
+    id="brand-color-picker">
+    
+    <x-slot:help>
+        This color picker has a custom ID attribute
+    </x-slot:help>
+</x-form-color>
+```
+
+### With Placeholder
+```blade
+<x-form-color 
+    name="placeholder_color" 
+    label="Color with Placeholder"
+    placeholder="Select your preferred color">
+    
+    <x-slot:help>
+        Use the placeholder text as a guide for color selection
+    </x-slot:help>
+</x-form-color>
+```
+
+### With Autocomplete
+```blade
+<x-form-color 
+    name="autocomplete_color" 
+    label="Autocomplete Color"
+    autocomplete="on">
+    
+    <x-slot:help>
+        Autocomplete is enabled for this color picker
+    </x-slot:help>
+</x-form-color>
+```
+
+### With Extra Attributes
+```blade
+<x-form-color 
+    name="extra_attrs_color" 
+    label="Extra Attributes Color"
+    data-test="color-picker"
+    data-color-format="hex">
+    
+    <x-slot:help>
+        This color picker has additional data attributes
+    </x-slot:help>
+</x-form-color>
+```
+
+### Disabled Color Field
+```blade
+<x-form-color 
+    name="disabled_color" 
+    label="Disabled Color"
+    disabled>
+    
+    <x-slot:help>
+        This color field is currently disabled
+    </x-slot:help>
+</x-form-color>
+```
+
+### Readonly Color Field
+```blade
+<x-form-color 
+    name="readonly_color" 
+    label="Readonly Color"
+    readonly>
+    
+    <x-slot:help>
+        This color field is currently readonly
+    </x-slot:help>
+</x-form-color>
 ```
 
 ### Livewire Integration
 ```blade
 <x-form-color 
-    wire:model="theme.primary_color"
-    wire:change="updateTheme"
-    name="primary_color">
+    wire:model.live="selectedColor"
+    name="livewire_color" 
+    label="Livewire Color">
+    
+    <x-slot:help>
+        <div class="livewire-status">
+            <strong>Selected Color:</strong> 
+            <span x-text="$wire.selectedColor ?: 'None selected'">None selected</span>
+            <div class="color-preview mt-2" x-show="$wire.selectedColor">
+                <div class="color-swatch" :style="`background-color: ${$wire.selectedColor}`"></div>
+                <small x-text="$wire.selectedColor"></small>
+            </div>
+        </div>
+    </x-slot:help>
 </x-form-color>
 ```
 
-### Framework-Specific Styling
-
-#### Bootstrap Classes
+### With Model Binding
 ```blade
 <x-form-color 
-    class="form-control-color form-control-lg"
-    name="color">
-</x-form-color>
-```
-
-#### Custom Styling
-```blade
-<x-form-color 
-    class="custom-color-picker border-2"
-    style="width: 100px; height: 40px;"
-    name="color">
+    name="user_color" 
+    label="User Color"
+    :bind="$user">
+    
+    <x-slot:help>
+        This color will be bound to the user model
+    </x-slot:help>
 </x-form-color>
 ```
 
 ## Component Variants
 
-### form-color
-**Usage:** `<x-form-color>`
-**Description:** Native HTML5 color picker input
+### Standard Color Input
+**Usage:** `<x-form-color>` (default)
+**Description:** Basic color input with standard functionality
 **Features:**
-- Native browser color picker
+- HTML5 color input type
 - Bootstrap form-control-color styling
-- Extends FormInput with type="color"
+- Standard color validation
+- FormInput extension
 
-### form-colors
-**Usage:** `<x-form-colors>`
-**Description:** Predefined color selection with badge-style options
+### Enhanced Color Input
+**Usage:** `<x-form-color class="enhanced-color-picker">`
+**Description:** Color input with custom styling
 **Features:**
-- 25+ predefined colors including brand colors
-- Badge-style visual representation
-- Extends FormChoices component
-- Social media brand colors included
+- Custom CSS classes
+- Enhanced visual appearance
+- Professional styling
+- Flexible customization
+
+### Livewire Color Input
+**Usage:** `<x-form-color wire:model.live="color">`
+**Description:** Color input with real-time updates
+**Features:**
+- Livewire real-time color selection
+- Dynamic color preview
+- Enhanced user experience
+- Performance optimization
 
 ## Configuration
 
@@ -178,58 +317,403 @@ This component inherits from `FormInput` and supports these additional attribute
     'form-color' => [
         'view' => 'laravel-components::{framework}.form-color',
     ],
-    'form-colors' => [
-        'view' => 'laravel-components::{framework}.form-colors',
-    ],
 ],
 ```
 
+### Default Settings
+The component uses these default settings:
+- **Type:** `'color'`
+- **Class:** `'form-control-color'`
+- **Validation:** Standard color validation
+- **Form Integration:** Full form integration support
+
+### Color Format Support
+The component supports various color formats:
+- **Hexadecimal:** `#ff0000`, `#f00`
+- **RGB:** `rgb(255, 0, 0)`
+- **RGBA:** `rgba(255, 0, 0, 0.5)`
+- **HSL:** `hsl(0, 100%, 50%)`
+- **Named Colors:** `red`, `blue`, `green`
+
 ## Common Patterns
 
-### Theme Color Selection
+### Brand Color Selection
 ```blade
-<div class="row">
-    <div class="col-md-6">
-        <x-form-color 
-            name="primary_color"
-            label="Primary Color"
-            :error="$errors->first('primary_color')">
-        </x-form-color>
+<div class="brand-color-selection">
+    <h4>Brand Color Selection</h4>
+    <p>Choose colors for your brand identity:</p>
+    
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <x-form-color 
+                name="primary_brand_color" 
+                label="Primary Brand Color"
+                :default="'#007bff'"
+                required>
+                
+                <x-slot:help>
+                    <div class="primary-color-help">
+                        <strong>Primary Color Guidelines:</strong><br>
+                        • Should represent your main brand identity<br>
+                        • Use for primary buttons and links<br>
+                        • Ensure good contrast with text<br>
+                        • Consider accessibility standards
+                    </div>
+                </x-slot:help>
+            </x-form-color>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+            <x-form-color 
+                name="secondary_brand_color" 
+                label="Secondary Brand Color"
+                :default="'#6c757d'">
+                
+                <x-slot:help>
+                    <div class="secondary-color-help">
+                        <strong>Secondary Color Guidelines:</strong><br>
+                        • Should complement your primary color<br>
+                        • Use for secondary elements<br>
+                        • Maintain visual hierarchy<br>
+                        • Ensure good contrast
+                    </div>
+                </x-slot:help>
+            </x-form-color>
+        </div>
     </div>
-    <div class="col-md-6">
-        <x-form-colors 
-            name="accent_color"
-            label="Accent Color">
-        </x-form-colors>
+    
+    <div class="brand-color-tips mt-3">
+        <h6>Brand Color Tips</h6>
+        <div class="row">
+            <div class="col-md-4">
+                <strong>Color Psychology:</strong><br>
+                • Blue: Trust, professionalism<br>
+                • Green: Growth, nature<br>
+                • Red: Energy, passion<br>
+                • Yellow: Optimism, creativity
+            </div>
+            <div class="col-md-4">
+                <strong>Accessibility:</strong><br>
+                • Ensure sufficient contrast<br>
+                • Test with color blindness<br>
+                • Consider dark mode support<br>
+                • Use color as enhancement
+            </div>
+            <div class="col-md-4">
+                <strong>Consistency:</strong><br>
+                • Use colors consistently<br>
+                • Document color values<br>
+                • Create color palette<br>
+                • Maintain brand guidelines
+            </div>
+        </div>
     </div>
 </div>
 ```
 
-### Brand Color Management
+### Theme Color Management
 ```blade
-<x-form-colors 
-    name="brand_colors[]"
-    multiple
-    label="Select Brand Colors">
+<div class="theme-color-management">
+    <h4>Theme Color Management</h4>
+    <p>Configure colors for your application theme:</p>
     
-    <x-slot:help>
-        Choose up to 3 colors for your brand palette
-    </x-slot:help>
-</x-form-colors>
+    <x-form-color 
+        name="theme_primary" 
+        label="Theme Primary Color"
+        :default="'#007bff'"
+        required>
+        
+        <x-slot:help>
+            <div class="theme-primary-help">
+                <strong>Primary Theme Color:</strong><br>
+                • Main color for your application<br>
+                • Used for primary actions<br>
+                • Should be accessible and professional<br>
+                • Consider your target audience
+            </div>
+        </x-slot:help>
+    </x-form-color>
+    
+    <div class="theme-color-palette mt-3">
+        <h6>Theme Color Palette</h6>
+        <div class="row">
+            <div class="col-md-3">
+                <x-form-color 
+                    name="theme_success" 
+                    label="Success Color"
+                    :default="'#28a745'">
+                    
+                    <x-slot:help>
+                        Color for success messages and actions
+                    </x-slot:help>
+                </x-form-color>
+            </div>
+            
+            <div class="col-md-3">
+                <x-form-color 
+                    name="theme_warning" 
+                    label="Warning Color"
+                    :default="'#ffc107'">
+                    
+                    <x-slot:help>
+                        Color for warning messages and actions
+                    </x-slot:help>
+                </x-form-color>
+            </div>
+            
+            <div class="col-md-3">
+                <x-form-color 
+                    name="theme_danger" 
+                    label="Danger Color"
+                    :default="'#dc3545'">
+                    
+                    <x-slot:help>
+                        Color for error messages and actions
+                    </x-slot:help>
+                </x-form-color>
+            </div>
+            
+            <div class="col-md-3">
+                <x-form-color 
+                    name="theme_info" 
+                    label="Info Color"
+                    :default="'#17a2b8'">
+                    
+                    <x-slot:help>
+                        Color for informational messages
+                    </x-slot:help>
+                </x-form-color>
+            </div>
+        </div>
+    </div>
+</div>
 ```
 
-### Color Validation
+### UI Component Color Selection
 ```blade
-<x-form-color 
-    name="theme_color"
-    required
-    pattern="^#[0-9A-Fa-f]{6}$"
-    :error="$errors->first('theme_color')">
+<div class="ui-component-color-selection">
+    <h4>UI Component Colors</h4>
+    <p>Select colors for specific UI components:</p>
     
-    <x-slot:help>
-        Must be a valid 6-digit hex color code
-    </x-slot:help>
-</x-form-color>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <x-form-color 
+                name="button_color" 
+                label="Button Color"
+                :default="'#007bff'">
+                
+                <x-slot:help>
+                    <div class="button-color-help">
+                        <strong>Button Color Guidelines:</strong><br>
+                        • Should have good contrast with text<br>
+                        • Consider hover and active states<br>
+                        • Ensure accessibility compliance<br>
+                        • Match your brand identity
+                    </div>
+                </x-slot:help>
+            </x-form-color>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+            <x-form-color 
+                name="link_color" 
+                label="Link Color"
+                :default="'#007bff'">
+                
+                <x-slot:help>
+                    <div class="link-color-help">
+                        <strong>Link Color Guidelines:</strong><br>
+                        • Should be distinct from regular text<br>
+                        • Consider visited and hover states<br>
+                        • Ensure sufficient contrast<br>
+                        • Follow web accessibility guidelines
+                    </div>
+                </x-slot:help>
+            </x-form-color>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+            <x-form-color 
+                name="background_color" 
+                label="Background Color"
+                :default="'#ffffff'">
+                
+                <x-slot:help>
+                    <div class="background-color-help">
+                        <strong>Background Color Guidelines:</strong><br>
+                        • Should not interfere with readability<br>
+                        • Consider content contrast<br>
+                        • Support for dark mode<br>
+                        • Maintain visual hierarchy
+                    </div>
+                </x-slot:help>
+            </x-form-color>
+        </div>
+    </div>
+</div>
+```
+
+### Accessibility Color Testing
+```blade
+<div class="accessibility-color-testing">
+    <h4>Accessibility Color Testing</h4>
+    <p>Test your color combinations for accessibility:</p>
+    
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <x-form-color 
+                name="text_color" 
+                label="Text Color"
+                :default="'#000000'">
+                
+                <x-slot:help>
+                    <div class="text-color-help">
+                        <strong>Text Color Guidelines:</strong><br>
+                        • Should have sufficient contrast with background<br>
+                        • Test with various background colors<br>
+                        • Consider color blindness<br>
+                        • Ensure readability in all conditions
+                    </div>
+                </x-slot:help>
+            </x-form-color>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+            <x-form-color 
+                name="background_test_color" 
+                label="Background Test Color"
+                :default="'#ffffff'">
+                
+                <x-slot:help>
+                    <div class="background-test-help">
+                        <strong>Background Test Guidelines:</strong><br>
+                        • Test contrast with selected text color<br>
+                        • Ensure WCAG compliance<br>
+                        • Consider different lighting conditions<br>
+                        • Test with color vision deficiencies
+                    </div>
+                </x-slot:help>
+            </x-form-color>
+        </div>
+    </div>
+    
+    <div class="contrast-testing mt-3">
+        <h6>Contrast Testing</h6>
+        <div class="row">
+            <div class="col-md-6">
+                <strong>WCAG Guidelines:</strong><br>
+                • AA: 4.5:1 for normal text<br>
+                • AAA: 7:1 for normal text<br>
+                • Large text: 3:1 ratio<br>
+                • UI components: 3:1 ratio
+            </div>
+            <div class="col-md-6">
+                <strong>Testing Tools:</strong><br>
+                • WebAIM Contrast Checker<br>
+                • Chrome DevTools<br>
+                • Color Contrast Analyzer<br>
+                • Browser extensions
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### Creative Design Color Selection
+```blade
+<div class="creative-design-color-selection">
+    <h4>Creative Design Colors</h4>
+    <p>Choose colors for creative design projects:</p>
+    
+    <x-form-color 
+        name="creative_primary" 
+        label="Creative Primary Color"
+        :default="'#ff6b6b'">
+        
+        <x-slot:help>
+            <div class="creative-primary-help">
+                <strong>Creative Primary Color:</strong><br>
+                • Should reflect your creative vision<br>
+                • Consider emotional impact<br>
+                • Think about target audience<br>
+                • Balance creativity with usability
+            </div>
+        </x-slot:help>
+    </x-form-color>
+    
+    <div class="creative-color-palette mt-3">
+        <h6>Creative Color Palette</h6>
+        <div class="row">
+            <div class="col-md-3">
+                <x-form-color 
+                    name="creative_accent_1" 
+                    label="Accent Color 1"
+                    :default="'#4ecdc4'">
+                    
+                    <x-slot:help>
+                        First accent color for creative elements
+                    </x-slot:help>
+                </x-form-color>
+            </div>
+            
+            <div class="col-md-3">
+                <x-form-color 
+                    name="creative_accent_2" 
+                    label="Accent Color 2"
+                    :default="'#45b7d1'">
+                    
+                    <x-slot:help>
+                        Second accent color for creative elements
+                    </x-slot:help>
+                </x-form-color>
+            </div>
+            
+            <div class="col-md-3">
+                <x-form-color 
+                    name="creative_accent_3" 
+                    label="Accent Color 3"
+                    :default="'#96ceb4'">
+                    
+                    <x-slot:help>
+                        Third accent color for creative elements
+                    </x-slot:help>
+                </x-form-color>
+            </div>
+            
+            <div class="col-md-3">
+                <x-form-color 
+                    name="creative_accent_4" 
+                    label="Accent Color 4"
+                    :default="'#feca57'">
+                    
+                    <x-slot:help>
+                        Fourth accent color for creative elements
+                    </x-slot:help>
+                </x-form-color>
+            </div>
+        </div>
+    </div>
+    
+    <div class="creative-color-tips mt-3">
+        <h6>Creative Color Tips</h6>
+        <div class="row">
+            <div class="col-md-6">
+                <strong>Color Harmony:</strong><br>
+                • Use complementary colors<br>
+                • Consider analogous schemes<br>
+                • Think about triadic harmony<br>
+                • Balance warm and cool tones
+            </div>
+            <div class="col-md-6">
+                <strong>Creative Expression:</strong><br>
+                • Colors can convey emotions<br>
+                • Consider cultural meanings<br>
+                • Think about symbolism<br>
+                • Express your unique style
+            </div>
+        </div>
+    </div>
+</div>
 ```
 
 ## Testing Examples
@@ -247,14 +731,12 @@ public function it_renders_form_color_with_basic_attributes()
 }
 
 /** @test */
-public function it_renders_form_colors_with_predefined_options()
+public function it_renders_form_color_with_label()
 {
-    $view = $this->blade('<x-form-colors name="brand_color" />');
+    $view = $this->blade('<x-form-color name="color" label="Choose Color" />');
     
-    $view->assertSee('blue');
-    $view->assertSee('primary');
-    $view->assertSee('twitter');
-    $view->assertSee('github');
+    $view->assertSee('name="color"');
+    $view->assertSee('Choose Color');
 }
 ```
 
@@ -263,72 +745,99 @@ public function it_renders_form_colors_with_predefined_options()
 /** @test */
 public function it_integrates_with_livewire()
 {
-    Livewire::test(ColorPickerComponent::class)
+    Livewire::test(ColorComponent::class)
         ->assertSee('<x-form-color')
-        ->set('primaryColor', '#ff0000')
-        ->assertSee('value="#ff0000"');
+        ->set('color', '#ff0000')
+        ->assertSee('#ff0000');
 }
 ```
 
 ## Accessibility
 
 ### ARIA Attributes
-- `aria-describedby`: Links to help text when provided
-- `aria-invalid`: Applied when validation errors exist
-- `aria-required`: Applied when field is required
+- `aria-label`: Applied to color input
+- `aria-describedby`: Links to help text
+- `role="button"`: Applied to color picker
 
 ### Keyboard Navigation
 - Tab navigation to color input
-- Enter key opens color picker
-- Arrow keys navigate color options in predefined selection
+- Enter key for color picker
+- Color selection navigation
+- Form submission
+
+### Screen Reader Support
+- Proper labeling and descriptions
+- Color selection feedback
+- Help text communication
+- Error message communication
+
+### Color Accessibility
+- Clear color purpose indication
+- Proper validation feedback
+- Helpful error messages
+- Color guidelines
 
 ## Browser Compatibility
 
-- **Supported Browsers:** All modern browsers with HTML5 color input support
-- **JavaScript Dependencies:** None (native HTML5)
+- **Supported Browsers:** All modern browsers with HTML5 support
+- **JavaScript Dependencies:** Alpine.js (via FormInput)
 - **CSS Framework Requirements:** Bootstrap 4+ or custom styling
+- **Input Type Support:** HTML5 color input type
 
 ## Troubleshooting
 
 ### Common Issues
 
-#### Color Picker Not Opening
-**Problem:** Clicking the color input doesn't open the color picker
-**Solution:** Ensure the input is not disabled or readonly, and check browser compatibility
+#### Color Not Displaying
+**Problem:** Color picker not showing correctly
+**Solution:** Check browser support and CSS styling
 
-#### Predefined Colors Not Displaying
-**Problem:** Form-colors component shows empty options
-**Solution:** Verify that FormChoices component is properly configured and accessible
+#### FormInput Integration Problems
+**Problem:** FormInput extension not working
+**Solution:** Check FormInput component and attribute merging
 
-#### Color Value Not Saving
-**Problem:** Selected color value is not being submitted with the form
-**Solution:** Check that the name attribute is set and the form is properly configured
+#### Color Validation Issues
+**Problem:** Color validation not working
+**Solution:** Verify color validation rules and error handling
+
+#### Styling Issues
+**Problem:** Color input doesn't look like expected
+**Solution:** Check Bootstrap CSS and custom styles
+
+#### Color Format Issues
+**Problem:** Color format not working
+**Solution:** Check color format support and validation
 
 ## Related Components
 
-- **FormInput:** Base input component that form-color extends
-- **FormChoices:** Component that form-colors extends for predefined options
-- **FormHidden:** For storing additional color-related data
-- **ViewColor:** For displaying color values in read-only format
+- **Form Input:** Base input component
+- **Form Label:** Component labeling
+- **Form Errors:** Validation display
+- **Form Help:** Help text component
+- **Form Colors:** Multiple color input component
 
 ## Changelog
 
 ### Version 1.0.0
-- Initial release with HTML5 color input support
-- Predefined color selection with badge styling
-- Bootstrap 5 integration
+- Initial release with color input functionality
+- FormInput extension with color support
+- Help and default slot support
+- Comprehensive form integration
 
 ## Contributing
 
 To contribute to this component:
 1. Update the view file: `resources/views/bootstrap-5/form-color.blade.php`
-2. Update the view file: `resources/views/bootstrap-5/form-colors.blade.php`
-3. Add/update tests in `tests/Components/FormColorTest.php`
-4. Update this documentation
+2. Add/update tests in `tests/Components/FormColorTest.php`
+3. Update this documentation
 
 ## See Also
 
 - [Form Input Component](../form-input.md)
-- [Form Choices Component](../form-choices.md)
-- [View Color Component](../view-color.md)
-- [Bootstrap Color Input Documentation](https://getbootstrap.com/docs/5.3/forms/form-controls/#color)
+- [Form Label Component](../form-label.md)
+- [Form Errors Component](../form-errors.md)
+- [Form Help Component](../form-help.md)
+- [Form Colors Component](../form-colors.md)
+- [HTML5 Color Input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/color)
+- [CSS Color Values](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value)
+- [Web Color Accessibility](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)

@@ -1,285 +1,277 @@
 # Form Switch Component
 
-A toggle switch component with comprehensive form integration, validation support, and Livewire compatibility for boolean input fields.
+A sophisticated toggle switch component that provides a modern alternative to traditional checkboxes, featuring inline display options, copy functionality, Livewire integration, and comprehensive form validation. This component creates accessible toggle switches with enhanced user experience and flexible configuration options.
 
 ## Overview
 
-**Component Type:** Form Input  
+**Component Type:** Form  
 **Framework Support:** Bootstrap 5 (default), Bootstrap 4  
 **Livewire Compatible:** Yes  
-**Dependencies:** `diviky/laravel-form-components` for base functionality
+**Dependencies:** FormInput component, extends base form functionality
+**JavaScript Library:** Alpine.js (via Livewire integration)
 
 ## Files
 
 - **PHP Class:** None (view-only component)
 - **View File:** `resources/views/bootstrap-5/form-switch.blade.php`
 - **Documentation:** `docs/form-switch.md`
-- **Tests:** `tests/Components/FormSwitchTest.php`
 
 ## Basic Usage
 
+### Simple Toggle Switch
 ```blade
 <x-form-switch name="notifications" label="Enable Notifications" />
+```
+
+### With Default Value
+```blade
+<x-form-switch 
+    name="newsletter" 
+    label="Subscribe to Newsletter"
+    :checked="true">
+</x-form-switch>
+```
+
+### With Help Text
+```blade
+<x-form-switch 
+    name="marketing" 
+    label="Marketing Communications"
+    help="Receive promotional emails and special offers">
+</x-form-switch>
 ```
 
 ## Attributes & Properties
 
 ### Required Attributes
 
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| name | string | - | Input field name | `'notifications'` |
+| Name | Type | Description | Example |
+|------|------|-------------|---------|
+| name | string | Input name attribute | `'notifications'` or `'newsletter'` |
 
 ### Optional Attributes
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
-| label | string | null | Switch label text | `'Enable Feature'` |
-| value | string | '1' | Input value when checked | `'on'` |
-| checked | boolean | false | Initial checked state | `true` |
-| copy | string\|false | '0' | Hidden input value for unchecked state | `'off'` |
-| title | string | null | Form group title/label | `'Settings'` |
-| help | string | null | Help text below switch | `'Toggle this feature on/off'` |
-| inline | boolean | false | Display inline with other switches | `true` |
-
-### Hidden/Advanced Attributes
-
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| id | string | auto-generated | Input ID | `'notifications-switch'` |
+| label | string | '' | Switch label text | `'Enable Feature'` |
+| value | mixed | '1' | Switch value when checked | `'enabled'` |
+| checked | boolean | false | Whether switch is checked | `true` |
+| copy | mixed | true | Copy value for form submission | `false` |
+| help | string | '' | Help text below switch | `'Enable this feature'` |
+| extraAttributes | array | [] | Additional attributes | `['data-test' => 'switch']` |
 
 ### Inherited Attributes
 
-This component supports these additional attributes:
+This component extends base form functionality and supports these additional attributes:
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
-| class | string | null | Additional CSS classes | `'custom-switch'` |
+| id | string | auto-generated | Element ID | `'switch-input'` |
+| class | string | `'form-check-input'` | CSS classes | `'custom-switch'` |
 | disabled | boolean | false | Disable the switch | `true` |
+| readonly | boolean | false | Make switch readonly | `true` |
 | required | boolean | false | Make field required | `true` |
+| inline | boolean | false | Display inline | `true` |
+| title | string | null | Title attribute | `'Toggle Switch'` |
+
+### Authorization Attributes
+
+| Name | Type | Default | Description | Example |
+|------|------|---------|-------------|---------|
+| can | string | null | Laravel permission gate | `'toggle-feature'` |
+| role | string\|array | null | Required user role(s) | `'user'` or `['user', 'admin']` |
+| action | string | null | Action type for authorization | `'update'` |
 
 ## Slots
 
-### Default Slot
-- **Purpose:** Additional content after the switch
-- **Content Type:** HTML/Components
+### Optional Slots
+
+#### `help`
+- **Purpose:** Help text below the switch
 - **Required:** No
-
-## Usage Examples
-
-### Basic Switch
+- **Content Type:** HTML/Text/Components
+- **Example:**
 ```blade
-<x-form-switch name="notifications" label="Enable Notifications" />
+<x-slot:help>
+    Enable this feature to receive real-time updates and notifications.
+</x-slot:help>
 ```
 
-### Switch with Title and Help
+#### Default Slot
+- **Purpose:** Additional content after the switch
+- **Required:** No
+- **Content Type:** HTML/Components
+- **Example:**
 ```blade
-<x-form-switch 
-    name="dark_mode" 
-    label="Dark Mode"
-    title="Appearance Settings"
-    help="Switch between light and dark themes">
+<x-form-switch name="feature">
+    <small class="text-muted">Feature status will be updated immediately</small>
 </x-form-switch>
 ```
 
-### Pre-checked Switch
+## Usage Examples
+
+### Basic Toggle Switch
 ```blade
 <x-form-switch 
-    name="auto_save" 
-    label="Auto Save"
-    :checked="true" />
+    name="notifications" 
+    label="Enable Notifications">
+    
+    <x-slot:help>
+        Receive email and push notifications for important updates
+    </x-slot:help>
+</x-form-switch>
 ```
 
-### Custom Values
-```blade
-<x-form-switch 
-    name="status" 
-    label="Active Status"
-    value="active"
-    copy="inactive" />
-```
-
-### Inline Switches
-```blade
-<div class="d-flex gap-3">
-    <x-form-switch name="email" label="Email" inline />
-    <x-form-switch name="sms" label="SMS" inline />
-    <x-form-switch name="push" label="Push" inline />
-</div>
-```
-
-### Disabled Switch
-```blade
-<x-form-switch 
-    name="premium" 
-    label="Premium Features"
-    disabled />
-```
-
-### Required Switch
+### Required Toggle Switch
 ```blade
 <x-form-switch 
     name="terms" 
-    label="I agree to the terms and conditions"
-    required />
+    label="I agree to the Terms and Conditions"
+    required>
+    
+    <x-slot:help>
+        You must accept the terms to continue
+    </x-slot:help>
+</x-form-switch>
 ```
 
-### Switch with Custom Classes
+### With Custom Value
 ```blade
 <x-form-switch 
-    name="feature" 
-    label="Beta Feature"
-    class="custom-switch-lg">
+    name="status" 
+    label="Account Status"
+    value="active"
+    :checked="true">
+    
+    <x-slot:help>
+        Toggle between active and inactive account status
+    </x-slot:help>
+</x-form-switch>
+```
+
+### Inline Display
+```blade
+<x-form-switch 
+    name="preferences" 
+    label="Email Preferences"
+    inline>
+    
+    <x-slot:help>
+        Choose your email notification preferences
+    </x-slot:help>
+</x-form-switch>
+```
+
+### With Model Binding
+```blade
+<x-form-switch 
+    name="user_notifications" 
+    label="Your Notification Settings"
+    :bind="$user"
+    bind-key="notifications_enabled">
+    
+    <x-slot:help>
+        Manage your personal notification preferences
+    </x-slot:help>
 </x-form-switch>
 ```
 
 ### Livewire Integration
 ```blade
 <x-form-switch 
-    name="real_time" 
-    label="Real-time Updates"
-    wire:model="settings.realTime" />
-```
-
-### Switch with Validation
-```blade
-<x-form-switch 
-    name="consent" 
-    label="I consent to data processing"
-    required />
-```
-
-### Switch with Custom Help Component
-```blade
-<x-form-switch name="analytics" label="Analytics">
+    wire:model="form.enableFeature"
+    name="feature_toggle" 
+    label="Enable Advanced Feature"
+    required>
+    
     <x-slot:help>
-        <div class="text-muted small">
-            <i class="icon-info"></i>
-            Help us improve by sharing anonymous usage data
+        <div class="feature-status">
+            <strong>Status:</strong> 
+            <span class="badge" :class="$wire.form.enableFeature ? 'bg-success' : 'bg-secondary'">
+                {{ $wire.form.enableFeature ? 'Enabled' : 'Disabled' }}
+            </span>
         </div>
     </x-slot:help>
 </x-form-switch>
 ```
 
-## Features
-
-### Form Integration
-- **Name Attribute:** Proper form field naming
-- **Value Handling:** Custom values for checked/unchecked states
-- **Hidden Input:** Automatic hidden input for unchecked state
-- **Validation:** Built-in error handling and display
-
-### Styling Options
-- **Bootstrap Switch:** Uses Bootstrap 5 switch styling
-- **Inline Display:** Support for inline layout
-- **Custom Classes:** Additional CSS class support
-- **Form Group:** Proper form group structure
-
-### Livewire Support
-- **Wire Model:** Automatic wire:model integration
-- **Wire Modifiers:** Support for wire modifiers
-- **Real-time Updates:** Livewire compatibility
-
-### Accessibility
-- **Proper Labels:** Semantic label structure
-- **Form Check:** Bootstrap form-check classes
-- **ID Generation:** Automatic ID generation
-- **ARIA Support:** Proper accessibility attributes
-
-## Common Patterns
-
-### Settings Panel
+### With Custom Classes
 ```blade
-<div class="settings-panel">
-    <h4>Notification Settings</h4>
+<x-form-switch 
+    name="custom_switch" 
+    label="Custom Styled Switch"
+    class="custom-switch-lg"
+    title="Toggle this feature on or off">
     
-    <x-form-switch 
-        name="email_notifications" 
-        label="Email Notifications"
-        title="Email"
-        help="Receive notifications via email" />
-    
-    <x-form-switch 
-        name="sms_notifications" 
-        label="SMS Notifications"
-        title="SMS"
-        help="Receive notifications via SMS" />
-    
-    <x-form-switch 
-        name="push_notifications" 
-        label="Push Notifications"
-        title="Push"
-        help="Receive push notifications" />
-</div>
+    <x-slot:help>
+        <div class="switch-tips">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Tip:</strong> This switch has custom styling applied
+        </div>
+    </x-slot:help>
+</x-form-switch>
 ```
 
-### Feature Toggles
+### Disabled Switch
 ```blade
-<div class="feature-toggles">
-    <h5>Beta Features</h5>
+<x-form-switch 
+    name="locked_feature" 
+    label="Premium Feature"
+    disabled>
     
-    <x-form-switch 
-        name="dark_mode" 
-        label="Dark Mode"
-        help="Enable dark theme (beta)" />
-    
-    <x-form-switch 
-        name="advanced_search" 
-        label="Advanced Search"
-        help="Enable advanced search features" />
-    
-    <x-form-switch 
-        name="real_time_updates" 
-        label="Real-time Updates"
-        help="Enable real-time data updates" />
-</div>
+    <x-slot:help>
+        This feature is locked and cannot be changed
+    </x-slot:help>
+</x-form-switch>
 ```
 
-### Consent Forms
+### Readonly Switch
 ```blade
-<form wire:submit.prevent="saveConsent">
-    <x-form-switch 
-        name="marketing_consent" 
-        label="Marketing Communications"
-        help="Receive marketing emails and updates" />
+<x-form-switch 
+    name="display_status" 
+    label="Current Status"
+    readonly>
     
-    <x-form-switch 
-        name="data_processing" 
-        label="Data Processing"
-        help="Allow processing of personal data"
-        required />
-    
-    <x-form-switch 
-        name="third_party" 
-        label="Third-party Services"
-        help="Allow sharing data with third-party services" />
-    
-    <x-form-button type="submit">Save Preferences</x-form-button>
-</form>
+    <x-slot:help>
+        Your current status (cannot be edited)
+    </x-slot:help>
+</x-form-switch>
 ```
 
-### User Preferences
-```blade
-<div class="user-preferences">
-    <x-form-switch 
-        name="auto_save" 
-        label="Auto Save"
-        :checked="true"
-        help="Automatically save changes" />
-    
-    <x-form-switch 
-        name="notifications" 
-        label="Desktop Notifications"
-        help="Show desktop notifications" />
-    
-    <x-form-switch 
-        name="sound_effects" 
-        label="Sound Effects"
-        help="Play sound effects for actions" />
-</div>
-```
+## Component Variants
+
+### Standard Toggle Switch
+**Usage:** `<x-form-switch>` (default)
+**Description:** Basic toggle switch with standard styling
+**Features:**
+- Bootstrap form-switch styling
+- Standard checkbox functionality
+- Help text and label support
+- Form validation integration
+
+### Inline Toggle Switch
+**Usage:** `<x-form-switch inline>`
+**Description:** Switch displayed inline with other form elements
+**Features:**
+- Horizontal layout
+- Compact form design
+- Consistent spacing
+- Responsive behavior
+
+### Copy-Enabled Switch
+**Usage:** `<x-form-switch :copy="true">`
+**Description:** Switch with copy value functionality
+**Features:**
+- Hidden input for form submission
+- Copy value when switch is off
+- Flexible copy value configuration
+- Form data consistency
 
 ## Configuration
+
+### Environment Variables
+- `LARAVEL_COMPONENTS_FRAMEWORK`: Set to 'bootstrap-4' for Bootstrap 4 support
+- `LARAVEL_COMPONENTS_PREFIX`: Add prefix to all components (e.g., 'ui' makes `<x-ui-form-switch>`)
 
 ### Component Configuration
 ```php
@@ -291,208 +283,461 @@ This component supports these additional attributes:
 ],
 ```
 
-## JavaScript Integration
+### Default Settings
+The component uses these default settings:
+- **Type:** `'checkbox'`
+- **Class:** `'form-check-input'`
+- **Copy:** `true` (enabled by default)
+- **Inline:** `false` (disabled by default)
 
-### Custom Switch Behavior
-```javascript
-// Custom switch toggle behavior
-document.querySelectorAll('.form-switch input[type="checkbox"]').forEach(switchInput => {
-    switchInput.addEventListener('change', function() {
-        const label = this.closest('.form-switch').querySelector('.form-check-label');
-        
-        if (this.checked) {
-            label.classList.add('text-success');
-        } else {
-            label.classList.remove('text-success');
-        }
-    });
-});
-```
-
-### Switch State Management
-```javascript
-// Programmatically control switches
-function toggleSwitch(name, checked) {
-    const switchInput = document.querySelector(`input[name="${name}"]`);
-    if (switchInput) {
-        switchInput.checked = checked;
-        switchInput.dispatchEvent(new Event('change'));
-    }
+### Bootstrap Classes
+```css
+.form-switch {
+    /* Bootstrap 5 switch styling */
 }
 
-// Example usage
-toggleSwitch('notifications', true);
+.form-check-inline {
+    /* Inline display styling */
+}
+
+.form-check-input {
+    /* Input styling */
+}
+
+.form-check-label {
+    /* Label styling */
+}
 ```
 
-## Accessibility
+## Common Patterns
 
-### ARIA Attributes
-- Proper form-check structure
-- Semantic label associations
-- Screen reader friendly content
-- Keyboard navigation support
-
-### Best Practices
-- Use descriptive labels
-- Provide helpful descriptions
-- Ensure sufficient color contrast
-- Test with keyboard navigation
-
-## Browser Compatibility
-
-- **Supported Browsers:** All modern browsers
-- **JavaScript Dependencies:** None (purely CSS-based)
-- **CSS Framework Requirements:** Bootstrap 4+ for proper styling
-
-## Troubleshooting
-
-### Common Issues
-
-#### Switch Not Toggling
-**Problem:** Switch doesn't change state
-**Solution:** Ensure proper name attribute and form structure
-
-#### Validation Not Working
-**Problem:** Validation errors not displaying
-**Solution:** Check form validation rules and error handling
-
-#### Livewire Not Updating
-**Problem:** Livewire model not updating
-**Solution:** Ensure proper wire:model attribute and component structure
-
-#### Styling Issues
-**Problem:** Switch doesn't look like expected
-**Solution:** Verify Bootstrap CSS is loaded and check custom classes
-
-## Related Components
-
-- **Form Toggle:** Alternative toggle component
-- **Form Checkbox:** Traditional checkbox input
-- **Form Radio:** Radio button group
-- **Form Button:** Form submission buttons
-
-## Performance Considerations
-
-- Use appropriate switch states for user experience
-- Consider lazy loading for large numbers of switches
-- Optimize Livewire updates for real-time switches
-
-## Examples Gallery
-
-### Admin Dashboard Settings
+### User Preferences Form
 ```blade
-<div class="admin-settings">
-    <h4>System Settings</h4>
+<div class="user-preferences-form">
+    <h4>Notification Preferences</h4>
+    <p>Choose how you want to receive notifications:</p>
     
-    <div class="row">
-        <div class="col-md-6">
-            <x-form-switch 
-                name="maintenance_mode" 
-                label="Maintenance Mode"
-                title="System"
-                help="Enable maintenance mode for system updates" />
-            
-            <x-form-switch 
-                name="debug_mode" 
-                label="Debug Mode"
-                title="Development"
-                help="Enable debug logging and features" />
-        </div>
+    <x-form-switch 
+        name="email_notifications" 
+        label="Email Notifications"
+        :checked="true">
         
-        <div class="col-md-6">
-            <x-form-switch 
-                name="backup_enabled" 
-                label="Auto Backup"
-                title="Backup"
-                help="Enable automatic system backups" />
-            
-            <x-form-switch 
-                name="notifications_enabled" 
-                label="System Notifications"
-                title="Notifications"
-                help="Enable system-wide notifications" />
+        <x-slot:help>
+            Receive important updates via email
+        </x-slot:help>
+    </x-form-switch>
+    
+    <x-form-switch 
+        name="push_notifications" 
+        label="Push Notifications"
+        :checked="true">
+        
+        <x-slot:help>
+            Receive real-time push notifications
+        </x-slot:help>
+    </x-form-switch>
+    
+    <x-form-switch 
+        name="sms_notifications" 
+        label="SMS Notifications"
+        :checked="false">
+        
+        <x-slot:help>
+            Receive urgent notifications via SMS
+        </x-slot:help>
+    </x-form-switch>
+    
+    <x-form-switch 
+        name="marketing_emails" 
+        label="Marketing Communications"
+        :checked="false">
+        
+        <x-slot:help>
+            Receive promotional emails and special offers
+        </x-slot:help>
+    </x-form-switch>
+    
+    <div class="preferences-summary mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h6>Your Notification Summary:</h6>
+                <ul class="mb-0 text-muted">
+                    <li>Email: <span x-text="$wire.emailNotifications ? 'Enabled' : 'Disabled'">Enabled</span></li>
+                    <li>Push: <span x-text="$wire.pushNotifications ? 'Enabled' : 'Disabled'">Enabled</span></li>
+                    <li>SMS: <span x-text="$wire.smsNotifications ? 'Enabled' : 'Disabled'">Disabled</span></li>
+                    <li>Marketing: <span x-text="$wire.marketingEmails ? 'Enabled' : 'Disabled'">Disabled</span></li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
 ```
 
-### User Profile Preferences
+### Feature Toggle Management
 ```blade
-<div class="profile-preferences">
-    <h5>Privacy Settings</h5>
+<div class="feature-toggle-management">
+    <h4>Feature Management</h4>
+    <p>Enable or disable system features:</p>
     
     <x-form-switch 
-        name="profile_public" 
-        label="Public Profile"
-        help="Make your profile visible to other users" />
+        name="maintenance_mode" 
+        label="Maintenance Mode"
+        :checked="false">
+        
+        <x-slot:help>
+            <div class="maintenance-warning">
+                <strong>Warning:</strong> Enabling maintenance mode will restrict user access
+            </div>
+        </x-slot:help>
+    </x-form-switch>
     
     <x-form-switch 
-        name="show_email" 
-        label="Show Email"
-        help="Display your email address on your profile" />
+        name="debug_mode" 
+        label="Debug Mode"
+        :checked="false">
+        
+        <x-slot:help>
+            Enable detailed error logging and debugging information
+        </x-slot:help>
+    </x-form-switch>
     
     <x-form-switch 
-        name="allow_messages" 
-        label="Allow Messages"
-        help="Allow other users to send you messages" />
-    
-    <h5>Notification Preferences</h5>
-    
-    <x-form-switch 
-        name="email_notifications" 
-        label="Email Notifications"
-        :checked="true"
-        help="Receive notifications via email" />
+        name="api_rate_limiting" 
+        label="API Rate Limiting"
+        :checked="true">
+        
+        <x-slot:help>
+            Limit API requests to prevent abuse
+        </x-slot:help>
+    </x-form-switch>
     
     <x-form-switch 
-        name="push_notifications" 
-        label="Push Notifications"
-        help="Receive push notifications in your browser" />
+        name="user_registration" 
+        label="User Registration"
+        :checked="true">
+        
+        <x-slot:help>
+            Allow new users to create accounts
+        </x-slot:help>
+    </x-form-switch>
+    
+    <div class="feature-status mt-3">
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            <strong>Note:</strong> Feature changes take effect immediately. 
+            Some features may require a system restart.
+        </div>
+    </div>
 </div>
 ```
 
-### E-commerce Settings
+### Settings Configuration
 ```blade
-<div class="store-settings">
-    <h4>Store Configuration</h4>
+<div class="settings-configuration">
+    <h4>Account Settings</h4>
+    <p>Configure your account preferences:</p>
     
     <x-form-switch 
-        name="store_open" 
-        label="Store Open"
-        title="Status"
-        help="Make store available for customers" />
+        name="two_factor_auth" 
+        label="Two-Factor Authentication"
+        :checked="true">
+        
+        <x-slot:help>
+            <div class="security-info">
+                <strong>Security:</strong> Add an extra layer of protection to your account
+            </div>
+        </x-slot:help>
+    </x-form-switch>
     
     <x-form-switch 
-        name="inventory_tracking" 
-        label="Inventory Tracking"
-        title="Inventory"
-        help="Track product inventory levels" />
+        name="session_timeout" 
+        label="Extended Session Timeout"
+        :checked="false">
+        
+        <x-slot:help>
+            Keep your session active for longer periods
+        </x-slot:help>
+    </x-form-switch>
     
     <x-form-switch 
-        name="tax_calculation" 
-        label="Tax Calculation"
-        title="Taxes"
-        help="Automatically calculate taxes on orders" />
+        name="activity_logging" 
+        label="Activity Logging"
+        :checked="true">
+        
+        <x-slot:help>
+            Log your account activities for security purposes
+        </x-slot:help>
+    </x-form-switch>
     
     <x-form-switch 
-        name="shipping_calculation" 
-        label="Shipping Calculation"
-        title="Shipping"
-        help="Calculate shipping costs automatically" />
+        name="data_export" 
+        label="Data Export Access"
+        :checked="false">
+        
+        <x-slot:help>
+            Allow downloading your account data
+        </x-slot:help>
+    </x-form-switch>
+    
+    <div class="settings-note mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h6>Settings Information:</h6>
+                <ul class="mb-0 text-muted">
+                    <li>Two-factor authentication enhances account security</li>
+                    <li>Extended sessions may reduce security</li>
+                    <li>Activity logging helps track account usage</li>
+                    <li>Data export includes all your stored information</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 ```
+
+### Permission Management
+```blade
+<div class="permission-management">
+    <h4>User Permissions</h4>
+    <p>Manage user access and permissions:</p>
+    
+    <x-form-switch 
+        name="can_create_users" 
+        label="Create Users"
+        :checked="false">
+        
+        <x-slot:help>
+            Allow this user to create new user accounts
+        </x-slot:help>
+    </x-form-switch>
+    
+    <x-form-switch 
+        name="can_edit_users" 
+        label="Edit Users"
+        :checked="false">
+        
+        <x-slot:help>
+            Allow this user to modify existing user accounts
+        </x-slot:help>
+    </x-form-switch>
+    
+    <x-form-switch 
+        name="can_delete_users" 
+        label="Delete Users"
+        :checked="false">
+        
+        <x-slot:help>
+            Allow this user to remove user accounts
+        </x-slot:help>
+    </x-form-switch>
+    
+    <x-form-switch 
+        name="can_manage_roles" 
+        label="Manage Roles"
+        :checked="false">
+        
+        <x-slot:help>
+            Allow this user to assign and modify user roles
+        </x-slot:help>
+    </x-form-switch>
+    
+    <div class="permission-warning mt-3">
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Permission Warning:</strong> 
+            Granting these permissions gives users significant control over the system. 
+            Only assign to trusted administrators.
+        </div>
+    </div>
+</div>
+```
+
+### System Configuration
+```blade
+<div class="system-configuration">
+    <h4>System Configuration</h4>
+    <p>Configure system-wide settings:</p>
+    
+    <x-form-switch 
+        name="auto_backup" 
+        label="Automatic Backups"
+        :checked="true">
+        
+        <x-slot:help>
+            Automatically create system backups
+        </x-slot:help>
+    </x-form-switch>
+    
+    <x-form-switch 
+        name="error_reporting" 
+        label="Error Reporting"
+        :checked="true">
+        
+        <x-slot:help>
+            Report errors to monitoring services
+        </x-slot:help>
+    </x-form-switch>
+    
+    <x-form-switch 
+        name="performance_monitoring" 
+        label="Performance Monitoring"
+        :checked="true">
+        
+        <x-slot:help>
+            Monitor system performance metrics
+        </x-slot:help>
+    </x-form-switch>
+    
+    <x-form-switch 
+        name="security_scanning" 
+        label="Security Scanning"
+        :checked="true">
+        
+        <x-slot:help>
+            Regularly scan for security vulnerabilities
+        </x-slot:help>
+    </x-form-switch>
+    
+    <div class="system-info mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h6>System Status:</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Last Backup:</strong> <span x-text="lastBackupDate">Never</span></p>
+                        <p class="mb-1"><strong>System Health:</strong> <span class="badge bg-success">Good</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Uptime:</strong> <span x-text="systemUptime">Calculating...</span></p>
+                        <p class="mb-1"><strong>Version:</strong> <span x-text="systemVersion">1.0.0</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+## Testing Examples
+
+### Unit Tests
+```php
+/** @test */
+public function it_renders_form_switch_with_basic_attributes()
+{
+    $view = $this->blade('<x-form-switch name="test" />');
+    
+    $view->assertSee('name="test"');
+    $view->assertSee('form-switch');
+}
+
+/** @test */
+public function it_renders_form_switch_with_inline_attribute()
+{
+    $view = $this->blade('<x-form-switch name="test" inline />');
+    
+    $view->assertSee('name="test"');
+    $view->assertSee('form-check-inline');
+}
+```
+
+### Integration Tests
+```php
+/** @test */
+public function it_integrates_with_livewire()
+{
+    Livewire::test(SwitchComponent::class)
+        ->assertSee('<x-form-switch')
+        ->set('enableFeature', true)
+        ->assertSee('Enabled');
+}
+```
+
+## Accessibility
+
+### ARIA Attributes
+- `aria-label`: Applied to switch input
+- `aria-describedby`: Links to help text
+- `role="checkbox"`: Applied to switch input
+
+### Keyboard Navigation
+- Tab navigation to switch
+- Space key to toggle switch
+- Enter key to toggle switch
+- Escape key to clear focus
+
+### Screen Reader Support
+- Proper labeling and descriptions
+- Switch state announcements
+- Help text communication
+- Error message communication
+
+### Switch Accessibility
+- Clear visual indication of state
+- High contrast for state changes
+- Proper focus management
+- Keyboard-only operation support
+
+## Browser Compatibility
+
+- **Supported Browsers:** All modern browsers with CSS support
+- **CSS Framework Requirements:** Bootstrap 4+ for proper styling
+- **JavaScript Dependencies:** Alpine.js (via Livewire)
+- **Input Type Support:** HTML5 checkbox input type
+
+## Troubleshooting
+
+### Common Issues
+
+#### Switch Not Styling Correctly
+**Problem:** Switch doesn't look like a toggle
+**Solution:** Check Bootstrap CSS and form-switch classes
+
+#### Livewire Integration Issues
+**Problem:** Switch not updating with Livewire
+**Solution:** Verify wire:model syntax and Livewire setup
+
+#### Copy Functionality Not Working
+**Problem:** Copy value not submitting correctly
+**Solution:** Check copy attribute and hidden input generation
+
+#### Inline Display Problems
+**Problem:** Inline switches not displaying correctly
+**Solution:** Verify inline attribute and CSS classes
+
+#### Form Validation Issues
+**Problem:** Switch validation not working
+**Solution:** Check form structure and validation rules
+
+## Related Components
+
+- **Form Input:** Base input component
+- **Form Label:** Component labeling
+- **Form Errors:** Validation display
+- **Form Checkbox:** Alternative checkbox component
+- **Form Toggle:** Alternative toggle component
 
 ## Changelog
 
-### Version 2.0.0
-- Added Livewire integration support
-- Enhanced validation error handling
-- Improved accessibility features
-- Added inline display support
+### Version 1.0.0
+- Initial release with Bootstrap 5 switch styling
+- Inline display support
+- Copy functionality for form submission
+- Livewire integration support
+- Comprehensive form validation
 
 ## Contributing
 
 To contribute to this component:
 1. Update the view file: `resources/views/bootstrap-5/form-switch.blade.php`
 2. Add/update tests in `tests/Components/FormSwitchTest.php`
-3. Update this documentation 
+3. Update this documentation
+
+## See Also
+
+- [Form Input Component](../form-input.md)
+- [Form Label Component](../form-label.md)
+- [Form Errors Component](../form-errors.md)
+- [Form Checkbox Component](../form-checkbox.md)
+- [Bootstrap Form Switch](https://getbootstrap.com/docs/5.3/forms/checks-radios/#switches)
+- [Laravel Form Components](https://github.com/ryangjchandler/laravel-form-components) 

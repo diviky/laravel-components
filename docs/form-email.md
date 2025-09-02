@@ -1,89 +1,112 @@
 # Form Email Component
 
-A specialized email input component that extends the base Form Input with email-specific functionality. This component provides a user-friendly way to handle email inputs with built-in email validation and proper HTML5 email input type.
+A specialized email input component that provides a professional interface for email addresses with automatic email validation, comprehensive form integration, and enhanced user experience. This component extends FormInput to offer intuitive email input experiences with proper formatting and validation support.
 
 ## Overview
 
-**Component Type:** View-Only Form Input Extension  
+**Component Type:** Form  
 **Framework Support:** Bootstrap 5 (default), Bootstrap 4  
 **Livewire Compatible:** Yes  
-**Dependencies:** `diviky/laravel-form-components` for base functionality  
-**Location:** `resources/views/bootstrap-5/form-email.blade.php`
+**Dependencies:** FormInput component, extends base form functionality
+**JavaScript Library:** Alpine.js (via FormInput)
 
 ## Files
 
+- **PHP Class:** None (view-only component)
 - **View File:** `resources/views/bootstrap-5/form-email.blade.php`
 - **Documentation:** `docs/form-email.md`
-- **Tests:** `tests/Components/FormEmailTest.php`
 
 ## Basic Usage
 
+### Simple Email Input
 ```blade
-<x-form-email name="email" label="Email Address" placeholder="Enter your email" required />
+<x-form-email name="email" label="Email Address" />
+```
+
+### With Default Value
+```blade
+<x-form-email 
+    name="user_email" 
+    label="User Email"
+    :default="'user@example.com'">
+</x-form-email>
+```
+
+### With Help Text
+```blade
+<x-form-email 
+    name="contact_email" 
+    label="Contact Email"
+    help="We'll use this email to send you important updates">
+</x-form-email>
 ```
 
 ## Attributes & Properties
 
 ### Required Attributes
 
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| name | string | - | Email field name (required) | `'email'` |
+| Name | Type | Description | Example |
+|------|------|-------------|---------|
+| name | string | Input name attribute | `'email'` or `'user_email'` |
 
 ### Optional Attributes
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
-| label | string | null | Email label text | `'Email Address'` |
-| value | string | null | Initial email value | `'user@example.com'` |
-| placeholder | string | null | Placeholder text | `'Enter your email'` |
-| required | boolean | false | Whether field is required | `true` |
-| readonly | boolean | false | Whether field is readonly | `true` |
-| disabled | boolean | false | Whether field is disabled | `true` |
-| size | string | null | Input size variant | `'sm'`, `'lg'` |
-| icon | string | null | Icon name to display | `'mail'` |
-| floating | boolean | false | Use floating label style | `true` |
-| flat | boolean | false | Use flat input group style | `true` |
-| inline | boolean | false | Display inline without form-group wrapper | `true` |
-| help | string | null | Help text below input | `'We\'ll never share your email'` |
-| id | string | auto-generated | Input ID attribute | `'user-email'` |
-| title | string | null | Title attribute for tooltip | `'Enter a valid email address'` |
-| class | string | null | Additional CSS classes | `'custom-email'` |
-| wire:model | string | null | Livewire model binding | `'user.email'` |
-| extra-attributes | string | null | Additional HTML attributes | `'data-custom="value"'` |
-
-### Hidden/Advanced Attributes
-
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| default | string | null | Default value | `'default@example.com'` |
-| bind | mixed | null | Model binding value | `$user->email` |
-| language | string | null | Language-specific field | `'en'` |
-| showErrors | boolean | true | Show validation errors | `false` |
+| label | string | '' | Form field label | `'Email Address'` |
+| value | mixed | null | Current email value | `'user@example.com'` |
+| default | mixed | null | Default email value | `'admin@example.com'` |
+| extraAttributes | array | [] | Additional attributes | `['data-test' => 'email']` |
 
 ### Inherited Attributes
 
-This component supports all standard HTML input attributes:
+This component extends `FormInput` and supports these additional attributes:
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
-| pattern | string | null | Email pattern for validation | `'[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'` |
-| autocomplete | string | null | Autocomplete attribute | `'email'` |
-| autofocus | boolean | false | Autofocus the input | `true` |
-| form | string | null | Form ID to associate with | `'user-form'` |
-| tabindex | string | null | Tab index | `'0'` |
-| spellcheck | boolean | false | Enable spellcheck | `true` |
+| id | string | auto-generated | Element ID | `'email-input'` |
+| class | string | '' | CSS classes | `'email-input'` |
+| disabled | boolean | false | Disable the component | `true` |
+| readonly | boolean | false | Make component readonly | `true` |
+| required | boolean | false | Make field required | `true` |
+| placeholder | string | '' | Input placeholder text | `'Enter your email'` |
+| pattern | string | null | Email validation pattern | `'[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'` |
+| maxlength | number | null | Maximum email length | `254` |
+| minlength | number | null | Minimum email length | `5` |
 
-## Named Slots
+### Authorization Attributes
 
-| Slot | Description | Example |
-|------|-------------|---------|
-| prepend | Content to prepend to input | `<x-slot name="prepend">📧</x-slot>` |
-| append | Content to append to input | `<x-slot name="append"><button>Verify</button></x-slot>` |
-| before | Content before input (inside input group) | `<x-slot name="before"><span class="input-group-text">@</span></x-slot>` |
-| after | Content after input (inside input group) | `<x-slot name="after"><button>Check</button></x-slot>` |
-| help | Help text slot | `<x-slot name="help">Custom help text</x-slot>` |
-| icon | Custom icon slot | `<x-slot name="icon"><x-icon name="custom" /></x-slot>` |
+| Name | Type | Default | Description | Example |
+|------|------|---------|-------------|---------|
+| can | string | null | Laravel permission gate | `'enter-email'` |
+| role | string\|array | null | Required user role(s) | `'user'` or `['user', 'admin']` |
+| action | string | null | Action type for authorization | `'create'` |
+
+## Slots
+
+### Optional Slots
+
+#### `help`
+- **Purpose:** Help text below the email input
+- **Required:** No
+- **Content Type:** HTML/Text/Components
+- **Example:**
+```blade
+<x-slot:help>
+    Enter a valid email address. We'll use this to send you important updates and notifications.
+</x-slot:help>
+```
+
+#### Default Slot
+- **Purpose:** Additional content after the email input
+- **Required:** No
+- **Content Type:** HTML/Components
+- **Example:**
+```blade
+<x-form-email name="email">
+    <small class="text-muted">We'll never share your email with anyone else</small>
+</x-form-email>
+```
 
 ## Usage Examples
 
@@ -91,600 +114,576 @@ This component supports all standard HTML input attributes:
 ```blade
 <x-form-email 
     name="email" 
-    label="Email Address" 
-    placeholder="Enter your email" 
-    required 
-/>
+    label="Email Address">
+    
+    <x-slot:help>
+        Enter your email address to receive updates
+    </x-slot:help>
+</x-form-email>
 ```
 
-### Email with Help Text
+### Required Email Input
 ```blade
 <x-form-email 
-    name="email" 
-    label="Email Address" 
-    help="We'll never share your email with anyone else"
-    required 
-/>
+    name="user_email" 
+    label="User Email"
+    required>
+    
+    <x-slot:help>
+        This field is required to create your account
+    </x-slot:help>
+</x-form-email>
 ```
 
-### Email with Validation Pattern
+### With Custom Validation Pattern
 ```blade
 <x-form-email 
-    name="email" 
-    label="Email Address" 
+    name="business_email" 
+    label="Business Email"
     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-    title="Please enter a valid email address"
-    required 
-/>
-```
-
-### Email with Icon
-```blade
-<x-form-email 
-    name="email" 
-    label="Email Address" 
-    icon="mail" 
-    placeholder="Enter your email" 
-/>
-```
-
-### Floating Label Email
-```blade
-<x-form-email 
-    name="email" 
-    label="Email Address" 
-    floating 
-    placeholder="Enter your email" 
-/>
-```
-
-### Email with Custom Size
-```blade
-<x-form-email 
-    name="email" 
-    label="Email Address" 
-    size="lg" 
-    placeholder="Enter your email" 
-/>
-```
-
-### Livewire Email Input
-```blade
-<x-form-email 
-    name="email" 
-    label="Email Address" 
-    wire:model.live="email" 
-    placeholder="Enter your email" 
-/>
-```
-
-### Email with Prepend Content
-```blade
-<x-form-email name="email" label="Email Address">
-    <x-slot name="prepend">📧</x-slot>
+    title="Please enter a valid email address">
+    
+    <x-slot:help>
+        Enter your business email address
+    </x-slot:help>
 </x-form-email>
 ```
 
-### Email with Custom Help Slot
+### With Model Binding
 ```blade
-<x-form-email name="email" label="Email Address">
-    <x-slot name="help">
-        <div class="d-flex align-items-center">
-            <x-icon name="info" class="me-2" />
-            <span>We'll send a verification email to this address</span>
+<x-form-email 
+    name="profile_email" 
+    label="Profile Email"
+    :bind="$user"
+    bind-key="email">
+    
+    <x-slot:help>
+        Update your profile email address
+    </x-slot:help>
+</x-form-email>
+```
+
+### Livewire Integration
+```blade
+<x-form-email 
+    wire:model="form.email"
+    name="registration_email" 
+    label="Registration Email"
+    required>
+    
+    <x-slot:help>
+        <div class="email-validation">
+            <strong>Email Status:</strong> 
+            <span class="badge" :class="$wire.form.email && isValidEmail($wire.form.email) ? 'bg-success' : 'bg-secondary'">
+                {{ $wire.form.email && isValidEmail($wire.form.email) ? 'Valid' : 'Invalid' }}
+            </span>
         </div>
-    </x-slot>
+    </x-slot:help>
 </x-form-email>
 ```
 
-### Email with Custom Icon Slot
+### With Custom Classes
 ```blade
-<x-form-email name="email" label="Email Address">
-    <x-slot name="icon">
-        <x-icon name="envelope" class="text-primary" />
-    </x-slot>
+<x-form-email 
+    name="custom_email" 
+    label="Custom Email"
+    class="email-input-lg"
+    placeholder="Enter your custom email address">
+    
+    <x-slot:help>
+        <div class="email-tips">
+            <i class="fas fa-envelope"></i>
+            <strong>Tip:</strong> Use a professional email address
+        </div>
+    </x-slot:help>
 </x-form-email>
 ```
 
-### Email with Before/After Content
+### Disabled Email Field
 ```blade
-<x-form-email name="email" label="Email Address">
-    <x-slot name="before">
-        <span class="input-group-text">@</span>
-    </x-slot>
-    <x-slot name="after">
-        <button type="button" class="btn btn-outline-secondary">Verify</button>
-    </x-slot>
+<x-form-email 
+    name="locked_email" 
+    label="Email"
+    disabled>
+    
+    <x-slot:help>
+        This email field is locked and cannot be changed
+    </x-slot:help>
 </x-form-email>
 ```
 
-### Disabled Email Input
+### Readonly Email Field
 ```blade
 <x-form-email 
-    name="email" 
-    label="Email Address" 
-    disabled 
-    value="cannot-change@example.com" 
-/>
+    name="display_email" 
+    label="Current Email"
+    readonly>
+    
+    <x-slot:help>
+        Your current email address (cannot be edited)
+    </x-slot:help>
+</x-form-email>
 ```
 
-### Readonly Email Input
-```blade
-<x-form-email 
-    name="email" 
-    label="Email Address" 
-    readonly 
-    value="readonly@example.com" 
-/>
+## Component Variants
+
+### Standard Email Input
+**Usage:** `<x-form-email>` (default)
+**Description:** Basic email input with standard validation
+**Features:**
+- HTML5 email input type
+- Standard email validation
+- Help and default slot support
+- FormInput extension
+
+### Custom Email Input
+**Usage:** `<x-form-email pattern="custom-pattern">`
+**Description:** Email input with custom validation pattern
+**Features:**
+- Custom validation patterns
+- Enhanced validation rules
+- Flexible email format support
+- Improved user experience
+
+### Enhanced Email Input
+**Usage:** `<x-form-email maxlength="254" minlength="5">`
+**Description:** Email input with length constraints
+**Features:**
+- Length validation
+- Character count limits
+- Enhanced validation feedback
+- Professional email handling
+
+## Configuration
+
+### Environment Variables
+- `LARAVEL_COMPONENTS_FRAMEWORK`: Set to 'bootstrap-4' for Bootstrap 4 support
+- `LARAVEL_COMPONENTS_PREFIX`: Add prefix to all components (e.g., 'ui' makes `<x-ui-form-email>`)
+
+### Component Configuration
+```php
+// config/laravel-components.php
+'components' => [
+    'form-email' => [
+        'view' => 'laravel-components::{framework}.form-email',
+    ],
+],
 ```
 
-### Email with Autocomplete
-```blade
-<x-form-email 
-    name="email" 
-    label="Email Address" 
-    autocomplete="email" 
-/>
+### Default Settings
+The component uses these default settings:
+- **Type:** `'email'`
+- **Validation:** HTML5 email validation
+- **Pattern:** Standard email pattern
+- **Length:** No default constraints
+
+### Email Validation Patterns
+```html
+<!-- Standard email pattern -->
+pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+
+<!-- Strict email pattern -->
+pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+
+<!-- Business email pattern -->
+pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
 ```
 
-### Email with Spellcheck
-```blade
-<x-form-email 
-    name="email" 
-    label="Email Address" 
-    spellcheck="true" 
-/>
-```
-
-## Real Project Examples
+## Common Patterns
 
 ### User Registration Form
 ```blade
-<x-form action="{{ route('users.store') }}" method="POST">
-    <div class="row">
-        <div class="col-md-6">
-            <x-form-input name="first_name" label="First Name" required />
-        </div>
-        <div class="col-md-6">
-            <x-form-input name="last_name" label="Last Name" required />
-        </div>
-    </div>
+<div class="user-registration-form">
+    <h4>Create Your Account</h4>
+    <p>Enter your information to get started:</p>
     
     <x-form-email 
-        name="email" 
-        label="Email Address" 
-        placeholder="your@email.com"
-        help="We'll send a verification email to this address"
-        required 
-    />
+        name="registration_email" 
+        label="Email Address"
+        required>
+        
+        <x-slot:help>
+            <strong>Email Requirements:</strong><br>
+            • Must be a valid email format<br>
+            • Will be used for account verification<br>
+            • We'll send a confirmation email<br>
+            • Choose a professional email address
+        </x-slot:help>
+    </x-form-email>
     
-    <x-form-password 
-        name="password" 
-        label="Password" 
-        placeholder="Create a strong password"
-        required 
-    />
+    <x-form-email 
+        name="confirm_email" 
+        label="Confirm Email"
+        required>
+        
+        <x-slot:help>
+            Please confirm your email address to ensure accuracy
+        </x-slot:help>
+    </x-form-email>
     
-    <x-form-submit>Create Account</x-form-submit>
-</x-form>
+    <div class="email-validation mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h6>Email Validation:</h6>
+                <div class="validation-checks">
+                    <p class="mb-1"><strong>Format:</strong> <span x-text="isValidEmail($wire.registrationEmail) ? '✅ Valid' : '❌ Invalid'">Checking...</span></p>
+                    <p class="mb-1"><strong>Match:</strong> <span x-text="emailsMatch() ? '✅ Match' : '❌ No Match'">Checking...</span></p>
+                    <p class="mb-0"><strong>Availability:</strong> <span x-text="emailAvailable() ? '✅ Available' : '❌ Taken'">Checking...</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 ```
 
 ### Contact Form
 ```blade
-<x-form action="{{ route('contact.send') }}" method="POST">
-    <x-form-input name="name" label="Full Name" required />
+<div class="contact-form">
+    <h4>Contact Us</h4>
+    <p>Send us a message and we'll get back to you:</p>
     
     <x-form-email 
-        name="email" 
-        label="Email Address" 
-        placeholder="your@email.com"
-        help="We'll respond to this email address"
-        required 
-    />
-    
-    <x-form-input name="subject" label="Subject" required />
-    
-    <x-form-textarea 
-        name="message" 
-        label="Message" 
-        placeholder="Tell us how we can help..."
-        rows="5"
-        required 
-    />
-    
-    <x-form-submit>Send Message</x-form-submit>
-</x-form>
-```
-
-### Newsletter Signup
-```blade
-<x-form action="{{ route('newsletter.subscribe') }}" method="POST">
-    <x-form-email 
-        name="email" 
-        label="Email Address" 
-        placeholder="Enter your email address"
-        help="Get the latest updates and news"
-        required 
-    >
-        <x-slot name="append">
-            <button type="submit" class="btn btn-primary">Subscribe</button>
-        </x-slot>
+        name="contact_email" 
+        label="Your Email"
+        required>
+        
+        <x-slot:help>
+            We'll use this email to respond to your inquiry
+        </x-slot:help>
     </x-form-email>
-</x-form>
-```
-
-### Settings Form
-```blade
-<x-form action="{{ route('settings.update') }}" method="PUT">
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Profile Settings</h3>
-        </div>
-        <div class="card-body">
-            <x-form-input name="name" label="Full Name" :value="$user->name" required />
-            
-            <x-form-email 
-                name="email" 
-                label="Email Address" 
-                :value="$user->email"
-                help="This email will be used for account notifications"
-                required 
-            />
-            
-            <x-form-input name="phone" label="Phone Number" :value="$user->phone" />
-        </div>
-    </div>
     
-    <x-form-submit>Update Profile</x-form-submit>
-</x-form>
-```
-
-### Login Form
-```blade
-<x-form action="{{ route('login') }}" method="POST">
     <x-form-email 
-        name="email" 
-        label="Email Address" 
+        name="reply_to_email" 
+        label="Reply-to Email (Optional)"
+        placeholder="Different email for replies">
+        
+        <x-slot:help>
+            If you want us to reply to a different email address
+        </x-slot:help>
+    </x-form-email>
+    
+    <div class="contact-info mt-3">
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            <strong>Response Time:</strong> We typically respond within 24 hours during business days.
+        </div>
+    </div>
+</div>
+```
+
+### Newsletter Subscription
+```blade
+<div class="newsletter-subscription">
+    <h4>Stay Updated</h4>
+    <p>Subscribe to our newsletter for the latest updates:</p>
+    
+    <x-form-email 
+        name="newsletter_email" 
+        label="Email Address"
         placeholder="your@email.com"
-        autocomplete="email"
-        required 
-    />
+        required>
+        
+        <x-slot:help>
+            <div class="newsletter-benefits">
+                <strong>What you'll receive:</strong><br>
+                • Weekly industry insights<br>
+                • Product updates and announcements<br>
+                • Exclusive offers and promotions<br>
+                • Expert tips and tutorials
+            </div>
+        </x-slot:help>
+    </x-form-email>
     
-    <x-form-password 
-        name="password" 
-        label="Password" 
-        placeholder="Enter your password"
-        autocomplete="current-password"
-        required 
-    />
-    
-    <div class="d-flex justify-content-between align-items-center">
-        <x-form-checkbox name="remember" label="Remember me" />
-        <a href="{{ route('password.request') }}">Forgot password?</a>
+    <div class="subscription-options mt-3">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="marketing_emails">
+            <label class="form-check-label" for="marketing_emails">
+                I also want to receive marketing emails
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="weekly_digest">
+            <label class="form-check-label" for="weekly_digest">
+                Send me a weekly digest instead of daily emails
+            </label>
+        </div>
     </div>
     
-    <x-form-submit>Sign In</x-form-submit>
-</x-form>
+    <div class="privacy-note mt-3">
+        <small class="text-muted">
+            By subscribing, you agree to our <a href="/privacy">Privacy Policy</a> and consent to receive emails from us.
+        </small>
+    </div>
+</div>
 ```
 
-## Features
-
-### Email Validation
-The component automatically includes email validation:
-- **HTML5 Validation**: Browser-native email format validation
-- **Pattern Validation**: Custom regex pattern support
-- **Laravel Validation**: Server-side email validation integration
-- **Real-time Validation**: Livewire validation support
-
-### Form Integration
-- **Automatic Validation**: Integrates with Laravel's validation system
-- **Error Display**: Shows validation errors with proper styling
-- **CSRF Protection**: Automatically includes CSRF tokens
-- **Method Spoofing**: Supports PUT, PATCH, DELETE methods
-
-### Styling Options
-- **Size Variants**: `sm`, `lg` for different input sizes
-- **Floating Labels**: Modern floating label design
-- **Flat Style**: Alternative flat input group styling
-- **Icon Support**: Built-in icon display with `x-icon`
-- **Custom Classes**: Additional CSS class support
-
-### Interactive Features
-- **Livewire Integration**: Full Livewire model binding support
-- **Real-time Validation**: Live validation with `wire:model.live`
-- **Debounced Input**: Support for debounced model updates
-- **Autocomplete**: HTML5 autocomplete attribute support
-
-### Accessibility
-- **ARIA Labels**: Proper accessibility labeling
-- **Screen Reader Support**: Semantic HTML structure
-- **Keyboard Navigation**: Full keyboard accessibility
-- **Focus Management**: Proper focus handling
-
-### Advanced Features
-- **Language Support**: Multi-language field support
-- **Model Binding**: Direct model property binding
-- **Custom Validation**: Pattern and constraint validation
-- **Spellcheck**: Built-in spellcheck support
-
-## Common Patterns
-
-### Email with Verification
+### Profile Management
 ```blade
-<x-form-email 
-    name="email" 
-    label="Email Address" 
-    wire:model.live="email"
-    help="We'll send a verification code to this email"
->
-    <x-slot name="after">
-        <button type="button" class="btn btn-outline-primary" wire:click="sendVerification">
-            Send Code
-        </button>
-    </x-slot>
-</x-form-email>
-```
-
-### Email with Domain Validation
-```blade
-<x-form-email 
-    name="email" 
-    label="Work Email" 
-    pattern="[a-z0-9._%+-]+@(company\.com|business\.org)$"
-    title="Please use your work email address"
-    help="Only company email addresses are allowed"
-    required 
-/>
-```
-
-### Email with Auto-suggestion
-```blade
-<x-form-email 
-    name="email" 
-    label="Email Address" 
-    autocomplete="email"
-    list="email-suggestions"
->
-    <datalist id="email-suggestions">
-        <option value="user@gmail.com">
-        <option value="user@yahoo.com">
-        <option value="user@hotmail.com">
-    </datalist>
-</x-form-email>
-```
-
-### Email with Loading State
-```blade
-<x-form-email 
-    name="email" 
-    label="Email Address" 
-    wire:model.live="email"
-    wire:loading.class="opacity-50"
-    wire:target="email"
->
-    <x-slot name="after">
-        <div wire:loading wire:target="email">
-            <x-icon name="spinner" class="spinner-border spinner-border-sm" />
+<div class="profile-management">
+    <h4>Email Preferences</h4>
+    <p>Manage your email settings and preferences:</p>
+    
+    <x-form-email 
+        name="primary_email" 
+        label="Primary Email"
+        required>
+        
+        <x-slot:help>
+            This is your main email address for account communications
+        </x-slot:help>
+    </x-form-email>
+    
+    <x-form-email 
+        name="secondary_email" 
+        label="Secondary Email (Optional)"
+        placeholder="backup@email.com">
+        
+        <x-slot:help>
+            Backup email for important notifications
+        </x-slot:help>
+    </x-form-email>
+    
+    <x-form-email 
+        name="work_email" 
+        label="Work Email (Optional)"
+        placeholder="name@company.com">
+        
+        <x-slot:help>
+            Professional email for business communications
+        </x-slot:help>
+    </x-form-email>
+    
+    <div class="email-preferences mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h6>Email Preferences:</h6>
+                <div class="preference-options">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="account_emails" checked>
+                        <label class="form-check-label" for="account_emails">
+                            Account and security notifications
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="marketing_emails">
+                        <label class="form-check-label" for="marketing_emails">
+                            Marketing and promotional emails
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="newsletter_emails">
+                        <label class="form-check-label" for="newsletter_emails">
+                            Newsletter and updates
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
-    </x-slot>
-</x-form-email>
+    </div>
+</div>
 ```
 
-## Configuration
-
-### Global Configuration
-The component uses the global form components configuration from `diviky/laravel-form-components`:
-
-```php
-// config/form-components.php
-return [
-    'framework' => 'bootstrap-5',
-    'floating_labels' => false,
-    'show_errors' => true,
-    'default_wire' => false,
-];
-```
-
-### Component-Specific Configuration
-```php
-// In your service provider
-Blade::component('form-email', FormEmail::class);
-```
-
-## JavaScript Integration
-
-### Custom JavaScript
-```javascript
-// Custom email validation
-document.querySelectorAll('[data-custom-email]').forEach(input => {
-    input.addEventListener('input', function() {
-        // Custom email validation
-        validateEmailFormat(this.value);
-    });
-});
-```
-
-### Livewire Integration
-```javascript
-// Automatic Livewire integration
-Livewire.on('email-updated', (data) => {
-    // Handle email updates
-});
+### Password Reset
+```blade
+<div class="password-reset-form">
+    <h4>Reset Your Password</h4>
+    <p>Enter your email address to receive password reset instructions:</p>
+    
+    <x-form-email 
+        name="reset_email" 
+        label="Email Address"
+        placeholder="Enter the email associated with your account"
+        required>
+        
+        <x-slot:help>
+            <div class="reset-instructions">
+                <strong>What happens next:</strong><br>
+                1. Enter your email address<br>
+                2. Check your inbox for reset instructions<br>
+                3. Click the reset link in the email<br>
+                4. Create a new password
+            </div>
+        </x-slot:help>
+    </x-form-email>
+    
+    <div class="reset-note mt-3">
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Note:</strong> If you don't receive an email within a few minutes, check your spam folder.
+        </div>
+    </div>
+    
+    <div class="back-to-login mt-3">
+        <a href="/login" class="btn btn-link">
+            <i class="fas fa-arrow-left"></i> Back to Login
+        </a>
+    </div>
+</div>
 ```
 
 ### Email Verification
-```javascript
-// Email verification functionality
-function verifyEmail(email) {
-    fetch('/api/verify-email', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-        },
-        body: JSON.stringify({ email: email })
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Handle verification response
-    });
+```blade
+<div class="email-verification">
+    <h4>Verify Your Email</h4>
+    <p>We've sent a verification code to your email address:</p>
+    
+    <x-form-email 
+        name="verification_email" 
+        label="Email Address"
+        readonly>
+        
+        <x-slot:help>
+            This is the email where we sent your verification code
+        </x-slot:help>
+    </x-form-email>
+    
+    <div class="verification-code mt-3">
+        <label for="verification_code" class="form-label">Verification Code</label>
+        <input type="text" class="form-control" id="verification_code" placeholder="Enter 6-digit code" maxlength="6">
+        <div class="form-text">
+            Enter the 6-digit code sent to your email
+        </div>
+    </div>
+    
+    <div class="verification-actions mt-3">
+        <button type="button" class="btn btn-primary">Verify Email</button>
+        <button type="button" class="btn btn-secondary">Resend Code</button>
+    </div>
+    
+    <div class="verification-help mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h6>Need Help?</h6>
+                <ul class="mb-0">
+                    <li>Check your spam/junk folder</li>
+                    <li>Make sure the email address is correct</li>
+                    <li>Wait a few minutes for the email to arrive</li>
+                    <li>Contact support if you continue to have issues</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+## Testing Examples
+
+### Unit Tests
+```php
+/** @test */
+public function it_renders_form_email_with_basic_attributes()
+{
+    $view = $this->blade('<x-form-email name="test" />');
+    
+    $view->assertSee('name="test"');
+    $view->assertSee('form-email');
+}
+
+/** @test */
+public function it_renders_form_email_with_email_type()
+{
+    $view = $this->blade('<x-form-email name="test" />');
+    
+    $view->assertSee('type="email"');
+}
+```
+
+### Integration Tests
+```php
+/** @test */
+public function it_integrates_with_livewire()
+{
+    Livewire::test(EmailComponent::class)
+        ->assertSee('<x-form-email')
+        ->set('email', 'test@example.com')
+        ->assertSee('test@example.com');
 }
 ```
 
 ## Accessibility
 
 ### ARIA Attributes
-The component automatically includes proper ARIA attributes:
-- `aria-describedby` for help text
-- `aria-invalid` for validation errors
-- `aria-required` for required fields
-- `aria-label` for icon-only inputs
+- `aria-label`: Applied to email input
+- `aria-describedby`: Links to help text
+- `role="textbox"`: Applied to input field
 
 ### Keyboard Navigation
-- Tab navigation through form fields
-- Enter key submission
-- Escape key for clearing input
-- Space key for button activation
+- Tab navigation to email input
+- Text input for email addresses
+- Enter key for form submission
+- Escape key to clear focus
 
 ### Screen Reader Support
-- Proper label association
-- Descriptive help text
-- Clear error messages
+- Proper labeling and descriptions
 - Email format announcements
+- Help text communication
+- Error message communication
+
+### Email Accessibility
+- Clear email format indication
+- Proper validation feedback
+- Helpful error messages
+- Format guidance
 
 ## Browser Compatibility
 
-### Supported Browsers
-- **Chrome**: 90+
-- **Firefox**: 88+
-- **Safari**: 14+
-- **Edge**: 90+
-- **Internet Explorer**: Not supported
-
-### Feature Support
-- **HTML5 Email Input**: Full support
-- **CSS Grid/Flexbox**: Full support
-- **ES6+ JavaScript**: Full support
-- **Custom Properties**: Full support
+- **Supported Browsers:** All modern browsers with HTML5 support
+- **JavaScript Dependencies:** Alpine.js (via FormInput)
+- **CSS Framework Requirements:** Bootstrap 4+ or custom styling
+- **Input Type Support:** HTML5 email input type
 
 ## Troubleshooting
 
 ### Common Issues
 
-**Email validation not working**
-```blade
-<!-- Ensure proper pattern attribute -->
-<x-form-email name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
-```
+#### Email Validation Not Working
+**Problem:** Email validation not functioning correctly
+**Solution:** Check HTML5 email input support and validation patterns
 
-**Autocomplete not working**
-```blade
-<!-- Ensure autocomplete attribute is set -->
-<x-form-email name="email" autocomplete="email" />
-```
+#### FormInput Integration Problems
+**Problem:** FormInput extension not working
+**Solution:** Check FormInput component and attribute merging
 
-**Livewire binding issues**
-```blade
-<!-- Ensure proper wire:model syntax -->
-<x-form-email name="email" wire:model="user.email" />
-```
+#### Email Pattern Issues
+**Problem:** Custom email patterns not working
+**Solution:** Verify pattern attribute syntax and regex validity
 
-**Icon not displaying**
-```blade
-<!-- Ensure icon component is available -->
-<x-form-email name="email" icon="mail" />
-```
+#### Styling Issues
+**Problem:** Email input doesn't look like expected
+**Solution:** Check Bootstrap CSS and custom styles
 
-### Debug Mode
-Enable debug mode to see component rendering details:
-```php
-// config/app.php
-'debug' => true,
-```
+#### Validation Issues
+**Problem:** Email validation errors not displaying
+**Solution:** Check form validation rules and error handling
 
 ## Related Components
 
-- [Form Input](form-input.md) - Base input component
-- [Form Password](form-password.md) - Password input component
-- [Form Number](form-number.md) - Number input component
-- [Form Tel](form-tel.md) - Telephone input component
-- [Form URL](form-url.md) - URL input component
-- [Form Hidden](form-hidden.md) - Hidden input component
-- [Form Select](form-select.md) - Select dropdown component
-- [Form Textarea](form-textarea.md) - Multi-line text input component
-- [Form Checkbox](form-checkbox.md) - Checkbox input component
-- [Form Switch](form-switch.md) - Toggle switch component
-
-## Performance
-
-### Optimization Tips
-1. **Use `wire:model.lazy`** for less critical email updates
-2. **Minimize re-renders** with proper Livewire optimization
-3. **Cache validation rules** when appropriate
-4. **Use debounced validation** for real-time email checking
-
-### Bundle Size
-- **Base Component**: ~2KB
-- **With Validation**: ~5KB
-- **With Livewire**: ~8KB
-- **Full Package**: ~10KB
-
-## Examples Gallery
-
-### Basic Email Inputs
-```blade
-<!-- Simple Email -->
-<x-form-email name="email" label="Email Address" />
-
-<!-- Required Email -->
-<x-form-email name="email" label="Email Address" required />
-
-<!-- Email with Help -->
-<x-form-email name="email" label="Email Address" help="We'll never share your email" />
-
-<!-- Email with Icon -->
-<x-form-email name="email" label="Email Address" icon="mail" />
-```
-
-### Advanced Email Inputs
-```blade
-<!-- Floating Label -->
-<x-form-email name="email" label="Email Address" floating />
-
-<!-- Large Email -->
-<x-form-email name="email" label="Email Address" size="lg" />
-
-<!-- Livewire Email -->
-<x-form-email name="email" wire:model.live="email" />
-
-<!-- Email with Pattern -->
-<x-form-email name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
-```
+- **Form Input:** Base input component
+- **Form Label:** Component labeling
+- **Form Errors:** Validation display
+- **Form Text:** Text input component
+- **Form Help:** Help text component
 
 ## Changelog
 
-### Version 2.0
-- Added enhanced email validation patterns
-- Improved accessibility features
-- Enhanced icon integration
-- Added custom slot support
-
-### Version 1.0
-- Initial release
-- Basic email input functionality
-- Bootstrap 5 support
-- Form validation integration
+### Version 1.0.0
+- Initial release with HTML5 email input type
+- FormInput extension with email validation
+- Help and default slot support
+- Comprehensive form integration
 
 ## Contributing
 
-When contributing to the Form Email component:
+To contribute to this component:
+1. Update the view file: `resources/views/bootstrap-5/form-email.blade.php`
+2. Add/update tests in `tests/Components/FormEmailTest.php`
+3. Update this documentation
 
-1. **Test email validation** thoroughly
-2. **Ensure accessibility** compliance
-3. **Update documentation** for new features
-4. **Add test cases** for new functionality
-5. **Follow coding standards** consistently
+## See Also
 
-## License
-
-This component is part of the `diviky/laravel-components` package and is licensed under the MIT License.
+- [Form Input Component](../form-input.md)
+- [Form Label Component](../form-label.md)
+- [Form Errors Component](../form-errors.md)
+- [Form Text Component](../form-text.md)
+- [HTML5 Email Input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email)
+- [Laravel Form Components](https://github.com/ryangjchandler/laravel-form-components)

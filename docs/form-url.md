@@ -1,588 +1,642 @@
 # Form URL Component
 
-A specialized URL input component that extends FormInput with HTML5 URL validation and proper input type attributes.
+A specialized URL input component that provides a professional interface for web addresses with automatic URL validation, comprehensive form integration, and enhanced user experience. This component extends FormInput to offer intuitive URL input experiences with proper formatting and validation support.
 
 ## Overview
 
-**Component Type:** Form Input Component (URL Specialization)  
-**Framework Support:** Bootstrap 5 (default), Bootstrap 4, Tailwind CSS  
+**Component Type:** Form  
+**Framework Support:** Bootstrap 5 (default), Bootstrap 4  
 **Livewire Compatible:** Yes  
-**Dependencies:** Bootstrap CSS for styling  
-**Location:** `resources/views/bootstrap-5/form-url.blade.php`  
-**Base Component:** Extends `x-form-input` with `type="url"`
+**Dependencies:** FormInput component, extends base form functionality
+**JavaScript Library:** Alpine.js (via FormInput)
 
 ## Files
 
+- **PHP Class:** None (view-only component)
 - **View File:** `resources/views/bootstrap-5/form-url.blade.php`
 - **Documentation:** `docs/form-url.md`
-- **Tests:** `tests/Components/FormUrlTest.php`
 
 ## Basic Usage
 
+### Simple URL Input
 ```blade
-<x-form-url name="website" label="Website URL" placeholder="https://example.com" />
+<x-form-url name="website" label="Website URL" />
 ```
 
-## Component Structure
-
-The Form URL component is a simple wrapper around FormInput that automatically sets the input type to "url":
-
+### With Default Value
 ```blade
-<x-form-url name="field_name" label="URL Label" placeholder="Enter URL" />
+<x-form-url 
+    name="homepage" 
+    label="Homepage"
+    :default="'https://example.com'">
+</x-form-url>
+```
+
+### With Help Text
+```blade
+<x-form-url 
+    name="profile_url" 
+    label="Profile URL"
+    help="Enter your social media profile URL">
+</x-form-url>
 ```
 
 ## Attributes & Properties
 
-Since this component extends FormInput, it inherits all FormInput attributes and features:
-
 ### Required Attributes
 
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| name | string | '' | Input name attribute | 'website' |
-| label | string | '' | Input label text | 'Website URL' |
+| Name | Type | Description | Example |
+|------|------|-------------|---------|
+| name | string | Input name attribute | `'website'` or `'profile_url'` |
 
 ### Optional Attributes
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
-| value | string | null | Input value | 'https://example.com' |
-| placeholder | string | '' | Placeholder text | 'Enter website URL' |
-| required | bool | false | Whether the field is required | true |
-| readonly | bool | false | Whether the field is readonly | true |
-| disabled | bool | false | Whether the field is disabled | true |
-| size | string | '' | Input size | 'sm', 'lg' |
-| floating | bool | false | Use floating label style | true |
-| help | string | null | Help text to display | 'Enter a valid URL' |
-| id | string | auto | Input ID attribute | 'website-url' |
-| title | string | null | Title attribute for tooltip | 'Enter website URL' |
-| class | string | null | Additional CSS classes | 'custom-url-input' |
-| wire:model | string | null | Livewire model binding | 'website' |
-| pattern | string | null | URL validation pattern | 'https?://.*' |
-| maxlength | int | null | Maximum character length | 255 |
-| minlength | int | null | Minimum character length | 10 |
-| extra-attributes | string | null | Additional HTML attributes | 'data-custom="value"' |
+| label | string | '' | Form field label | `'Website URL'` |
+| value | mixed | null | Current URL value | `'https://example.com'` |
+| default | mixed | null | Default URL value | `'https://example.com'` |
+| extraAttributes | array | [] | Additional attributes | `['data-test' => 'url']` |
 
 ### Inherited Attributes
 
-All components support standard HTML attributes:
+This component extends `FormInput` and supports these additional attributes:
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
-| style | string | null | Inline CSS styles | 'margin: 1rem;' |
-| data-* | string | null | Custom data attributes | `data-testid="url-input"` |
+| id | string | auto-generated | Element ID | `'url-input'` |
+| class | string | '' | CSS classes | `'url-input'` |
+| disabled | boolean | false | Disable the component | `true` |
+| readonly | boolean | false | Make component readonly | `true` |
+| required | boolean | false | Make field required | `true` |
+| placeholder | string | '' | Input placeholder text | `'https://example.com'` |
+| pattern | string | null | URL validation pattern | `'https?://.*'` |
+
+### Authorization Attributes
+
+| Name | Type | Default | Description | Example |
+|------|------|---------|-------------|---------|
+| can | string | null | Laravel permission gate | `'enter-urls'` |
+| role | string\|array | null | Required user role(s) | `'user'` or `['user', 'admin']` |
+| action | string | null | Action type for authorization | `'create'` |
+
+## Slots
+
+### Optional Slots
+
+#### `help`
+- **Purpose:** Help text below the URL input
+- **Required:** No
+- **Content Type:** HTML/Text/Components
+- **Example:**
+```blade
+<x-slot:help>
+    Enter a valid URL including the protocol (http:// or https://)
+</x-slot:help>
+```
+
+#### Default Slot
+- **Purpose:** Additional content after the URL input
+- **Required:** No
+- **Content Type:** HTML/Components
+- **Example:**
+```blade
+<x-form-url name="website">
+    <small class="text-muted">Must be a valid website URL</small>
+</x-form-url>
+```
 
 ## Usage Examples
 
 ### Basic URL Input
 ```blade
-<x-form-url name="website" label="Website URL" placeholder="https://example.com" />
+<x-form-url 
+    name="website" 
+    label="Website URL">
+    
+    <x-slot:help>
+        Enter your website URL
+    </x-slot:help>
+</x-form-url>
 ```
 
 ### Required URL Input
 ```blade
-<x-form-url name="website" label="Website URL" required placeholder="Enter website URL" />
+<x-form-url 
+    name="homepage" 
+    label="Homepage URL"
+    required>
+    
+    <x-slot:help>
+        This field is required to complete your profile
+    </x-slot:help>
+</x-form-url>
 ```
 
-### URL Input with Help Text
+### With Pattern Validation
 ```blade
-<x-form-url name="website" label="Website URL" 
-    help="Enter the complete URL including http:// or https://" />
+<x-form-url 
+    name="secure_url" 
+    label="Secure URL"
+    pattern="https://.*"
+    placeholder="https://example.com">
+    
+    <x-slot:help>
+        Only HTTPS URLs are allowed for security reasons
+    </x-slot:help>
+</x-form-url>
 ```
 
-### URL Input with Validation Pattern
+### With Custom Placeholder
 ```blade
-<x-form-url name="website" label="Website URL" 
-    pattern="https?://.*" title="URL must start with http:// or https://" />
-```
-
-### Floating Label URL Input
-```blade
-<x-form-url name="website" label="Website URL" floating placeholder="https://example.com" />
-```
-
-### Small URL Input
-```blade
-<x-form-url name="website" label="Website URL" size="sm" />
-```
-
-### Large URL Input
-```blade
-<x-form-url name="website" label="Website URL" size="lg" />
-```
-
-### Disabled URL Input
-```blade
-<x-form-url name="website" label="Website URL" disabled value="https://example.com" />
-```
-
-### Readonly URL Input
-```blade
-<x-form-url name="website" label="Website URL" readonly value="https://example.com" />
-```
-
-### URL Input with Custom ID
-```blade
-<x-form-url name="website" label="Website URL" id="custom-website-url" />
-```
-
-### URL Input with Custom Class
-```blade
-<x-form-url name="website" label="Website URL" class="custom-url-input" />
+<x-form-url 
+    name="social_profile" 
+    label="Social Media Profile"
+    placeholder="https://twitter.com/username">
+    
+    <x-slot:help>
+        Enter your social media profile URL
+    </x-slot:help>
+</x-form-url>
 ```
 
 ### Livewire Integration
 ```blade
-<x-form-url name="website" label="Website URL" wire:model="website" />
+<x-form-url 
+    wire:model="form.website"
+    name="company_website" 
+    label="Company Website"
+    required>
+    
+    <x-slot:help>
+        <div class="url-validation">
+            <strong>URL Status:</strong><br>
+            <span x-text="validateUrl($wire.form.website)">Enter a URL to validate</span>
+        </div>
+    </x-slot:help>
+</x-form-url>
 ```
 
-### URL Input with Character Limits
+### With Custom Classes
 ```blade
-<x-form-url name="website" label="Website URL" 
-    minlength="10" maxlength="255" 
-    placeholder="https://example.com" />
+<x-form-url 
+    name="custom_url" 
+    label="Custom URL"
+    class="url-input-lg"
+    placeholder="Enter your custom URL">
+    
+    <x-slot:help>
+        <div class="url-tips">
+            <i class="fas fa-link"></i>
+            <strong>Tip:</strong> Include the protocol (http:// or https://)
+        </div>
+    </x-slot:help>
+</x-form-url>
 ```
 
-### URL Input with Custom Pattern
+### Disabled URL Field
 ```blade
-<x-form-url name="website" label="Website URL" 
-    pattern="https://.*\.com$" 
-    title="URL must be HTTPS and end with .com" />
+<x-form-url 
+    name="locked_url" 
+    label="URL"
+    disabled>
+    
+    <x-slot:help>
+        This URL field is locked and cannot be changed
+    </x-slot:help>
+</x-form-url>
 ```
 
-## Real Project Examples
-
-### Contact Information Form
+### Readonly URL Field
 ```blade
-<form method="POST" action="{{ route('contact.store') }}">
-    @csrf
+<x-form-url 
+    name="display_url" 
+    label="Current URL"
+    readonly>
     
-    <x-form-input name="name" label="Full Name" required />
-    <x-form-email name="email" label="Email Address" required />
-    <x-form-url name="website" label="Website URL" 
-        placeholder="https://your-website.com" 
-        help="Optional: Your personal or company website" />
-    <x-form-tel name="phone" label="Phone Number" />
-    
-    <x-form-submit>Submit Contact</x-form-submit>
-</form>
+    <x-slot:help>
+        Your current URL (cannot be edited)
+    </x-slot:help>
+</x-form-url>
 ```
 
-### Social Media Profile Form
+## Component Variants
+
+### Standard URL Input
+**Usage:** `<x-form-url>` (default)
+**Description:** Basic URL input with standard validation
+**Features:**
+- HTML5 URL input type
+- Standard URL validation
+- Help and default slot support
+- FormInput extension
+
+### Pattern-Constrained URL Input
+**Usage:** `<x-form-url pattern="https://.*">`
+**Description:** URL input with specific pattern constraints
+**Features:**
+- Custom URL pattern validation
+- Protocol enforcement
+- Enhanced validation feedback
+- Improved user experience
+
+### Secure URL Input
+**Usage:** `<x-form-url pattern="https://.*">`
+**Description:** URL input that only accepts HTTPS URLs
+**Features:**
+- HTTPS-only validation
+- Security-focused input
+- Professional security handling
+- Compliance support
+
+## Configuration
+
+### Environment Variables
+- `LARAVEL_COMPONENTS_FRAMEWORK`: Set to 'bootstrap-4' for Bootstrap 4 support
+- `LARAVEL_COMPONENTS_PREFIX`: Add prefix to all components (e.g., 'ui' makes `<x-ui-form-url>`)
+
+### Component Configuration
+```php
+// config/laravel-components.php
+'components' => [
+    'form-url' => [
+        'view' => 'laravel-components::{framework}.form-url',
+    ],
+],
+```
+
+### Default Settings
+The component uses these default settings:
+- **Type:** `'url'`
+- **Validation:** HTML5 URL validation
+- **Pattern:** No default pattern constraints
+- **Protocol:** Accepts both HTTP and HTTPS
+
+### URL Validation Patterns
+```html
+<!-- HTTPS only -->
+pattern="https://.*"
+
+<!-- HTTP or HTTPS -->
+pattern="https?://.*"
+
+<!-- Specific domain -->
+pattern="https?://(www\.)?example\.com.*"
+
+<!-- Social media URLs -->
+pattern="https?://(www\.)?(twitter|facebook|linkedin)\.com.*"
+```
+
+## Common Patterns
+
+### Contact Information Forms
 ```blade
-<div class="social-media-section">
-    <h3>Social Media Links</h3>
+<div class="contact-information-form">
+    <h4>Contact Information</h4>
+    <p>Provide your contact details:</p>
     
-    <x-form-url name="linkedin" label="LinkedIn Profile" 
-        placeholder="https://linkedin.com/in/username" 
-        help="Your LinkedIn profile URL" />
+    <x-form-url 
+        name="personal_website" 
+        label="Personal Website"
+        placeholder="https://yourname.com">
+        
+        <x-slot:help>
+            Your personal website or portfolio URL
+        </x-slot:help>
+    </x-form-url>
     
-    <x-form-url name="twitter" label="Twitter Profile" 
-        placeholder="https://twitter.com/username" 
-        help="Your Twitter profile URL" />
+    <x-form-url 
+        name="linkedin_profile" 
+        label="LinkedIn Profile"
+        placeholder="https://linkedin.com/in/username">
+        
+        <x-slot:help>
+            Your LinkedIn professional profile URL
+        </x-slot:help>
+    </x-form-url>
     
-    <x-form-url name="github" label="GitHub Profile" 
-        placeholder="https://github.com/username" 
-        help="Your GitHub profile URL" />
+    <x-form-url 
+        name="github_profile" 
+        label="GitHub Profile"
+        placeholder="https://github.com/username">
+        
+        <x-slot:help>
+            Your GitHub profile URL for code samples
+        </x-slot:help>
+    </x-form-url>
     
-    <x-form-url name="portfolio" label="Portfolio Website" 
-        placeholder="https://your-portfolio.com" 
-        help="Your personal portfolio or website" />
+    <x-form-url 
+        name="portfolio_url" 
+        label="Portfolio URL"
+        placeholder="https://portfolio.com">
+        
+        <x-slot:help>
+            URL to your work portfolio or showcase
+        </x-slot:help>
+    </x-form-url>
 </div>
 ```
 
-### Company Information Form
+### Business Profile Forms
 ```blade
-<div class="company-info">
-    <h3>Company Information</h3>
+<div class="business-profile-form">
+    <h4>Business Information</h4>
+    <p>Update your business profile:</p>
     
-    <x-form-input name="company_name" label="Company Name" required />
-    <x-form-url name="company_website" label="Company Website" required 
-        placeholder="https://company.com" 
-        help="Official company website URL" />
+    <x-form-url 
+        name="company_website" 
+        label="Company Website"
+        pattern="https://.*"
+        required>
+        
+        <x-slot:help>
+            Your company's main website URL (HTTPS required)
+        </x-slot:help>
+    </x-form-url>
     
-    <x-form-url name="careers_page" label="Careers Page" 
-        placeholder="https://company.com/careers" 
-        help="Link to job openings or careers page" />
+    <x-form-url 
+        name="online_store" 
+        label="Online Store"
+        placeholder="https://store.company.com">
+        
+        <x-slot:help>
+            URL to your online store or e-commerce platform
+        </x-slot:help>
+    </x-form-url>
     
-    <x-form-url name="blog_url" label="Company Blog" 
-        placeholder="https://blog.company.com" 
-        help="Company blog or news section" />
+    <x-form-url 
+        name="support_portal" 
+        label="Support Portal"
+        placeholder="https://support.company.com">
+        
+        <x-slot:help>
+            Customer support and help center URL
+        </x-slot:help>
+    </x-form-url>
+    
+    <x-form-url 
+        name="documentation_url" 
+        label="Documentation"
+        placeholder="https://docs.company.com">
+        
+        <x-slot:help>
+            Product documentation and user guides URL
+        </x-slot:help>
+    </x-form-url>
 </div>
 ```
 
-### API Configuration Form
+### Social Media Management
 ```blade
-<div class="api-config">
-    <h3>API Configuration</h3>
+<div class="social-media-management-form">
+    <h4>Social Media Profiles</h4>
+    <p>Manage your social media presence:</p>
     
-    <x-form-url name="api_base_url" label="API Base URL" required 
-        placeholder="https://api.example.com" 
-        help="Base URL for API endpoints" />
+    <x-form-url 
+        name="facebook_page" 
+        label="Facebook Page"
+        placeholder="https://facebook.com/pagename">
+        
+        <x-slot:help>
+            Your Facebook business page URL
+        </x-slot:help>
+    </x-form-url>
     
-    <x-form-url name="webhook_url" label="Webhook URL" 
-        placeholder="https://your-app.com/webhooks" 
-        help="URL to receive webhook notifications" />
+    <x-form-url 
+        name="twitter_profile" 
+        label="Twitter Profile"
+        placeholder="https://twitter.com/username">
+        
+        <x-slot:help>
+            Your Twitter profile URL
+        </x-slot:help>
+    </x-form-url>
     
-    <x-form-url name="callback_url" label="OAuth Callback URL" 
-        placeholder="https://your-app.com/auth/callback" 
-        help="OAuth callback URL for authentication" />
+    <x-form-url 
+        name="instagram_profile" 
+        label="Instagram Profile"
+        placeholder="https://instagram.com/username">
+        
+        <x-slot:help>
+            Your Instagram profile URL
+        </x-slot:help>
+    </x-form-url>
     
-    <x-form-url name="redirect_url" label="Redirect URL" 
-        placeholder="https://your-app.com/dashboard" 
-        help="URL to redirect after successful authentication" />
-</div>
-```
-
-### E-commerce Product Form
-```blade
-<div class="product-form">
-    <h3>Product Information</h3>
+    <x-form-url 
+        name="youtube_channel" 
+        label="YouTube Channel"
+        placeholder="https://youtube.com/channel/...">
+        
+        <x-slot:help>
+            Your YouTube channel URL
+        </x-slot:help>
+    </x-form-url>
     
-    <x-form-input name="product_name" label="Product Name" required />
-    <x-form-textarea name="description" label="Description" rows="4" />
-    
-    <x-form-url name="product_url" label="Product URL" 
-        placeholder="https://example.com/product-name" 
-        help="Direct link to the product page" />
-    
-    <x-form-url name="affiliate_url" label="Affiliate URL" 
-        placeholder="https://example.com/product?ref=your-id" 
-        help="Affiliate or referral link" />
-    
-    <x-form-url name="review_url" label="Review URL" 
-        placeholder="https://trustpilot.com/review/example" 
-        help="Link to customer reviews" />
-</div>
-```
-
-### Developer Profile Form
-```blade
-<div class="developer-profile">
-    <h3>Developer Profile</h3>
-    
-    <x-form-input name="name" label="Full Name" required />
-    <x-form-email name="email" label="Email" required />
-    
-    <x-form-url name="personal_website" label="Personal Website" 
-        placeholder="https://yourname.dev" 
-        help="Your personal website or blog" />
-    
-    <x-form-url name="github_profile" label="GitHub Profile" 
-        placeholder="https://github.com/username" 
-        help="Your GitHub profile URL" />
-    
-    <x-form-url name="linkedin_profile" label="LinkedIn Profile" 
-        placeholder="https://linkedin.com/in/username" 
-        help="Your LinkedIn profile URL" />
-    
-    <x-form-url name="portfolio_url" label="Portfolio" 
-        placeholder="https://portfolio.yourname.dev" 
-        help="Your project portfolio URL" />
-    
-    <x-form-url name="blog_url" label="Technical Blog" 
-        placeholder="https://blog.yourname.dev" 
-        help="Your technical blog or articles" />
-</div>
-```
-
-### Livewire Component Example
-```blade
-<div>
-    <h3>Website Configuration</h3>
-    
-    <x-form-url name="homepage_url" label="Homepage URL" 
-        wire:model="homepageUrl" 
-        placeholder="https://your-website.com" />
-    
-    <x-form-url name="api_docs_url" label="API Documentation" 
-        wire:model="apiDocsUrl" 
-        placeholder="https://docs.your-website.com" />
-    
-    <x-form-url name="support_url" label="Support Page" 
-        wire:model="supportUrl" 
-        placeholder="https://support.your-website.com" />
-    
-    <x-form-url name="privacy_policy_url" label="Privacy Policy" 
-        wire:model="privacyPolicyUrl" 
-        placeholder="https://your-website.com/privacy" />
-    
-    <div class="mt-3">
-        <button wire:click="saveConfiguration" class="btn btn-primary">Save Configuration</button>
+    <div class="social-summary mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h6>Social Media Summary:</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Total Profiles:</strong> <span x-text="countSocialProfiles()">0</span></p>
+                        <p class="mb-1"><strong>Active Profiles:</strong> <span x-text="countActiveProfiles()">0</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Profile Status:</strong> <span x-text="getProfileStatus()">Incomplete</span></p>
+                        <p class="mb-0"><strong>Recommendations:</strong> <span x-text="getSocialRecommendations()">None</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 ```
 
-## Advanced Features
-
-### Custom URL Validation
+### Application Configuration
 ```blade
-<x-form-url name="website" label="Website URL" 
-    pattern="https://.*\.(com|org|net)$" 
-    title="URL must be HTTPS and end with .com, .org, or .net" />
+<div class="application-configuration-form">
+    <h4>Application Settings</h4>
+    <p>Configure your application URLs:</p>
+    
+    <x-form-url 
+        name="app_url" 
+        label="Application URL"
+        pattern="https://.*"
+        required>
+        
+        <x-slot:help>
+            Your application's main URL (HTTPS required for production)
+        </x-slot:help>
+    </x-form-url>
+    
+    <x-form-url 
+        name="api_base_url" 
+        label="API Base URL"
+        placeholder="https://api.example.com">
+        
+        <x-slot:help>
+            Base URL for your API endpoints
+        </x-slot:help>
+    </x-form-url>
+    
+    <x-form-url 
+        name="webhook_url" 
+        label="Webhook URL"
+        placeholder="https://webhook.example.com">
+        
+        <x-slot:help>
+            URL for receiving webhook notifications
+        </x-slot:help>
+    </x-form-url>
+    
+    <x-form-url 
+        name="callback_url" 
+        label="OAuth Callback URL"
+        placeholder="https://app.example.com/auth/callback">
+        
+        <x-slot:help>
+            OAuth callback URL for authentication
+        </x-slot:help>
+    </x-form-url>
+    
+    <div class="url-validation mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h6>URL Validation:</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Valid URLs:</strong> <span x-text="countValidUrls()">0</span></p>
+                        <p class="mb-1"><strong>HTTPS URLs:</strong> <span x-text="countHttpsUrls()">0</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Status:</strong> <span x-text="getUrlValidationStatus()">Pending</span></p>
+                        <p class="mb-0"><strong>Issues:</strong> <span x-text="getUrlIssues()">None</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 ```
 
-### URL with Specific Protocol
-```blade
-<x-form-url name="secure_site" label="Secure Site" 
-    pattern="https://.*" 
-    title="Only HTTPS URLs are allowed" />
-```
+## Testing Examples
 
-### URL with Domain Restriction
-```blade
-<x-form-url name="company_site" label="Company Site" 
-    pattern="https://.*\.company\.com.*" 
-    title="URL must be from company.com domain" />
-```
-
-### URL with Path Validation
-```blade
-<x-form-url name="api_endpoint" label="API Endpoint" 
-    pattern="https://api\.example\.com/v[0-9]+/.*" 
-    title="URL must be API endpoint with version number" />
-```
-
-## Styling and Customization
-
-### Custom CSS Classes
-```blade
-<x-form-url name="website" label="Website URL" class="custom-url-input" />
-```
-
-### Custom Styling
-```blade
-<x-form-url name="website" label="Website URL" 
-    style="background-color: #f8f9fa; border-radius: 10px;" />
-```
-
-### Bootstrap Utilities
-```blade
-<x-form-url name="website" label="Website URL" 
-    class="border border-primary bg-light" />
-```
-
-## Validation Integration
-
-The component automatically integrates with Laravel's validation system:
-
-```blade
-<!-- Will show error styling if validation fails -->
-<x-form-url name="website" label="Website URL" required />
-```
-
-### Validation Rules
+### Unit Tests
 ```php
-// In your controller
-$request->validate([
-    'website' => 'required|url',
-    'api_url' => 'required|url|starts_with:https://',
-    'callback_url' => 'required|url|active_url',
-]);
-```
-
-### Custom Validation
-```php
-// Custom URL validation
-$request->validate([
-    'website' => [
-        'required',
-        'url',
-        function ($attribute, $value, $fail) {
-            if (!filter_var($value, FILTER_VALIDATE_URL)) {
-                $fail('The ' . $attribute . ' must be a valid URL.');
-            }
-        },
-    ],
-]);
-```
-
-## Styling Classes
-
-The component applies these CSS classes based on props:
-
-- `form-control` - Base input styling
-- `form-control-sm` - Small size styling
-- `form-control-lg` - Large size styling
-- `is-invalid` - Error state styling
-- `form-floating` - Floating label styling
-
-## JavaScript Integration
-
-The component can be enhanced with JavaScript:
-
-```javascript
-// URL validation
-document.querySelectorAll('input[type="url"]').forEach(input => {
-    input.addEventListener('blur', function() {
-        const url = this.value;
-        if (url && !isValidUrl(url)) {
-            this.classList.add('is-invalid');
-            this.setCustomValidity('Please enter a valid URL');
-        } else {
-            this.classList.remove('is-invalid');
-            this.setCustomValidity('');
-        }
-    });
-});
-
-function isValidUrl(string) {
-    try {
-        new URL(string);
-        return true;
-    } catch (_) {
-        return false;
-    }
+/** @test */
+public function it_renders_form_url_with_basic_attributes()
+{
+    $view = $this->blade('<x-form-url name="test" />');
+    
+    $view->assertSee('name="test"');
+    $view->assertSee('form-url');
 }
 
-// Auto-format URLs
-document.querySelectorAll('input[type="url"]').forEach(input => {
-    input.addEventListener('blur', function() {
-        let url = this.value.trim();
-        if (url && !url.match(/^https?:\/\//)) {
-            url = 'https://' + url;
-            this.value = url;
-        }
-    });
-});
+/** @test */
+public function it_renders_form_url_with_url_type()
+{
+    $view = $this->blade('<x-form-url name="test" />');
+    
+    $view->assertSee('type="url"');
+}
 ```
 
-## Accessibility Features
-
-- Proper label association
-- ARIA attributes for screen readers
-- Keyboard navigation support
-- Focus management
-- Error state announcements
-
-```blade
-<x-form-url name="accessible" label="Accessible URL" 
-    aria-describedby="help-text" aria-required="true" />
+### Integration Tests
+```php
+/** @test */
+public function it_integrates_with_livewire()
+{
+    Livewire::test(UrlComponent::class)
+        ->assertSee('<x-form-url')
+        ->set('website', 'https://example.com')
+        ->assertSee('https://example.com');
+}
 ```
+
+## Accessibility
+
+### ARIA Attributes
+- `aria-label`: Applied to URL input
+- `aria-describedby`: Links to help text
+- `role="textbox"`: Applied to input field
+
+### Keyboard Navigation
+- Tab navigation to URL input
+- URL key input for values
+- Enter key for form submission
+- Copy/paste support for URLs
+
+### Screen Reader Support
+- Proper labeling and descriptions
+- URL format announcements
+- Help text communication
+- Error message communication
+
+### URL Accessibility
+- Clear URL format indication
+- Proper validation feedback
+- Helpful error messages
+- Format guidance
 
 ## Browser Compatibility
 
-### Supported Browsers
-- **Chrome**: 90+
-- **Firefox**: 88+
-- **Safari**: 14+
-- **Edge**: 90+
-- **Internet Explorer**: 11+
-
-### Feature Support
-- **HTML5 URL Validation**: Full support
-- **CSS Grid**: Full support
-- **Flexbox**: Full support
-- **CSS Custom Properties**: Full support
-- **ES6+ JavaScript**: Full support
+- **Supported Browsers:** All modern browsers with HTML5 support
+- **JavaScript Dependencies:** Alpine.js (via FormInput)
+- **CSS Framework Requirements:** Bootstrap 4+ or custom styling
+- **Input Type Support:** HTML5 URL input type
 
 ## Troubleshooting
 
 ### Common Issues
 
-**URL validation not working**
-```blade
-<!-- Ensure proper pattern attribute -->
-<x-form-url name="website" label="Website URL" 
-    pattern="https?://.*" required />
-```
+#### URL Validation Not Working
+**Problem:** URL validation not functioning correctly
+**Solution:** Check HTML5 URL input support and validation patterns
 
-**URL not formatting correctly**
-```javascript
-// Add JavaScript to auto-format URLs
-input.addEventListener('blur', function() {
-    if (this.value && !this.value.match(/^https?:\/\//)) {
-        this.value = 'https://' + this.value;
-    }
-});
-```
+#### FormInput Integration Problems
+**Problem:** FormInput extension not working
+**Solution:** Check FormInput component and attribute merging
 
-**Validation errors not showing**
-```blade
-<!-- Ensure validation rules are set -->
-<x-form-url name="website" label="Website URL" required />
-```
+#### URL Pattern Issues
+**Problem:** Custom URL patterns not working
+**Solution:** Verify pattern attribute syntax and regex validity
 
-### Debug Mode
-Enable debug mode to see component rendering details:
-```php
-// config/app.php
-'debug' => true,
-```
+#### Styling Issues
+**Problem:** URL input doesn't look like expected
+**Solution:** Check Bootstrap CSS and custom styles
+
+#### Validation Issues
+**Problem:** URL validation errors not displaying
+**Solution:** Check form validation rules and error handling
 
 ## Related Components
 
-- [Form Input](form-input.md) - Base input component
-- [Form Email](form-email.md) - Email input component
-- [Form Tel](form-tel.md) - Telephone input component
-- [Form Label](form-label.md) - Label component
-- [Form Errors](form-errors.md) - Error display component
-
-## Performance
-
-### Optimization Tips
-1. **Use appropriate validation** for URL format
-2. **Minimize inline styles** when possible
-3. **Use Bootstrap classes** for consistent styling
-4. **Optimize for mobile** display
-5. **Use semantic HTML** for better accessibility
-
-### Bundle Size
-- **Base Component**: ~2KB
-- **With Bootstrap**: ~50KB (one-time load)
-- **With Custom CSS**: ~1KB
-- **Full Package**: ~53KB
-
-## Examples Gallery
-
-### Basic URL Inputs
-```blade
-<!-- Simple URL input -->
-<x-form-url name="website" label="Website URL" />
-
-<!-- With placeholder -->
-<x-form-url name="website" label="Website URL" placeholder="https://example.com" />
-
-<!-- Required field -->
-<x-form-url name="website" label="Website URL" required />
-```
-
-### Advanced URL Inputs
-```blade
-<!-- With validation pattern -->
-<x-form-url name="website" label="Website URL" pattern="https://.*" />
-
-<!-- With help text -->
-<x-form-url name="website" label="Website URL" help="Enter complete URL" />
-
-<!-- Floating label -->
-<x-form-url name="website" label="Website URL" floating />
-```
+- **Form Input:** Base input component
+- **Form Label:** Component labeling
+- **Form Errors:** Validation display
+- **Form Text:** Text input component
+- **Form Help:** Help text component
 
 ## Changelog
 
-### Version 2.0
-- Enhanced URL validation patterns
-- Improved accessibility features
-- Added floating label support
-- Better error handling
-
-### Version 1.0
-- Initial release
-- Basic URL input functionality
-- HTML5 URL validation
-- Bootstrap integration
+### Version 1.0.0
+- Initial release with HTML5 URL input type
+- FormInput extension with URL validation
+- Help and default slot support
+- Comprehensive form integration
 
 ## Contributing
 
-When contributing to the Form URL component:
+To contribute to this component:
+1. Update the view file: `resources/views/bootstrap-5/form-url.blade.php`
+2. Add/update tests in `tests/Components/FormUrlTest.php`
+3. Update this documentation
 
-1. **Test URL validation** thoroughly
-2. **Ensure accessibility** compliance
-3. **Update documentation** for new features
-4. **Add test cases** for new functionality
-5. **Follow coding standards** consistently
+## See Also
 
-## License
-
-This component is part of the `diviky/laravel-components` package and is licensed under the MIT License.
+- [Form Input Component](../form-input.md)
+- [Form Label Component](../form-label.md)
+- [Form Errors Component](../form-errors.md)
+- [Form Text Component](../form-text.md)
+- [HTML5 URL Input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/url)
+- [Laravel Form Components](https://github.com/ryangjchandler/laravel-form-components)

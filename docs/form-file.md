@@ -1,18 +1,20 @@
 # Form File Component
 
-A file upload component that provides a user-friendly interface for file selection with automatic MIME type conversion, FilePond integration, and comprehensive file type validation. Features include intelligent accept attribute handling, language support, and Livewire compatibility.
+A sophisticated file input component that provides professional file upload capabilities with comprehensive form integration and enhanced user experience. This component offers advanced file handling features including FilePond integration, MIME type conversion, language support, and seamless form integration.
 
 ## Overview
 
 **Component Type:** Form  
 **Framework Support:** Bootstrap 5 (default), Bootstrap 4  
 **Livewire Compatible:** Yes  
-**Dependencies:** FilePond (optional), extends base Component
+**Dependencies:** Component class, FilePond (optional)
+**JavaScript Libraries:** FilePond for enhanced file handling (optional)
 
 ## Files
 
 - **PHP Class:** `src/Components/FormFile.php`
 - **View File:** `resources/views/bootstrap-5/form-file.blade.php`
+- **Tests:** `tests/Components/FormFileTest.php`
 - **Documentation:** `docs/form-file.md`
 
 ## Basic Usage
@@ -25,17 +27,17 @@ A file upload component that provides a user-friendly interface for file selecti
 ### With File Type Restrictions
 ```blade
 <x-form-file 
-    name="image" 
-    label="Upload Image"
-    accept=".jpg,.png,.gif">
+    name="pdf_only" 
+    label="PDF Document"
+    accept=".pdf,.doc,.docx">
 </x-form-file>
 ```
 
 ### With FilePond Integration
 ```blade
 <x-form-file 
-    name="files" 
-    label="Upload Files"
+    name="filepond_file" 
+    label="Enhanced File Upload"
     :pond="true">
 </x-form-file>
 ```
@@ -46,35 +48,38 @@ A file upload component that provides a user-friendly interface for file selecti
 
 | Name | Type | Description | Example |
 |------|------|-------------|---------|
-| name | string | Input name attribute | `'document'` or `'image'` |
+| name | string | Input name attribute | `'document'` or `'file'` |
 
 ### Optional Attributes
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
 | label | string | '' | Form field label | `'Upload File'` |
-| value | mixed | null | Current file value | `'document.pdf'` |
+| value | mixed | '' | Current file value | `'current-file.pdf'` |
 | default | mixed | null | Default file value | `'template.docx'` |
 | type | string | 'text' | Input type | `'file'` |
-| size | string | '' | File size limit | `'10MB'` |
+| size | string | '' | File size specification | `'10MB'` |
+| bind | mixed | null | Model binding | `$document` |
 | language | string | null | Language-specific naming | `'en'` |
+| showErrors | boolean | true | Show validation errors | `false` |
+| floating | boolean | false | Use floating label style | `true` |
+| inline | boolean | false | Use inline form style | `true` |
+| settings | array | [] | FilePond settings | `['maxFiles' => 5]` |
 | accept | string | '*.*' | Accepted file types | `'.pdf,.doc,.docx'` |
-| pond | boolean | true | Enable FilePond integration | `false` |
-| settings | array | [] | FilePond configuration | `['maxFiles' => 5]` |
+| extraAttributes | array | [] | Additional attributes | `['data-test' => 'file']` |
 
 ### Inherited Attributes
 
-This component inherits from the base `Component` and supports these additional attributes:
+This component supports standard form attributes:
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
 | id | string | auto-generated | Element ID | `'file-input'` |
-| class | string | null | Additional CSS classes | `'custom-file'` |
+| class | string | '' | CSS classes | `'file-input'` |
 | disabled | boolean | false | Disable the component | `true` |
 | readonly | boolean | false | Make component readonly | `true` |
 | required | boolean | false | Make field required | `true` |
 | multiple | boolean | false | Allow multiple files | `true` |
-| max | string | null | Maximum file size | `'5MB'` |
 
 ### Authorization Attributes
 
@@ -95,19 +100,8 @@ This component inherits from the base `Component` and supports these additional 
 - **Example:**
 ```blade
 <x-slot:help>
-    Maximum file size: 10MB. Supported formats: PDF, DOC, DOCX
+    Supported formats: PDF, DOC, DOCX. Max size: 10MB.
 </x-slot:help>
-```
-
-#### `prepend` (inherited from FormInput)
-- **Purpose:** Content before the input field
-- **Required:** No
-- **Content Type:** HTML/Text/Components
-- **Example:**
-```blade
-<x-slot:prepend>
-    <i class="fas fa-upload"></i>
-</x-slot:prepend>
 ```
 
 ## Usage Examples
@@ -119,109 +113,65 @@ This component inherits from the base `Component` and supports these additional 
     label="Upload Document">
     
     <x-slot:help>
-        Please select a file to upload
+        Please upload your document in a supported format
     </x-slot:help>
 </x-form-file>
 ```
 
-### Image Upload with Restrictions
+### Required File Upload
 ```blade
 <x-form-file 
-    name="profile_image" 
-    label="Profile Picture"
-    accept=".jpg,.png,.gif"
-    :pond="false">
+    name="required_file" 
+    label="Required File"
+    required>
     
     <x-slot:help>
-        Supported formats: JPG, PNG, GIF. Max size: 5MB
+        This file is required to complete your submission
     </x-slot:help>
 </x-form-file>
 ```
 
-### Document Upload with Multiple Files
+### With File Type Restrictions
+```blade
+<x-form-file 
+    name="pdf_only" 
+    label="PDF Document"
+    accept=".pdf"
+    required>
+    
+    <x-slot:help>
+        Only PDF files are accepted for this upload
+    </x-slot:help>
+</x-form-file>
+```
+
+### With Multiple File Types
 ```blade
 <x-form-file 
     name="documents" 
-    label="Upload Documents"
+    label="Documents"
     accept=".pdf,.doc,.docx,.txt"
-    multiple
-    :pond="true">
+    multiple>
     
     <x-slot:help>
-        You can upload multiple documents at once
+        <div class="file-requirements">
+            <strong>Accepted Formats:</strong><br>
+            • PDF files (.pdf)<br>
+            • Word documents (.doc, .docx)<br>
+            • Text files (.txt)<br>
+            • Maximum file size: 10MB
+        </div>
     </x-slot:help>
 </x-form-file>
 ```
 
-### With Model Binding
+### With FilePond Integration
 ```blade
 <x-form-file 
-    name="user_avatar" 
-    label="User Avatar"
-    :bind="$user"
-    bind-key="avatar">
-</x-form-file>
-```
-
-### Livewire Integration
-```blade
-<x-form-file 
-    wire:model="selectedFile"
-    name="file" 
-    label="Select File"
-    accept=".csv,.xlsx">
-    
-    <x-slot:help>
-        Selected: {{ $selectedFile ? $selectedFile->getClientOriginalName() : 'No file selected' }}
-    </x-slot:help>
-</x-form-file>
-```
-
-### With Validation
-```blade
-<x-form-file 
-    name="file" 
-    label="Required File"
-    required
-    accept=".pdf">
-    
-    <x-slot:help>
-        This file is required to proceed
-    </x-slot:help>
-</x-form-file>
-```
-
-### Custom Styling
-```blade
-<x-form-file 
-    name="file" 
-    label="Styled File Input"
-    class="custom-file-input"
-    style="--file-border-color: #007bff;">
-</x-form-file>
-```
-
-### With Language Support
-```blade
-<x-form-file 
-    name="file" 
-    label="Archivo"
-    language="es"
-    accept=".pdf,.doc">
-</x-form-file>
-```
-
-### FilePond Configuration
-```blade
-<x-form-file 
-    name="files" 
-    label="Advanced File Upload"
+    name="filepond_file" 
+    label="Enhanced File Upload"
     :pond="true"
-    :settings="[
-        'maxFiles' => 5,
-        'maxFileSize' => '10MB',
-        'acceptedFileTypes' => ['image/*', 'application/pdf']
-    ]">
+    :settings="['maxFiles' => 5, 'maxFileSize' => '10MB']">
     
     <x-slot:help>
         Drag and drop files here or click to browse
@@ -229,47 +179,172 @@ This component inherits from the base `Component` and supports these additional 
 </x-form-file>
 ```
 
-### Audio/Video Upload
+### With Custom FilePond Settings
 ```blade
 <x-form-file 
-    name="media" 
-    label="Media Files"
-    accept=".mp3,.mp4,.avi,.mov"
-    :pond="true">
+    name="custom_filepond" 
+    label="Custom FilePond"
+    :pond="true"
+    :settings="[
+        'maxFiles' => 10,
+        'maxFileSize' => '25MB',
+        'acceptedFileTypes' => ['image/*', 'application/pdf'],
+        'allowMultiple' => true,
+        'allowReplace' => true,
+        'allowRevert' => true,
+        'instantUpload' => false
+    ]">
     
     <x-slot:help>
-        Supported formats: MP3, MP4, AVI, MOV
+        <div class="filepond-features">
+            <strong>FilePond Features:</strong><br>
+            • Drag and drop support<br>
+            • Multiple file selection<br>
+            • File preview and validation<br>
+            • Custom upload handling
+        </div>
+    </x-slot:help>
+</x-form-file>
+```
+
+### With Language Support
+```blade
+<x-form-file 
+    name="localized_file" 
+    label="Localized File"
+    language="en">
+    
+    <x-slot:help>
+        This file will be specific to the English language
+    </x-slot:help>
+</x-form-file>
+```
+
+### With Model Binding
+```blade
+<x-form-file 
+    name="user_document" 
+    label="User Document"
+    :bind="$user">
+    
+    <x-slot:help>
+        This file will be bound to the user model
+    </x-slot:help>
+</x-form-file>
+```
+
+### With Floating Label Style
+```blade
+<x-form-file 
+    name="floating_file" 
+    label="Floating Label File"
+    :floating="true">
+    
+    <x-slot:help>
+        This file input uses floating label style
+    </x-slot:help>
+</x-form-file>
+```
+
+### With Inline Form Style
+```blade
+<x-form-file 
+    name="inline_file" 
+    label="Inline File"
+    :inline="true">
+    
+    <x-slot:help>
+        This file input uses inline form style
+    </x-slot:help>
+</x-form-file>
+```
+
+### With Custom Classes
+```blade
+<x-form-file 
+    name="custom_file" 
+    label="Custom File"
+    class="custom-file-input"
+    accept=".pdf,.doc,.docx">
+    
+    <x-slot:help>
+        <div class="custom-file-help">
+            <strong>Custom Styling:</strong><br>
+            This file input has custom CSS classes applied
+        </div>
+    </x-slot:help>
+</x-form-file>
+```
+
+### With Hidden Errors
+```blade
+<x-form-file 
+    name="hidden_errors_file" 
+    label="Hidden Errors File"
+    :show-errors="false">
+    
+    <x-slot:help>
+        Validation errors are hidden for this file input
+    </x-slot:help>
+</x-form-file>
+```
+
+### Livewire Integration
+```blade
+<x-form-file 
+    wire:model="selectedFile"
+    name="livewire_file" 
+    label="Livewire File"
+    accept=".pdf,.doc,.docx">
+    
+    <x-slot:help>
+        <div class="livewire-status">
+            <strong>Status:</strong> 
+            <span x-text="$wire.selectedFile ? 'File selected' : 'No file'">
+                {{ $selectedFile ? 'File selected' : 'No file' }}
+            </span>
+        </div>
     </x-slot:help>
 </x-form-file>
 ```
 
 ## Component Variants
 
-### Standard File Input
+### Standard File Upload
 **Usage:** `<x-form-file>` (default)
-**Description:** Basic file input with standard styling
+**Description:** Basic file upload with standard functionality
 **Features:**
-- Standard HTML file input
-- Bootstrap form styling
-- File type validation
-- Error handling
+- Standard file input
+- Basic validation
+- Form integration
+- Error display
 
-### FilePond Enhanced Input
+### FilePond Enhanced Upload
 **Usage:** `<x-form-file :pond="true">`
-**Description:** File input with FilePond drag-and-drop interface
+**Description:** File upload with FilePond enhancement
 **Features:**
-- Drag and drop functionality
+- Drag and drop support
 - File preview
-- Progress indicators
-- Advanced configuration options
+- Enhanced validation
+- Professional appearance
 
-### Restricted File Types
-**Usage:** `<x-form-file accept=".pdf,.doc">`
-**Description:** File input with specific file type restrictions
+### Custom FilePond Upload
+**Usage:** `<x-form-file :pond="true" :settings="[...]">`
+**Description:** File upload with custom FilePond configuration
 **Features:**
-- MIME type conversion
-- File extension validation
-- Intelligent accept attribute handling
+- Custom FilePond settings
+- Advanced file handling
+- Flexible configuration
+- Professional workflow
+
+### Localized File Upload
+**Usage:** `<x-form-file language="en">`
+**Description:** Language-specific file upload
+**Features:**
+- Multi-language support
+- Localized naming
+- Internationalization ready
+- Language-specific validation
 
 ## Configuration
 
@@ -283,185 +358,422 @@ This component inherits from the base `Component` and supports these additional 
 'components' => [
     'form-file' => [
         'view' => 'laravel-components::{framework}.form-file',
-        'class' => Components\FormFile::class,
     ],
 ],
 ```
 
 ### FilePond Configuration
-The component supports FilePond configuration through the settings attribute:
-- **maxFiles:** Maximum number of files
-- **maxFileSize:** Maximum file size
-- **acceptedFileTypes:** Array of accepted MIME types
-- **server:** Custom server configuration
-- **instantUpload:** Enable/disable instant upload
+```blade
+<x-form-file 
+    name="file" 
+    :pond="true"
+    :settings="[
+        'maxFiles' => 5,
+        'maxFileSize' => '10MB',
+        'acceptedFileTypes' => ['image/*', 'application/pdf'],
+        'allowMultiple' => true,
+        'allowReplace' => true,
+        'allowRevert' => true,
+        'instantUpload' => false,
+        'server' => [
+            'url' => '/upload',
+            'process' => '/process',
+            'revert' => '/revert',
+            'restore' => '/restore',
+            'load' => '/load',
+            'fetch' => '/fetch',
+            'patch' => '/patch'
+        ]
+    ]">
+</x-form-file>
+```
 
 ### MIME Type Conversion
 The component automatically converts file extensions to MIME types:
-- **Input:** `.pdf,.doc,.jpg`
-- **Output:** `application/pdf,application/msword,image/jpeg`
+
+| Extension | MIME Types |
+|-----------|------------|
+| `.pdf` | `application/pdf` |
+| `.doc` | `application/msword` |
+| `.docx` | `application/vnd.openxmlformats-officedocument.wordprocessingml.document` |
+| `.csv` | `text/plain`, `text/csv` |
+| `.txt` | `text/plain` |
+| `.jpg` | `image/jpeg` |
+| `.png` | `image/png` |
+
+### Default Settings
+The component uses these default settings:
+- **File Type:** `*.*` (all files)
+- **FilePond:** Enabled by default
+- **MIME Conversion:** Automatic
+- **Form Integration:** Full support
 
 ## Common Patterns
 
-### Document Management System
+### Document Upload System
 ```blade
-<div class="document-upload">
-    <h4>Upload Documents</h4>
-    <p>Please upload the required documents:</p>
+<div class="document-upload-system">
+    <h4>Document Upload</h4>
+    <p>Upload your required documents:</p>
     
-    <x-form-file 
-        name="identification" 
-        label="Identification Document"
-        accept=".pdf,.jpg,.png"
-        required>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <x-form-file 
+                name="identification" 
+                label="Identification Document"
+                accept=".pdf,.jpg,.png"
+                required>
+                
+                <x-slot:help>
+                    <div class="id-requirements">
+                        <strong>ID Requirements:</strong><br>
+                        • Government-issued ID<br>
+                        • Clear, readable image<br>
+                        • PDF, JPG, or PNG format<br>
+                        • Maximum size: 5MB
+                    </div>
+                </x-slot:help>
+            </x-form-file>
+        </div>
         
-        <x-slot:help>
-            Upload a valid ID, passport, or driver's license
-        </x-slot:help>
-    </x-form-file>
+        <div class="col-md-6 mb-3">
+            <x-form-file 
+                name="proof_of_address" 
+                label="Proof of Address"
+                accept=".pdf,.jpg,.png"
+                required>
+                
+                <x-slot:help>
+                    <div class="address-requirements">
+                        <strong>Address Proof Requirements:</strong><br>
+                        • Recent utility bill or bank statement<br>
+                        • Must show your current address<br>
+                        • PDF, JPG, or PNG format<br>
+                        • Maximum size: 5MB
+                    </div>
+                </x-slot:help>
+            </x-form-file>
+        </div>
+    </div>
     
-    <x-form-file 
-        name="proof_of_address" 
-        label="Proof of Address"
-        accept=".pdf,.jpg,.png"
-        required>
-        
-        <x-slot:help>
-            Recent utility bill or bank statement
-        </x-slot:help>
-    </x-form-file>
-    
-    <div class="mt-3">
-        <small class="text-muted">
-            All documents must be clear and legible
-        </small>
+    <div class="upload-guidelines mt-3">
+        <h6>Upload Guidelines</h6>
+        <div class="row">
+            <div class="col-md-4">
+                <strong>File Quality:</strong><br>
+                • Ensure documents are clear and readable<br>
+                • Avoid blurry or low-quality scans<br>
+                • Use good lighting when taking photos<br>
+                • Check file size before uploading
+            </div>
+            <div class="col-md-4">
+                <strong>File Format:</strong><br>
+                • PDF is preferred for documents<br>
+                • Images should be high resolution<br>
+                • Avoid compressed or corrupted files<br>
+                • Use standard file extensions
+            </div>
+            <div class="col-md-4">
+                <strong>Security:</strong><br>
+                • Only upload necessary documents<br>
+                • Remove sensitive information if possible<br>
+                • Use secure connections<br>
+                • Keep uploaded files secure
+            </div>
+        </div>
     </div>
 </div>
 ```
 
-### Image Gallery Upload
+### File Management Interface
 ```blade
-<div class="gallery-upload">
-    <h4>Upload Gallery Images</h4>
+<div class="file-management-interface">
+    <h4>File Management</h4>
+    <p>Manage your uploaded files:</p>
     
     <x-form-file 
-        name="gallery_images" 
-        label="Gallery Images"
-        accept=".jpg,.png,.gif"
-        multiple
+        name="file_upload" 
+        label="Upload New File"
         :pond="true"
         :settings="[
             'maxFiles' => 10,
-            'maxFileSize' => '5MB',
-            'acceptedFileTypes' => ['image/*']
+            'maxFileSize' => '25MB',
+            'acceptedFileTypes' => ['*/*'],
+            'allowMultiple' => true,
+            'allowReplace' => true,
+            'allowRevert' => true,
+            'instantUpload' => false
         ]">
         
         <x-slot:help>
-            Drag and drop images here or click to browse. Max 10 images, 5MB each.
+            <div class="filepond-features">
+                <strong>FilePond Features:</strong><br>
+                • Drag and drop files here<br>
+                • Click to browse files<br>
+                • Multiple file selection<br>
+                • File preview and validation<br>
+                • Replace and revert options
+            </div>
         </x-slot:help>
     </x-form-file>
+    
+    <div class="file-categories mt-4">
+        <h6>File Categories</h6>
+        <div class="row">
+            <div class="col-md-3">
+                <x-form-file 
+                    name="documents" 
+                    label="Documents"
+                    accept=".pdf,.doc,.docx,.txt"
+                    :pond="true"
+                    :settings="['maxFiles' => 5, 'acceptedFileTypes' => ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain']]">
+                    
+                    <div class="category-upload">
+                        <i class="fas fa-file-alt fa-2x text-primary"></i>
+                        <small>Documents</small>
+                    </div>
+                </x-form-file>
+            </div>
+            
+            <div class="col-md-3">
+                <x-form-file 
+                    name="images" 
+                    label="Images"
+                    accept=".jpg,.jpeg,.png,.gif,.webp"
+                    :pond="true"
+                    :settings="['maxFiles' => 10, 'acceptedFileTypes' => ['image/*']]">
+                    
+                    <div class="category-upload">
+                        <i class="fas fa-image fa-2x text-success"></i>
+                        <small>Images</small>
+                    </div>
+                </x-form-file>
+            </div>
+            
+            <div class="col-md-3">
+                <x-form-file 
+                    name="videos" 
+                    label="Videos"
+                    accept=".mp4,.avi,.mov,.wmv"
+                    :pond="true"
+                    :settings="['maxFiles' => 3, 'acceptedFileTypes' => ['video/*']]">
+                    
+                    <div class="category-upload">
+                        <i class="fas fa-video fa-2x text-warning"></i>
+                        <small>Videos</small>
+                    </div>
+                </x-form-file>
+            </div>
+            
+            <div class="col-md-3">
+                <x-form-file 
+                    name="audio" 
+                    label="Audio"
+                    accept=".mp3,.wav,.aac,.ogg"
+                    :pond="true"
+                    :settings="['maxFiles' => 5, 'acceptedFileTypes' => ['audio/*']]">
+                    
+                    <div class="category-upload">
+                        <i class="fas fa-music fa-2x text-info"></i>
+                        <small>Audio</small>
+                    </div>
+                </x-form-file>
+            </div>
+        </div>
+    </div>
 </div>
 ```
 
-### Resume Upload Form
+### Resume Upload System
 ```blade
-<div class="resume-upload">
-    <h4>Upload Your Resume</h4>
-    <p>Please upload your resume in one of the supported formats:</p>
+<div class="resume-upload-system">
+    <h4>Resume Upload</h4>
+    <p>Upload your resume for job applications:</p>
     
     <x-form-file 
         name="resume" 
         label="Resume/CV"
-        accept=".pdf,.doc,.docx,.txt"
-        required>
+        accept=".pdf,.doc,.docx"
+        required
+        :pond="true"
+        :settings="[
+            'maxFiles' => 1,
+            'maxFileSize' => '5MB',
+            'acceptedFileTypes' => ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+            'allowMultiple' => false,
+            'allowReplace' => true,
+            'instantUpload' => false
+        ]">
         
         <x-slot:help>
-            <strong>Supported formats:</strong> PDF, DOC, DOCX, TXT<br>
-            <strong>Maximum size:</strong> 10MB<br>
-            <strong>Note:</strong> PDF format is preferred
+            <div class="resume-requirements">
+                <strong>Resume Requirements:</strong><br>
+                • PDF format preferred<br>
+                • Word documents accepted<br>
+                • Maximum file size: 5MB<br>
+                • Include contact information<br>
+                • List relevant experience and skills
+            </div>
         </x-slot:help>
     </x-form-file>
     
-    <div class="mt-3">
-        <small class="text-muted">
-            Your resume will be reviewed by our HR team
-        </small>
+    <div class="resume-tips mt-3">
+        <h6>Resume Tips</h6>
+        <div class="row">
+            <div class="col-md-6">
+                <strong>Content Tips:</strong><br>
+                • Keep it concise (1-2 pages)<br>
+                • Use clear, professional language<br>
+                • Highlight relevant achievements<br>
+                • Include keywords from job description<br>
+                • Proofread for errors
+            </div>
+            <div class="col-md-6">
+                <strong>Format Tips:</strong><br>
+                • Use consistent formatting<br>
+                • Choose readable fonts<br>
+                • Include proper spacing<br>
+                • Use bullet points for lists<br>
+                • Ensure good contrast
+            </div>
+        </div>
     </div>
 </div>
 ```
 
-### Multi-Language File Upload
+### Portfolio Upload System
 ```blade
-<div class="multilingual-upload">
+<div class="portfolio-upload-system">
+    <h4>Portfolio Upload</h4>
+    <p>Upload your work samples and projects:</p>
+    
     <x-form-file 
-        name="document" 
-        label="Document / Documento"
-        language="en"
-        accept=".pdf,.doc">
-        
-        <x-slot:help>
-            <div class="d-flex gap-3">
-                <span>🇺🇸 Upload your document here</span>
-                <span>🇪🇸 Sube tu documento aquí</span>
-            </div>
-        </x-slot:help>
-    </x-form-file>
-</div>
-```
-
-### File Upload with Progress
-```blade
-<div class="file-upload-progress">
-    <x-form-file 
-        name="large_file" 
-        label="Large File Upload"
-        accept=".zip,.rar,.7z"
+        name="portfolio_files" 
+        label="Portfolio Files"
         :pond="true"
         :settings="[
-            'maxFileSize' => '100MB',
-            'instantUpload' => false,
-            'server' => [
-                'url' => '/upload',
-                'process' => '/upload/process',
-                'revert' => '/upload/revert'
-            ]
+            'maxFiles' => 20,
+            'maxFileSize' => '50MB',
+            'acceptedFileTypes' => ['*/*'],
+            'allowMultiple' => true,
+            'allowReplace' => true,
+            'allowRevert' => true,
+            'instantUpload' => false
         ]">
         
         <x-slot:help>
-            Large files will show upload progress. Please be patient.
+            <div class="portfolio-guidelines">
+                <strong>Portfolio Guidelines:</strong><br>
+                • Include your best work samples<br>
+                • Show variety in your projects<br>
+                • Provide context for each piece<br>
+                • Keep file sizes reasonable<br>
+                • Use descriptive filenames
+            </div>
         </x-slot:help>
     </x-form-file>
+    
+    <div class="portfolio-categories mt-3">
+        <h6>Portfolio Categories</h6>
+        <div class="row">
+            <div class="col-md-4">
+                <strong>Design Work:</strong><br>
+                • Logo designs<br>
+                • Website mockups<br>
+                • Print materials<br>
+                • Brand guidelines<br>
+                • UI/UX designs
+            </div>
+            <div class="col-md-4">
+                <strong>Development:</strong><br>
+                • Code samples<br>
+                • Project screenshots<br>
+                • GitHub repositories<br>
+                • Live demos<br>
+                • Technical documentation
+            </div>
+            <div class="col-md-4">
+                <strong>Content:</strong><br>
+                • Writing samples<br>
+                • Blog posts<br>
+                • Case studies<br>
+                • Presentations<br>
+                • Research papers
+            </div>
+        </div>
+    </div>
 </div>
 ```
 
-### Audio/Video Upload System
+### Contract Document Upload
 ```blade
-<div class="media-upload">
-    <h4>Media Upload</h4>
+<div class="contract-document-upload">
+    <h4>Contract Documents</h4>
+    <p>Upload required contract documents:</p>
     
-    <x-form-file 
-        name="audio_files" 
-        label="Audio Files"
-        accept=".mp3,.wav,.ogg"
-        multiple
-        :pond="true">
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <x-form-file 
+                name="contract_agreement" 
+                label="Contract Agreement"
+                accept=".pdf,.doc,.docx"
+                required>
+                
+                <x-slot:help>
+                    <div class="contract-requirements">
+                        <strong>Contract Requirements:</strong><br>
+                        • Signed contract agreement<br>
+                        • All pages included<br>
+                        • Clear, readable text<br>
+                        • PDF or Word format<br>
+                        • Maximum size: 10MB
+                    </div>
+                </x-slot:help>
+            </x-form-file>
+        </div>
         
-        <x-slot:help>
-            Supported audio formats: MP3, WAV, OGG
-        </x-slot:help>
-    </x-form-file>
+        <div class="col-md-6 mb-3">
+            <x-form-file 
+                name="supporting_documents" 
+                label="Supporting Documents"
+                accept=".pdf,.doc,.docx,.jpg,.png"
+                multiple>
+                
+                <x-slot:help>
+                    <div class="supporting-requirements">
+                        <strong>Supporting Documents:</strong><br>
+                        • Financial statements<br>
+                        • Insurance certificates<br>
+                        • Licenses and permits<br>
+                        • References and testimonials<br>
+                        • Any additional relevant files
+                    </div>
+                </x-slot:help>
+            </x-form-file>
+        </div>
+    </div>
     
-    <x-form-file 
-        name="video_files" 
-        label="Video Files"
-        accept=".mp4,.avi,.mov"
-        multiple
-        :pond="true">
-        
-        <x-slot:help>
-            Supported video formats: MP4, AVI, MOV
-        </x-slot:help>
-    </x-form-file>
+    <div class="contract-checklist mt-3">
+        <h6>Contract Checklist</h6>
+        <div class="row">
+            <div class="col-md-6">
+                <strong>Required Documents:</strong><br>
+                ☐ Signed contract agreement<br>
+                ☐ Company registration<br>
+                ☐ Tax identification<br>
+                ☐ Insurance certificates<br>
+                ☐ Financial statements
+            </div>
+            <div class="col-md-6">
+                <strong>Optional Documents:</strong><br>
+                ☐ Project portfolio<br>
+                ☐ Team resumes<br>
+                ☐ Client references<br>
+                ☐ Awards and certifications<br>
+                ☐ Previous work samples
+            </div>
+        </div>
+    </div>
 </div>
 ```
 
@@ -479,12 +791,12 @@ public function it_renders_form_file_with_basic_attributes()
 }
 
 /** @test */
-public function it_renders_form_file_with_custom_accept()
+public function it_renders_form_file_with_label()
 {
-    $view = $this->blade('<x-form-file name="file" accept=".pdf,.doc" />');
+    $view = $this->blade('<x-form-file name="file" label="Upload File" />');
     
     $view->assertSee('name="file"');
-    $view->assertSee('accept=".pdf,.doc"');
+    $view->assertSee('Upload File');
 }
 ```
 
@@ -495,7 +807,7 @@ public function it_integrates_with_livewire()
 {
     Livewire::test(FileComponent::class)
         ->assertSee('<x-form-file')
-        ->set('selectedFile', 'test.pdf')
+        ->set('file', 'test.pdf')
         ->assertSee('test.pdf');
 }
 ```
@@ -503,72 +815,74 @@ public function it_integrates_with_livewire()
 ## Accessibility
 
 ### ARIA Attributes
-- `aria-label`: Applied to file input
+- `aria-label`: Applied to file inputs
 - `aria-describedby`: Links to help text
-- `role="button"`: Applied to file input when styled
+- `role="button"`: Applied to FilePond elements
 
 ### Keyboard Navigation
 - Tab navigation to file input
-- Enter key to open file dialog
-- Space key to open file dialog
+- File selection dialog
+- FilePond navigation
+- Form submission
 
 ### Screen Reader Support
 - Proper labeling and descriptions
-- File selection announcements
+- File selection feedback
+- Help text communication
 - Error message communication
-- File type restrictions announcement
+
+### File Accessibility
+- Clear file purpose indication
+- Proper validation feedback
+- Helpful error messages
+- File requirements
 
 ## Browser Compatibility
 
 - **Supported Browsers:** All modern browsers with HTML5 support
 - **JavaScript Dependencies:** FilePond (optional)
 - **CSS Framework Requirements:** Bootstrap 4+ or custom styling
-- **File API Support:** HTML5 File API required
+- **File Input Support:** HTML5 file input with FilePond enhancement
 
 ## Troubleshooting
 
 ### Common Issues
 
 #### File Not Uploading
-**Problem:** Files not being uploaded
-**Solution:** Check form enctype and server configuration
+**Problem:** File upload not working
+**Solution:** Check file permissions and upload configuration
 
-#### File Type Restrictions Not Working
-**Problem:** Wrong file types being accepted
-**Solution:** Verify accept attribute and MIME type conversion
+#### FilePond Not Working
+**Problem:** FilePond enhancement not functioning
+**Solution:** Verify FilePond library inclusion and configuration
 
-#### FilePond Not Loading
-**Problem:** FilePond interface not appearing
-**Solution:** Check FilePond CSS/JS loading and pond attribute
+#### MIME Type Issues
+**Problem:** Wrong file types accepted
+**Solution:** Check accept attribute and MIME type conversion
 
-#### Large File Uploads Failing
-**Problem:** Large files causing timeouts
-**Solution:** Check server upload limits and FilePond configuration
+#### File Size Issues
+**Problem:** File size validation not working
+**Solution:** Check server configuration and FilePond settings
 
-#### MIME Type Conversion Errors
-**Problem:** Incorrect MIME types being generated
-**Solution:** Verify file extension format and MimeTypes class
-
-#### Language Support Not Working
-**Problem:** Language-specific naming not functioning
-**Solution:** Check language attribute and name formatting
+#### Language Support Issues
+**Problem:** Language-specific naming not working
+**Solution:** Verify language parameter and naming logic
 
 ## Related Components
 
-- **Form Input:** Base input component
 - **Form Image:** Image-specific upload component
-- **Form Dropzone:** Drag-and-drop file upload
 - **Form Label:** Component labeling
 - **Form Errors:** Validation display
+- **Form Help:** Help text component
+- **Form Dropzone:** Drag-and-drop file upload
 
 ## Changelog
 
 ### Version 1.0.0
 - Initial release with file upload functionality
-- MIME type conversion support
-- FilePond integration
-- Language support
-- Comprehensive file validation
+- FilePond integration for enhanced file handling
+- MIME type conversion and validation
+- Comprehensive form integration
 
 ## Contributing
 
@@ -580,9 +894,11 @@ To contribute to this component:
 
 ## See Also
 
-- [Form Input Component](../form-input.md)
 - [Form Image Component](../form-image.md)
-- [Form Dropzone Component](../form-dropzone.md)
 - [Form Label Component](../form-label.md)
+- [Form Errors Component](../form-errors.md)
+- [Form Help Component](../form-help.md)
+- [Form Dropzone Component](../form-dropzone.md)
 - [FilePond Documentation](https://pqina.nl/filepond/)
 - [Laravel File Uploads](https://laravel.com/docs/file-uploads)
+- [HTML5 File Input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file)

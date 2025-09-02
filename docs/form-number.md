@@ -1,871 +1,796 @@
 # Form Number Component
 
-A specialized number input component that extends the base Form Input with number-specific functionality. This component provides a user-friendly way to handle numeric inputs with built-in number validation, step controls, and proper HTML5 number input type.
+A specialized number input component that provides a professional interface for numeric values with automatic number validation, comprehensive form integration, and enhanced user experience. This component extends FormInput to offer intuitive number input experiences with proper formatting and validation support.
 
 ## Overview
 
-**Component Type:** View-Only Form Input Extension  
+**Component Type:** Form  
 **Framework Support:** Bootstrap 5 (default), Bootstrap 4  
 **Livewire Compatible:** Yes  
-**Dependencies:** `diviky/laravel-form-components` for base functionality  
-**Location:** `resources/views/bootstrap-5/form-number.blade.php`
+**Dependencies:** FormInput component, extends base form functionality
+**JavaScript Library:** Alpine.js (via FormInput)
 
 ## Files
 
+- **PHP Class:** None (view-only component)
 - **View File:** `resources/views/bootstrap-5/form-number.blade.php`
 - **Documentation:** `docs/form-number.md`
-- **Tests:** `tests/Components/FormNumberTest.php`
 
 ## Basic Usage
 
+### Simple Number Input
 ```blade
-<x-form-number name="age" label="Age" placeholder="Enter your age" min="0" max="120" required />
+<x-form-number name="quantity" label="Quantity" />
+```
+
+### With Default Value
+```blade
+<x-form-number 
+    name="amount" 
+    label="Amount"
+    :default="100">
+</x-form-number>
+```
+
+### With Help Text
+```blade
+<x-form-number 
+    name="score" 
+    label="Test Score"
+    help="Enter a score between 0 and 100">
+</x-form-number>
 ```
 
 ## Attributes & Properties
 
 ### Required Attributes
 
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| name | string | - | Number field name (required) | `'age'` |
+| Name | Type | Description | Example |
+|------|------|-------------|---------|
+| name | string | Input name attribute | `'quantity'` or `'amount'` |
 
 ### Optional Attributes
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
-| label | string | null | Number label text | `'Age'` |
-| value | number | null | Initial number value | `25` |
-| placeholder | string | null | Placeholder text | `'Enter your age'` |
-| required | boolean | false | Whether field is required | `true` |
-| readonly | boolean | false | Whether field is readonly | `true` |
-| disabled | boolean | false | Whether field is disabled | `true` |
-| size | string | null | Input size variant | `'sm'`, `'lg'` |
-| icon | string | null | Icon name to display | `'calculator'` |
-| floating | boolean | false | Use floating label style | `true` |
-| flat | boolean | false | Use flat input group style | `true` |
-| inline | boolean | false | Display inline without form-group wrapper | `true` |
-| help | string | null | Help text below input | `'Must be between 0 and 120'` |
-| id | string | auto-generated | Input ID attribute | `'user-age'` |
-| title | string | null | Title attribute for tooltip | `'Enter a valid age'` |
-| class | string | null | Additional CSS classes | `'custom-number'` |
-| wire:model | string | null | Livewire model binding | `'user.age'` |
-| extra-attributes | string | null | Additional HTML attributes | `'data-custom="value"'` |
-
-### Number-Specific Attributes
-
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| min | number | null | Minimum allowed value | `0` |
-| max | number | null | Maximum allowed value | `100` |
-| step | number | 1 | Step increment value | `0.5`, `10` |
-| pattern | string | null | Number pattern for validation | `'[0-9]*'` |
-| autocomplete | string | null | Autocomplete attribute | `'off'` |
-| autofocus | boolean | false | Autofocus the input | `true` |
-| form | string | null | Form ID to associate with | `'user-form'` |
-| tabindex | string | null | Tab index | `'0'` |
-
-### Hidden/Advanced Attributes
-
-| Name | Type | Default | Description | Example |
-|------|------|---------|-------------|---------|
-| default | number | null | Default value | `18` |
-| bind | mixed | null | Model binding value | `$user->age` |
-| language | string | null | Language-specific field | `'en'` |
-| showErrors | boolean | true | Show validation errors | `false` |
+| label | string | '' | Form field label | `'Quantity'` |
+| value | mixed | null | Current number value | `'42'` |
+| default | mixed | null | Default number value | `'0'` |
+| extraAttributes | array | [] | Additional attributes | `['data-test' => 'number']` |
 
 ### Inherited Attributes
 
-This component supports all standard HTML input attributes:
+This component extends `FormInput` and supports these additional attributes:
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
-| inputmode | string | null | Input mode for mobile | `'numeric'`, `'decimal'` |
-| spellcheck | boolean | false | Enable spellcheck | `true` |
-| novalidate | boolean | false | Disable validation | `true` |
+| id | string | auto-generated | Element ID | `'number-input'` |
+| class | string | '' | CSS classes | `'number-input'` |
+| disabled | boolean | false | Disable the component | `true` |
+| readonly | boolean | false | Make component readonly | `true` |
+| required | boolean | false | Make field required | `true` |
+| placeholder | string | '' | Input placeholder text | `'Enter a number'` |
+| min | number | null | Minimum value | `0` |
+| max | number | null | Maximum value | `999999` |
+| step | number | '1' | Step increment | `0.01` |
+| pattern | string | null | Number validation pattern | `'[0-9]*'` |
 
-## Named Slots
+### Authorization Attributes
 
-| Slot | Description | Example |
-|------|-------------|---------|
-| prepend | Content to prepend to input | `<x-slot name="prepend">💰</x-slot>` |
-| append | Content to append to input | `<x-slot name="append"><button>Calculate</button></x-slot>` |
-| before | Content before input (inside input group) | `<x-slot name="before"><span class="input-group-text">$</span></x-slot>` |
-| after | Content after input (inside input group) | `<x-slot name="after"><button>Calculate</button></x-slot>` |
-| help | Help text slot | `<x-slot name="help">Custom help text</x-slot>` |
-| icon | Custom icon slot | `<x-slot name="icon"><x-icon name="custom" /></x-slot>` |
+| Name | Type | Default | Description | Example |
+|------|------|---------|-------------|---------|
+| can | string | null | Laravel permission gate | `'enter-numbers'` |
+| role | string\|array | null | Required user role(s) | `'user'` or `['user', 'admin']` |
+| action | string | null | Action type for authorization | `'create'` |
+
+## Slots
+
+### Optional Slots
+
+#### `help`
+- **Purpose:** Help text below the number input
+- **Required:** No
+- **Content Type:** HTML/Text/Components
+- **Example:**
+```blade
+<x-slot:help>
+    Enter a positive number between 1 and 1000. Decimals are allowed.
+</x-slot:help>
+```
+
+#### Default Slot
+- **Purpose:** Additional content after the number input
+- **Required:** No
+- **Content Type:** HTML/Components
+- **Example:**
+```blade
+<x-form-number name="quantity">
+    <small class="text-muted">Maximum order quantity is 1000</small>
+</x-form-number>
+```
 
 ## Usage Examples
 
 ### Basic Number Input
 ```blade
 <x-form-number 
-    name="age" 
-    label="Age" 
-    placeholder="Enter your age" 
-    min="0" 
-    max="120" 
-    required 
-/>
-```
-
-### Number with Step Control
-```blade
-<x-form-number 
-    name="price" 
-    label="Price" 
-    step="0.01" 
-    min="0" 
-    placeholder="Enter price" 
-/>
-```
-
-### Number with Help Text
-```blade
-<x-form-number 
     name="quantity" 
-    label="Quantity" 
-    help="Must be between 1 and 100"
-    min="1" 
-    max="100" 
-    required 
-/>
+    label="Quantity">
+    
+    <x-slot:help>
+        Enter the quantity you want to order
+    </x-slot:help>
+</x-form-number>
 ```
 
-### Number with Icon
+### Required Number Input
+```blade
+<x-form-number 
+    name="amount" 
+    label="Amount"
+    required>
+    
+    <x-slot:help>
+        This field is required to complete your order
+    </x-slot:help>
+</x-form-number>
+```
+
+### With Min/Max Constraints
 ```blade
 <x-form-number 
     name="score" 
-    label="Score" 
-    icon="star" 
-    min="0" 
-    max="100" 
-    placeholder="Enter score" 
-/>
-```
-
-### Floating Label Number
-```blade
-<x-form-number 
-    name="temperature" 
-    label="Temperature" 
-    floating 
-    step="0.1" 
-    placeholder="Enter temperature" 
-/>
-```
-
-### Number with Custom Size
-```blade
-<x-form-number 
-    name="weight" 
-    label="Weight (kg)" 
-    size="lg" 
-    step="0.1" 
-    min="0" 
-    placeholder="Enter weight" 
-/>
-```
-
-### Livewire Number Input
-```blade
-<x-form-number 
-    name="count" 
-    label="Count" 
-    wire:model.live="count" 
-    min="0" 
-    placeholder="Enter count" 
-/>
-```
-
-### Number with Prepend Content
-```blade
-<x-form-number name="amount" label="Amount">
-    <x-slot name="prepend">💰</x-slot>
+    label="Test Score"
+    min="0"
+    max="100"
+    step="0.5"
+    placeholder="Enter score (0-100)">
+    
+    <x-slot:help>
+        Score must be between 0 and 100. Half points are allowed.
+    </x-slot:help>
 </x-form-number>
 ```
 
-### Number with Custom Help Slot
-```blade
-<x-form-number name="percentage" label="Percentage" min="0" max="100">
-    <x-slot name="help">
-        <div class="d-flex align-items-center">
-            <x-icon name="info" class="me-2" />
-            <span>Enter a value between 0 and 100</span>
-        </div>
-    </x-slot>
-</x-form-number>
-```
-
-### Number with Custom Icon Slot
-```blade
-<x-form-number name="rating" label="Rating" min="1" max="5">
-    <x-slot name="icon">
-        <x-icon name="star" class="text-warning" />
-    </x-slot>
-</x-form-number>
-```
-
-### Number with Before/After Content
-```blade
-<x-form-number name="price" label="Price" step="0.01" min="0">
-    <x-slot name="before">
-        <span class="input-group-text">$</span>
-    </x-slot>
-    <x-slot name="after">
-        <button type="button" class="btn btn-outline-secondary">Calculate</button>
-    </x-slot>
-</x-form-number>
-```
-
-### Disabled Number Input
-```blade
-<x-form-number 
-    name="fixed_value" 
-    label="Fixed Value" 
-    disabled 
-    value="42" 
-/>
-```
-
-### Readonly Number Input
-```blade
-<x-form-number 
-    name="calculated_value" 
-    label="Calculated Value" 
-    readonly 
-    value="99.99" 
-/>
-```
-
-### Number with Pattern Validation
-```blade
-<x-form-number 
-    name="phone" 
-    label="Phone Number" 
-    pattern="[0-9]{10}" 
-    title="Please enter a 10-digit phone number"
-    placeholder="1234567890" 
-/>
-```
-
-### Number with Input Mode
-```blade
-<x-form-number 
-    name="decimal" 
-    label="Decimal Value" 
-    step="0.01" 
-    inputmode="decimal"
-    placeholder="Enter decimal" 
-/>
-```
-
-## Real Project Examples
-
-### Product Pricing Form
-```blade
-<x-form action="{{ route('products.store') }}" method="POST">
-    <div class="row">
-        <div class="col-md-6">
-            <x-form-input name="name" label="Product Name" required />
-        </div>
-        <div class="col-md-6">
-            <x-form-number 
-                name="price" 
-                label="Price" 
-                step="0.01" 
-                min="0" 
-                placeholder="0.00"
-                help="Enter price in dollars"
-                required 
-            >
-                <x-slot name="before">
-                    <span class="input-group-text">$</span>
-                </x-slot>
-            </x-form-number>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-md-6">
-            <x-form-number 
-                name="quantity" 
-                label="Stock Quantity" 
-                min="0" 
-                placeholder="0"
-                help="Available stock quantity"
-                required 
-            />
-        </div>
-        <div class="col-md-6">
-            <x-form-number 
-                name="weight" 
-                label="Weight (kg)" 
-                step="0.1" 
-                min="0" 
-                placeholder="0.0"
-                help="Product weight in kilograms"
-            />
-        </div>
-    </div>
-    
-    <x-form-submit>Create Product</x-form-submit>
-</x-form>
-```
-
-### Survey Form
-```blade
-<x-form action="{{ route('survey.submit') }}" method="POST">
-    <x-form-input name="name" label="Full Name" required />
-    
-    <x-form-number 
-        name="age" 
-        label="Age" 
-        min="13" 
-        max="120" 
-        placeholder="Enter your age"
-        help="Must be 13 or older"
-        required 
-    />
-    
-    <x-form-number 
-        name="rating" 
-        label="Overall Rating" 
-        min="1" 
-        max="10" 
-        step="1"
-        placeholder="Rate from 1-10"
-        help="Rate your experience from 1 to 10"
-        required 
-    >
-        <x-slot name="icon">
-            <x-icon name="star" class="text-warning" />
-        </x-slot>
-    </x-form-number>
-    
-    <x-form-textarea 
-        name="feedback" 
-        label="Additional Feedback" 
-        placeholder="Share your thoughts..."
-        rows="4"
-    />
-    
-    <x-form-submit>Submit Survey</x-form-submit>
-</x-form>
-```
-
-### Calculator Form
-```blade
-<x-form action="{{ route('calculator.compute') }}" method="POST">
-    <div class="row">
-        <div class="col-md-6">
-            <x-form-number 
-                name="num1" 
-                label="First Number" 
-                step="any"
-                placeholder="Enter first number"
-                required 
-            />
-        </div>
-        <div class="col-md-6">
-            <x-form-number 
-                name="num2" 
-                label="Second Number" 
-                step="any"
-                placeholder="Enter second number"
-                required 
-            />
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-md-6">
-            <x-form-select name="operation" label="Operation" required>
-                <option value="">Select operation</option>
-                <option value="add">Addition (+)</option>
-                <option value="subtract">Subtraction (-)</option>
-                <option value="multiply">Multiplication (×)</option>
-                <option value="divide">Division (÷)</option>
-            </x-form-select>
-        </div>
-        <div class="col-md-6">
-            <x-form-number 
-                name="result" 
-                label="Result" 
-                readonly 
-                value="{{ $result ?? '' }}"
-                class="bg-light"
-            />
-        </div>
-    </div>
-    
-    <x-form-submit>Calculate</x-form-submit>
-</x-form>
-```
-
-### Settings Form
-```blade
-<x-form action="{{ route('settings.update') }}" method="PUT">
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Application Settings</h3>
-        </div>
-        <div class="card-body">
-            <x-form-number 
-                name="session_timeout" 
-                label="Session Timeout (minutes)" 
-                min="5" 
-                max="1440"
-                :value="$settings->session_timeout"
-                help="Session will expire after this many minutes"
-                required 
-            />
-            
-            <x-form-number 
-                name="max_upload_size" 
-                label="Max Upload Size (MB)" 
-                min="1" 
-                max="100"
-                :value="$settings->max_upload_size"
-                help="Maximum file upload size in megabytes"
-                required 
-            />
-            
-            <x-form-number 
-                name="cache_duration" 
-                label="Cache Duration (hours)" 
-                min="0" 
-                max="168"
-                step="0.5"
-                :value="$settings->cache_duration"
-                help="How long to cache data (0 = disabled)"
-                required 
-            />
-        </div>
-    </div>
-    
-    <x-form-submit>Update Settings</x-form-submit>
-</x-form>
-```
-
-### Order Form
-```blade
-<x-form action="{{ route('orders.store') }}" method="POST">
-    <div class="row">
-        <div class="col-md-8">
-            <x-form-input name="customer_name" label="Customer Name" required />
-        </div>
-        <div class="col-md-4">
-            <x-form-number 
-                name="order_number" 
-                label="Order Number" 
-                min="1000" 
-                max="99999"
-                placeholder="1000-99999"
-                help="Unique order identifier"
-                required 
-            />
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-md-4">
-            <x-form-number 
-                name="quantity" 
-                label="Quantity" 
-                min="1" 
-                max="1000"
-                placeholder="1"
-                help="Number of items"
-                required 
-            />
-        </div>
-        <div class="col-md-4">
-            <x-form-number 
-                name="unit_price" 
-                label="Unit Price" 
-                step="0.01" 
-                min="0"
-                placeholder="0.00"
-                help="Price per unit"
-                required 
-            >
-                <x-slot name="before">
-                    <span class="input-group-text">$</span>
-                </x-slot>
-            </x-form-number>
-        </div>
-        <div class="col-md-4">
-            <x-form-number 
-                name="total" 
-                label="Total" 
-                step="0.01" 
-                min="0"
-                readonly
-                class="bg-light"
-                help="Calculated total (quantity × unit price)"
-            >
-                <x-slot name="before">
-                    <span class="input-group-text">$</span>
-                </x-slot>
-            </x-form-number>
-        </div>
-    </div>
-    
-    <x-form-submit>Create Order</x-form-submit>
-</x-form>
-```
-
-## Features
-
-### Number Validation
-The component automatically includes number validation:
-- **HTML5 Validation**: Browser-native number format validation
-- **Range Validation**: Min/max value constraints
-- **Step Validation**: Increment/decrement step control
-- **Pattern Validation**: Custom regex pattern support
-- **Laravel Validation**: Server-side number validation integration
-- **Real-time Validation**: Livewire validation support
-
-### Form Integration
-- **Automatic Validation**: Integrates with Laravel's validation system
-- **Error Display**: Shows validation errors with proper styling
-- **CSRF Protection**: Automatically includes CSRF tokens
-- **Method Spoofing**: Supports PUT, PATCH, DELETE methods
-
-### Styling Options
-- **Size Variants**: `sm`, `lg` for different input sizes
-- **Floating Labels**: Modern floating label design
-- **Flat Style**: Alternative flat input group styling
-- **Icon Support**: Built-in icon display with `x-icon`
-- **Custom Classes**: Additional CSS class support
-
-### Interactive Features
-- **Livewire Integration**: Full Livewire model binding support
-- **Real-time Validation**: Live validation with `wire:model.live`
-- **Debounced Input**: Support for debounced model updates
-- **Step Controls**: Browser-native step up/down buttons
-- **Input Mode**: Mobile-optimized numeric input modes
-
-### Accessibility
-- **ARIA Labels**: Proper accessibility labeling
-- **Screen Reader Support**: Semantic HTML structure
-- **Keyboard Navigation**: Full keyboard accessibility
-- **Focus Management**: Proper focus handling
-- **Number Announcements**: Clear number format announcements
-
-### Advanced Features
-- **Language Support**: Multi-language field support
-- **Model Binding**: Direct model property binding
-- **Custom Validation**: Pattern and constraint validation
-- **Mobile Optimization**: Touch-friendly numeric input
-- **Decimal Support**: Flexible decimal precision control
-
-## Common Patterns
-
-### Number with Currency
+### With Decimal Support
 ```blade
 <x-form-number 
     name="price" 
-    label="Price" 
-    step="0.01" 
+    label="Price"
     min="0"
-    wire:model.live="price"
-    help="Enter price in dollars"
->
-    <x-slot name="before">
-        <span class="input-group-text">$</span>
-    </x-slot>
-    <x-slot name="after">
-        <button type="button" class="btn btn-outline-secondary" wire:click="calculateTax">
-            Calculate Tax
-        </button>
-    </x-slot>
+    step="0.01"
+    placeholder="0.00">
+    
+    <x-slot:help>
+        Enter the price with up to 2 decimal places
+    </x-slot:help>
 </x-form-number>
 ```
 
-### Number with Percentage
+### With Model Binding
 ```blade
 <x-form-number 
-    name="discount" 
-    label="Discount Rate" 
-    min="0" 
-    max="100" 
-    step="0.1"
-    title="Enter discount percentage"
-    help="Discount percentage (0-100%)"
->
-    <x-slot name="after">
-        <span class="input-group-text">%</span>
-    </x-slot>
+    name="user_age" 
+    label="Your Age"
+    :bind="$user"
+    bind-key="age"
+    min="13"
+    max="120">
+    
+    <x-slot:help>
+        You must be at least 13 years old to use this service
+    </x-slot:help>
 </x-form-number>
-```
-
-### Number with Range Slider
-```blade
-<x-form-number 
-    name="volume" 
-    label="Volume" 
-    min="0" 
-    max="100" 
-    step="1"
-    wire:model.live="volume"
-    help="Adjust volume level"
->
-    <x-slot name="icon">
-        <x-icon name="volume" class="text-primary" />
-    </x-slot>
-</x-form-number>
-```
-
-### Number with Auto-calculation
-```blade
-<x-form-number 
-    name="total" 
-    label="Total Amount" 
-    step="0.01" 
-    min="0"
-    readonly
-    class="bg-light"
-    wire:model="total"
-    help="Automatically calculated total"
->
-    <x-slot name="before">
-        <span class="input-group-text">$</span>
-    </x-slot>
-    <x-slot name="after">
-        <div wire:loading wire:target="total">
-            <x-icon name="spinner" class="spinner-border spinner-border-sm" />
-        </div>
-    </x-slot>
-</x-form-number>
-```
-
-## Configuration
-
-### Global Configuration
-The component uses the global form components configuration from `diviky/laravel-form-components`:
-
-```php
-// config/form-components.php
-return [
-    'framework' => 'bootstrap-5',
-    'floating_labels' => false,
-    'show_errors' => true,
-    'default_wire' => false,
-];
-```
-
-### Component-Specific Configuration
-```php
-// In your service provider
-Blade::component('form-number', FormNumber::class);
-```
-
-## JavaScript Integration
-
-### Custom JavaScript
-```javascript
-// Custom number validation
-document.querySelectorAll('[data-custom-number]').forEach(input => {
-    input.addEventListener('input', function() {
-        // Custom number validation
-        validateNumberFormat(this.value);
-    });
-});
 ```
 
 ### Livewire Integration
-```javascript
-// Automatic Livewire integration
-Livewire.on('number-updated', (data) => {
-    // Handle number updates
-});
+```blade
+<x-form-number 
+    wire:model="form.quantity"
+    name="order_quantity" 
+    label="Order Quantity"
+    min="1"
+    max="1000"
+    required>
+    
+    <x-slot:help>
+        <div class="quantity-summary">
+            <strong>Order Summary:</strong><br>
+            Quantity: <span x-text="$wire.form.quantity ?: '0'">0</span><br>
+            Unit Price: $<span x-text="unitPrice">10.00</span><br>
+            Total: $<span x-text="calculateTotal($wire.form.quantity)">0.00</span>
+        </div>
+    </x-slot:help>
+</x-form-number>
 ```
 
-### Number Formatting
-```javascript
-// Number formatting functionality
-function formatNumber(value, decimals = 2) {
-    return parseFloat(value).toFixed(decimals);
+### With Custom Classes
+```blade
+<x-form-number 
+    name="custom_number" 
+    label="Custom Number"
+    class="number-input-lg"
+    placeholder="Enter your custom number">
+    
+    <x-slot:help>
+        <div class="number-tips">
+            <i class="fas fa-calculator"></i>
+            <strong>Tip:</strong> Use the up/down arrows to adjust values
+        </div>
+    </x-slot:help>
+</x-form-number>
+```
+
+### Disabled Number Field
+```blade
+<x-form-number 
+    name="locked_number" 
+    label="Number"
+    disabled>
+    
+    <x-slot:help>
+        This number field is locked and cannot be changed
+    </x-slot:help>
+</x-form-number>
+```
+
+### Readonly Number Field
+```blade
+<x-form-number 
+    name="display_number" 
+    label="Current Number"
+    readonly>
+    
+    <x-slot:help>
+        Your current number (cannot be edited)
+    </x-slot:help>
+</x-form-number>
+```
+
+## Component Variants
+
+### Standard Number Input
+**Usage:** `<x-form-number>` (default)
+**Description:** Basic number input with standard validation
+**Features:**
+- HTML5 number input type
+- Standard number validation
+- Help and default slot support
+- FormInput extension
+
+### Constrained Number Input
+**Usage:** `<x-form-number min="0" max="100">`
+**Description:** Number input with value constraints
+**Features:**
+- Min/max value validation
+- Range constraint enforcement
+- Enhanced validation feedback
+- Improved user experience
+
+### Decimal Number Input
+**Usage:** `<x-form-number step="0.01">`
+**Description:** Number input with decimal support
+**Features:**
+- Decimal precision control
+- Step increment configuration
+- Financial calculation support
+- Professional number handling
+
+## Configuration
+
+### Environment Variables
+- `LARAVEL_COMPONENTS_FRAMEWORK`: Set to 'bootstrap-4' for Bootstrap 4 support
+- `LARAVEL_COMPONENTS_PREFIX`: Add prefix to all components (e.g., 'ui' makes `<x-ui-form-number>`)
+
+### Component Configuration
+```php
+// config/laravel-components.php
+'components' => [
+    'form-number' => [
+        'view' => 'laravel-components::{framework}.form-number',
+    ],
+],
+```
+
+### Default Settings
+The component uses these default settings:
+- **Type:** `'number'`
+- **Validation:** HTML5 number validation
+- **Step:** `'1'` (integer increments)
+- **Constraints:** No default min/max values
+
+### Number Validation Patterns
+```html
+<!-- Integer only -->
+pattern="[0-9]*"
+
+<!-- Positive numbers only -->
+pattern="[1-9][0-9]*"
+
+<!-- Decimal numbers -->
+pattern="[0-9]*\.?[0-9]+"
+
+<!-- Currency format -->
+pattern="[0-9]*\.?[0-9]{0,2}"
+```
+
+## Common Patterns
+
+### E-commerce Product Configuration
+```blade
+<div class="product-configuration-form">
+    <h4>Product Configuration</h4>
+    <p>Set the configuration for your product:</p>
+    
+    <x-form-number 
+        name="base_quantity" 
+        label="Base Quantity"
+        min="1"
+        required>
+        
+        <x-slot:help>
+            <strong>Quantity Guidelines:</strong><br>
+            • Minimum order quantity is 1<br>
+            • Consider production capacity<br>
+            • Factor in storage costs<br>
+            • Quantities are displayed as whole numbers
+        </x-slot:help>
+    </x-form-number>
+    
+    <x-form-number 
+        name="bulk_discount_threshold" 
+        label="Bulk Discount Threshold"
+        min="10">
+        
+        <x-slot:help>
+            Quantity at which bulk pricing applies
+        </x-slot:help>
+    </x-form-number>
+    
+    <x-form-number 
+        name="unit_price" 
+        label="Unit Price"
+        min="0"
+        step="0.01"
+        required>
+        
+        <x-slot:help>
+            Price per unit in your local currency
+        </x-slot:help>
+    </x-form-number>
+    
+    <div class="pricing-summary mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h6>Pricing Summary:</h6>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p class="mb-1"><strong>Base Quantity:</strong> <span x-text="$wire.baseQuantity ?: '0'">0</span></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="mb-1"><strong>Bulk Threshold:</strong> <span x-text="$wire.bulkDiscountThreshold ?: '0'">0</span></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="mb-1"><strong>Unit Price:</strong> $<span x-text="$wire.unitPrice ?: '0.00'">0.00</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### Survey and Assessment Forms
+```blade
+<div class="survey-assessment-form">
+    <h4>Customer Satisfaction Survey</h4>
+    <p>Rate your experience with our service:</p>
+    
+    <x-form-number 
+        name="overall_satisfaction" 
+        label="Overall Satisfaction"
+        min="1"
+        max="10"
+        required>
+        
+        <x-slot:help>
+            Rate your overall satisfaction from 1 (very dissatisfied) to 10 (very satisfied)
+        </x-slot:help>
+    </x-form-number>
+    
+    <x-form-number 
+        name="product_quality" 
+        label="Product Quality"
+        min="1"
+        max="10">
+        
+        <x-slot:help>
+            Rate the quality of our products
+        </x-slot:help>
+    </x-form-number>
+    
+    <x-form-number 
+        name="customer_service" 
+        label="Customer Service"
+        min="1"
+        max="10">
+        
+        <x-slot:help>
+            Rate the quality of our customer service
+        </x-slot:help>
+    </x-form-number>
+    
+    <x-form-number 
+        name="value_for_money" 
+        label="Value for Money"
+        min="1"
+        max="10">
+        
+        <x-slot:help>
+            Rate the value for money of our products
+        </x-slot:help>
+    </x-form-number>
+    
+    <div class="survey-summary mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h6>Survey Summary:</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Overall Score:</strong> <span x-text="calculateOverallScore()">0</span>/10</p>
+                        <p class="mb-1"><strong>Average Rating:</strong> <span x-text="calculateAverageRating()">0</span>/10</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Recommendation:</strong> <span x-text="getRecommendation()">Neutral</span></p>
+                        <p class="mb-0"><strong>Improvement Areas:</strong> <span x-text="getImprovementAreas()">None</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### Financial Planning and Budgeting
+```blade
+<div class="financial-planning-form">
+    <h4>Monthly Budget Planning</h4>
+    <p>Plan your monthly expenses and savings:</p>
+    
+    <x-form-number 
+        name="monthly_income" 
+        label="Monthly Income"
+        min="0"
+        step="0.01"
+        required>
+        
+        <x-slot:help>
+            Your total monthly income from all sources
+        </x-slot:help>
+    </x-form-number>
+    
+    <x-form-number 
+        name="rent_mortgage" 
+        label="Rent/Mortgage"
+        min="0"
+        step="0.01">
+        
+        <x-slot:help>
+            Monthly housing costs
+        </x-slot:help>
+    </x-form-number>
+    
+    <x-form-number 
+        name="utilities" 
+        label="Utilities"
+        min="0"
+        step="0.01">
+        
+        <x-slot:help>
+            Monthly utility bills (electricity, water, gas, internet)
+        </x-slot:help>
+    </x-form-number>
+    
+    <x-form-number 
+        name="groceries" 
+        label="Groceries"
+        min="0"
+        step="0.01">
+        
+        <x-slot:help>
+            Monthly food and household expenses
+        </x-slot:help>
+    </x-form-number>
+    
+    <x-form-number 
+        name="entertainment" 
+        label="Entertainment"
+        min="0"
+        step="0.01">
+        
+        <x-slot:help>
+            Monthly entertainment and recreation expenses
+        </x-slot:help>
+    </x-form-number>
+    
+    <div class="budget-summary mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h6>Budget Summary:</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Total Income:</strong> $<span x-text="$wire.monthlyIncome ?: '0.00'">0.00</span></p>
+                        <p class="mb-1"><strong>Total Expenses:</strong> $<span x-text="calculateTotalExpenses()">0.00</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Remaining:</strong> $<span x-text="calculateRemaining()">0.00</span></p>
+                        <p class="mb-0"><strong>Savings Rate:</strong> <span x-text="calculateSavingsRate()">0%</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### Inventory Management
+```blade
+<div class="inventory-management-form">
+    <h4>Inventory Management</h4>
+    <p>Update your inventory levels:</p>
+    
+    <x-form-number 
+        name="current_stock" 
+        label="Current Stock"
+        min="0"
+        readonly>
+        
+        <x-slot:help>
+            Current inventory level (cannot be edited)
+        </x-slot:help>
+    </x-form-number>
+    
+    <x-form-number 
+        name="reorder_point" 
+        label="Reorder Point"
+        min="0">
+        
+        <x-slot:help>
+            Stock level at which to reorder
+        </x-slot:help>
+    </x-form-number>
+    
+    <x-form-number 
+        name="order_quantity" 
+        label="Order Quantity"
+        min="1">
+        
+        <x-slot:help>
+            Quantity to order when reorder point is reached
+        </x-slot:help>
+    </x-form-number>
+    
+    <x-form-number 
+        name="lead_time_days" 
+        label="Lead Time (Days)"
+        min="1"
+        max="365">
+        
+        <x-slot:help>
+            Days from order to delivery
+        </x-slot:help>
+    </x-form-number>
+    
+    <div class="inventory-summary mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h6>Inventory Summary:</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Stock Status:</strong> <span x-text="getStockStatus()">Normal</span></p>
+                        <p class="mb-1"><strong>Days Until Reorder:</strong> <span x-text="getDaysUntilReorder()">0</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Next Order Date:</strong> <span x-text="getNextOrderDate()">N/A</span></p>
+                        <p class="mb-0"><strong>Safety Stock:</strong> <span x-text="getSafetyStock()">0</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### Performance Metrics
+```blade
+<div class="performance-metrics-form">
+    <h4>Performance Metrics</h4>
+    <p>Track your key performance indicators:</p>
+    
+    <x-form-number 
+        name="conversion_rate" 
+        label="Conversion Rate (%)"
+        min="0"
+        max="100"
+        step="0.01">
+        
+        <x-slot:help>
+            Percentage of visitors who complete a desired action
+        </x-slot:help>
+    </x-form-number>
+    
+    <x-form-number 
+        name="average_order_value" 
+        label="Average Order Value"
+        min="0"
+        step="0.01">
+        
+        <x-slot:help>
+            Average amount spent per order
+        </x-slot:help>
+    </x-form-number>
+    
+    <x-form-number 
+        name="customer_lifetime_value" 
+        label="Customer Lifetime Value"
+        min="0"
+        step="0.01">
+        
+        <x-slot:help>
+            Total value a customer brings over their lifetime
+        </x-slot:help>
+    </x-form-number>
+    
+    <x-form-number 
+        name="churn_rate" 
+        label="Churn Rate (%)"
+        min="0"
+        max="100"
+        step="0.01">
+        
+        <x-slot:help>
+            Percentage of customers who stop using your service
+        </x-slot:help>
+    </x-form-number>
+    
+    <div class="metrics-summary mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h6>Metrics Summary:</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Performance Score:</strong> <span x-text="calculatePerformanceScore()">0</span>/100</p>
+                        <p class="mb-1"><strong>Growth Rate:</strong> <span x-text="calculateGrowthRate()">0%</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Trend:</strong> <span x-text="getTrend()">Stable</span></p>
+                        <p class="mb-0"><strong>Recommendations:</strong> <span x-text="getRecommendations()">None</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+## Testing Examples
+
+### Unit Tests
+```php
+/** @test */
+public function it_renders_form_number_with_basic_attributes()
+{
+    $view = $this->blade('<x-form-number name="test" />');
+    
+    $view->assertSee('name="test"');
+    $view->assertSee('form-number');
 }
 
-function formatCurrency(value) {
-    return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD'
-    }).format(value);
+/** @test */
+public function it_renders_form_number_with_number_type()
+{
+    $view = $this->blade('<x-form-number name="test" />');
+    
+    $view->assertSee('type="number"');
 }
 ```
 
-### Auto-calculation
-```javascript
-// Auto-calculation functionality
-function calculateTotal(quantity, unitPrice) {
-    const total = quantity * unitPrice;
-    document.getElementById('total').value = total.toFixed(2);
-    return total;
+### Integration Tests
+```php
+/** @test */
+public function it_integrates_with_livewire()
+{
+    Livewire::test(NumberComponent::class)
+        ->assertSee('<x-form-number')
+        ->set('quantity', '42')
+        ->assertSee('42');
 }
 ```
 
 ## Accessibility
 
 ### ARIA Attributes
-The component automatically includes proper ARIA attributes:
-- `aria-describedby` for help text
-- `aria-invalid` for validation errors
-- `aria-required` for required fields
-- `aria-label` for icon-only inputs
-- `aria-valuemin` and `aria-valuemax` for range constraints
+- `aria-label`: Applied to number input
+- `aria-describedby`: Links to help text
+- `role="textbox"`: Applied to input field
 
 ### Keyboard Navigation
-- Tab navigation through form fields
-- Enter key submission
-- Escape key for clearing input
-- Arrow keys for step increment/decrement
-- Space key for button activation
+- Tab navigation to number input
+- Number key input for values
+- Arrow key navigation
+- Enter key for form submission
 
 ### Screen Reader Support
-- Proper label association
-- Descriptive help text
-- Clear error messages
+- Proper labeling and descriptions
 - Number format announcements
-- Range constraint announcements
+- Help text communication
+- Error message communication
+
+### Number Accessibility
+- Clear number format indication
+- Proper validation feedback
+- Helpful error messages
+- Format guidance
 
 ## Browser Compatibility
 
-### Supported Browsers
-- **Chrome**: 90+
-- **Firefox**: 88+
-- **Safari**: 14+
-- **Edge**: 90+
-- **Internet Explorer**: Not supported
-
-### Feature Support
-- **HTML5 Number Input**: Full support
-- **CSS Grid/Flexbox**: Full support
-- **ES6+ JavaScript**: Full support
-- **Custom Properties**: Full support
-- **Step Controls**: Full support
+- **Supported Browsers:** All modern browsers with HTML5 support
+- **JavaScript Dependencies:** Alpine.js (via FormInput)
+- **CSS Framework Requirements:** Bootstrap 4+ or custom styling
+- **Input Type Support:** HTML5 number input type
 
 ## Troubleshooting
 
 ### Common Issues
 
-**Number validation not working**
-```blade
-<!-- Ensure proper min/max attributes -->
-<x-form-number name="age" min="0" max="120" />
-```
+#### Number Validation Not Working
+**Problem:** Number validation not functioning correctly
+**Solution:** Check HTML5 number input support and validation patterns
 
-**Step controls not working**
-```blade
-<!-- Ensure step attribute is set -->
-<x-form-number name="price" step="0.01" />
-```
+#### FormInput Integration Problems
+**Problem:** FormInput extension not working
+**Solution:** Check FormInput component and attribute merging
 
-**Livewire binding issues**
-```blade
-<!-- Ensure proper wire:model syntax -->
-<x-form-number name="count" wire:model="user.count" />
-```
+#### Number Pattern Issues
+**Problem:** Custom number patterns not working
+**Solution:** Verify pattern attribute syntax and regex validity
 
-**Icon not displaying**
-```blade
-<!-- Ensure icon component is available -->
-<x-form-number name="score" icon="star" />
-```
+#### Styling Issues
+**Problem:** Number input doesn't look like expected
+**Solution:** Check Bootstrap CSS and custom styles
 
-### Debug Mode
-Enable debug mode to see component rendering details:
-```php
-// config/app.php
-'debug' => true,
-```
+#### Validation Issues
+**Problem:** Number validation errors not displaying
+**Solution:** Check form validation rules and error handling
 
 ## Related Components
 
-- [Form Input](form-input.md) - Base input component
-- [Form Email](form-email.md) - Email input component
-- [Form Password](form-password.md) - Password input component
-- [Form Tel](form-tel.md) - Telephone input component
-- [Form URL](form-url.md) - URL input component
-- [Form Hidden](form-hidden.md) - Hidden input component
-- [Form Select](form-select.md) - Select dropdown component
-- [Form Textarea](form-textarea.md) - Multi-line text input component
-- [Form Checkbox](form-checkbox.md) - Checkbox input component
-- [Form Switch](form-switch.md) - Toggle switch component
-
-## Performance
-
-### Optimization Tips
-1. **Use `wire:model.lazy`** for less critical number updates
-2. **Minimize re-renders** with proper Livewire optimization
-3. **Cache validation rules** when appropriate
-4. **Use debounced validation** for real-time number checking
-
-### Bundle Size
-- **Base Component**: ~2KB
-- **With Validation**: ~5KB
-- **With Livewire**: ~8KB
-- **Full Package**: ~10KB
-
-## Examples Gallery
-
-### Basic Number Inputs
-```blade
-<!-- Simple Number -->
-<x-form-number name="age" label="Age" />
-
-<!-- Required Number -->
-<x-form-number name="quantity" label="Quantity" required />
-
-<!-- Number with Help -->
-<x-form-number name="score" label="Score" help="Enter score from 0-100" />
-
-<!-- Number with Icon -->
-<x-form-number name="rating" label="Rating" icon="star" />
-```
-
-### Advanced Number Inputs
-```blade
-<!-- Floating Label -->
-<x-form-number name="temperature" label="Temperature" floating />
-
-<!-- Large Number -->
-<x-form-number name="weight" label="Weight" size="lg" />
-
-<!-- Livewire Number -->
-<x-form-number name="count" wire:model.live="count" />
-
-<!-- Number with Step -->
-<x-form-number name="price" step="0.01" min="0" />
-```
+- **Form Input:** Base input component
+- **Form Label:** Component labeling
+- **Form Errors:** Validation display
+- **Form Text:** Text input component
+- **Form Help:** Help text component
 
 ## Changelog
 
-### Version 2.0
-- Added enhanced number validation patterns
-- Improved accessibility features
-- Enhanced step control integration
-- Added custom slot support
-
-### Version 1.0
-- Initial release
-- Basic number input functionality
-- Bootstrap 5 support
-- Form validation integration
+### Version 1.0.0
+- Initial release with HTML5 number input type
+- FormInput extension with number validation
+- Help and default slot support
+- Comprehensive form integration
 
 ## Contributing
 
-When contributing to the Form Number component:
+To contribute to this component:
+1. Update the view file: `resources/views/bootstrap-5/form-number.blade.php`
+2. Add/update tests in `tests/Components/FormNumberTest.php`
+3. Update this documentation
 
-1. **Test number validation** thoroughly
-2. **Ensure accessibility** compliance
-3. **Update documentation** for new features
-4. **Add test cases** for new functionality
-5. **Follow coding standards** consistently
+## See Also
 
-## License
-
-This component is part of the `diviky/laravel-components` package and is licensed under the MIT License.
+- [Form Input Component](../form-input.md)
+- [Form Label Component](../form-label.md)
+- [Form Errors Component](../form-errors.md)
+- [Form Text Component](../form-text.md)
+- [HTML5 Number Input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number)
+- [Laravel Form Components](https://github.com/ryangjchandler/laravel-form-components)

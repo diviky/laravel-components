@@ -1,44 +1,45 @@
 # Form Image Component
 
-An advanced image upload component with built-in cropping capabilities, progress tracking, and Livewire integration. Features include drag-and-drop image uploads, real-time cropping with Cropper.js, progress bars, and customizable crop settings.
+A sophisticated image input component that provides professional image upload, preview, and cropping capabilities with comprehensive form integration and enhanced user experience. This component offers advanced image handling features including real-time preview, image cropping, progress tracking, and seamless Livewire integration.
 
 ## Overview
 
 **Component Type:** Form  
 **Framework Support:** Bootstrap 5 (default), Bootstrap 4  
 **Livewire Compatible:** Yes  
-**Dependencies:** Alpine.js, Cropper.js, Livewire file uploads
+**Dependencies:** Component class, Alpine.js, Cropper.js
+**JavaScript Libraries:** Alpine.js, Cropper.js for image manipulation
 
 ## Files
 
 - **PHP Class:** `src/Components/FormImage.php`
 - **View File:** `resources/views/bootstrap-5/form-image.blade.php`
+- **Tests:** `tests/Components/FormImageTest.php`
 - **Documentation:** `docs/form-image.md`
 
 ## Basic Usage
 
 ### Simple Image Upload
 ```blade
-<x-form-image name="profile_photo" label="Profile Photo" />
+<x-form-image name="profile_image" label="Profile Picture" />
 ```
 
-### With Default Image
+### With Default Value
 ```blade
 <x-form-image 
     name="avatar" 
     label="Avatar"
-    :default="$user->avatar_url">
-    <img src="{{ $user->avatar_url }}" alt="Current avatar" class="w-32 h-32 rounded-full" />
+    :default="'default-avatar.jpg'">
 </x-form-image>
 ```
 
-### With Cropping Enabled
+### With Custom Preview Content
 ```blade
-<x-form-image 
-    name="banner_image" 
-    label="Banner Image"
-    :crop-after-change="true">
-    <img src="{{ $banner_url }}" alt="Current banner" class="w-full h-32 object-cover" />
+<x-form-image name="banner" label="Banner Image">
+    <div class="banner-preview">
+        <i class="fas fa-image fa-3x"></i>
+        <p>Click to upload banner image</p>
+    </div>
 </x-form-image>
 ```
 
@@ -48,32 +49,34 @@ An advanced image upload component with built-in cropping capabilities, progress
 
 | Name | Type | Description | Example |
 |------|------|-------------|---------|
-| name | string | Input name attribute | `'profile_photo'` or `'banner_image'` |
+| name | string | Input name attribute | `'profile_image'` or `'banner'` |
 
 ### Optional Attributes
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
 | label | string | '' | Form field label | `'Upload Image'` |
-| value | mixed | null | Current image value | `'path/to/image.jpg'` |
-| default | mixed | null | Default image value | `'default-avatar.jpg'` |
+| value | mixed | '' | Current image value | `'current-image.jpg'` |
+| default | mixed | null | Default image value | `'default.jpg'` |
 | language | string | null | Language-specific naming | `'en'` |
-| hideProgress | boolean | false | Hide upload progress bar | `true` |
+| bind | mixed | null | Model binding | `$user` |
+| hideProgress | boolean | false | Hide progress bar | `true` |
 | cropAfterChange | boolean | false | Auto-crop after file change | `true` |
-| changeText | string | 'Change' | Text for change button | `'Update Image'` |
+| changeText | string | 'Change' | Change button text | `'Update Image'` |
 | cropTitleText | string | 'Crop image' | Crop modal title | `'Adjust Image'` |
 | cropCancelText | string | 'Cancel' | Crop cancel button text | `'Discard'` |
-| cropSaveText | string | 'Crop' | Crop save button text | `'Apply Changes'` |
-| cropConfig | array | [] | Cropper.js configuration | `['aspectRatio' => 16/9]` |
+| cropSaveText | string | 'Crop' | Crop save button text | `'Apply'` |
+| cropConfig | array | [] | Cropper.js configuration | `['aspectRatio' => 1]` |
+| extraAttributes | array | [] | Additional attributes | `['data-test' => 'image']` |
 
 ### Inherited Attributes
 
-This component inherits from the base `Component` and supports these additional attributes:
+This component supports standard form attributes:
 
 | Name | Type | Default | Description | Example |
 |------|------|---------|-------------|---------|
 | id | string | auto-generated | Element ID | `'image-input'` |
-| class | string | null | Additional CSS classes | `'custom-image'` |
+| class | string | '' | CSS classes | `'image-input'` |
 | disabled | boolean | false | Disable the component | `true` |
 | readonly | boolean | false | Make component readonly | `true` |
 | required | boolean | false | Make field required | `true` |
@@ -89,27 +92,30 @@ This component inherits from the base `Component` and supports these additional 
 
 ## Slots
 
-### Default Slot
-- **Purpose:** Preview image display
-- **Required:** No (but recommended for better UX)
-- **Content Type:** HTML/Image elements
+### Optional Slots
+
+#### Default Slot
+- **Purpose:** Custom preview content and upload trigger
+- **Required:** No
+- **Content Type:** HTML/Components
 - **Example:**
 ```blade
-<x-form-image name="avatar">
-    <img src="{{ $user->avatar }}" alt="Current avatar" class="w-24 h-24 rounded-full" />
+<x-form-image name="image">
+    <div class="custom-preview">
+        <i class="fas fa-cloud-upload-alt fa-2x"></i>
+        <p>Click to upload image</p>
+    </div>
 </x-form-image>
 ```
 
-### Optional Slots
-
 #### `help`
-- **Purpose:** Help text below the input
+- **Purpose:** Help text below the image input
 - **Required:** No
 - **Content Type:** HTML/Text/Components
 - **Example:**
 ```blade
 <x-slot:help>
-    Supported formats: JPG, PNG, GIF. Max size: 5MB
+    Supported formats: JPEG, PNG, GIF. Max size: 5MB.
 </x-slot:help>
 ```
 
@@ -118,173 +124,164 @@ This component inherits from the base `Component` and supports these additional 
 ### Basic Image Upload
 ```blade
 <x-form-image 
-    name="photo" 
-    label="Upload Photo"
-    accept="image/jpeg,image/png">
+    name="profile_photo" 
+    label="Profile Photo">
     
     <x-slot:help>
-        Please upload a clear, high-quality photo
+        Upload a clear, professional photo for your profile
     </x-slot:help>
 </x-form-image>
 ```
 
-### Profile Picture with Cropping
+### Required Image Upload
 ```blade
 <x-form-image 
-    name="profile_picture" 
-    label="Profile Picture"
-    :crop-after-change="true"
-    :crop-config="['aspectRatio' => 1, 'viewMode' => 2]">
+    name="required_image" 
+    label="Required Image"
+    required>
     
-    @if($user->profile_picture)
-        <img src="{{ $user->profile_picture }}" 
-             alt="Current profile picture" 
-             class="w-32 h-32 rounded-full object-cover" />
-    @else
-        <div class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center">
-            <x-icon name="user" class="w-16 h-16 text-gray-400" />
-        </div>
-    @endif
+    <x-slot:help>
+        This image is required to complete your profile
+    </x-slot:help>
 </x-form-image>
 ```
 
-### Banner Image with Custom Crop Settings
+### With Custom Preview Content
 ```blade
 <x-form-image 
     name="banner_image" 
-    label="Banner Image"
-    :crop-after-change="true"
-    :crop-config="[
-        'aspectRatio' => 16/9,
-        'viewMode' => 1,
-        'dragMode' => 'move',
-        'autoCropArea' => 0.8
-    ]">
+    label="Banner Image">
     
-    @if($page->banner_image)
-        <img src="{{ $page->banner_image }}" 
-             alt="Current banner" 
-             class="w-full h-48 object-cover rounded-lg" />
-    @else
-        <div class="w-full h-48 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-            <span class="text-white text-lg">Click to upload banner image</span>
+    <div class="banner-upload-area">
+        <div class="upload-icon">
+            <i class="fas fa-image fa-4x text-muted"></i>
         </div>
-    @endif
-</x-form-image>
-```
-
-### Product Gallery Image
-```blade
-<x-form-image 
-    name="product_image" 
-    label="Product Image"
-    :hide-progress="true"
-    :crop-config="['aspectRatio' => 4/3]">
-    
-    @if($product->image)
-        <img src="{{ $product->image }}" 
-             alt="{{ $product->name }}" 
-             class="w-48 h-36 object-cover rounded-lg" />
-    @else
-        <div class="w-48 h-36 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
-            <div class="text-center">
-                <x-icon name="image" class="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                <span class="text-sm text-gray-500">Upload image</span>
-            </div>
+        <div class="upload-text">
+            <h5>Upload Banner Image</h5>
+            <p class="text-muted">Click here to select an image</p>
+            <small class="text-muted">Recommended: 1200x400 pixels</small>
         </div>
-    @endif
-</x-form-image>
-```
-
-### With Model Binding
-```blade
-<x-form-image 
-    name="cover_image" 
-    label="Cover Image"
-    :bind="$article"
-    bind-key="cover_image">
-    
-    @if($article->cover_image)
-        <img src="{{ $article->cover_image }}" 
-             alt="Article cover" 
-             class="w-full h-64 object-cover rounded-lg" />
-    @endif
-</x-form-image>
-```
-
-### Livewire Integration
-```blade
-<x-form-image 
-    wire:model="selectedImage"
-    name="image" 
-    label="Select Image"
-    :crop-after-change="true">
-    
-    @if($selectedImage)
-        <img src="{{ $selectedImage }}" 
-             alt="Selected image" 
-             class="w-40 h-40 object-cover rounded-lg" />
-    @endif
-</x-form-image>
-```
-
-### With Validation
-```blade
-<x-form-image 
-    name="logo" 
-    label="Company Logo"
-    required
-    accept="image/png,image/svg+xml">
+    </div>
     
     <x-slot:help>
-        Please upload a PNG or SVG logo file
+        <div class="banner-guidelines">
+            <strong>Banner Guidelines:</strong><br>
+            • Minimum size: 800x300 pixels<br>
+            • Maximum size: 5MB<br>
+            • Supported formats: JPEG, PNG, WebP
+        </div>
     </x-slot:help>
 </x-form-image>
 ```
 
-### Custom Styling
+### With Language Support
 ```blade
 <x-form-image 
-    name="hero_image" 
-    label="Hero Image"
-    class="custom-image-upload"
-    style="--upload-border-color: #007bff;">
+    name="localized_image" 
+    label="Localized Image"
+    language="en">
     
-    <div class="w-full h-64 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl border-2 border-dashed border-blue-200 flex items-center justify-center hover:border-blue-400 transition-colors">
-        <div class="text-center">
-            <x-icon name="upload" class="w-12 h-12 text-blue-400 mx-auto mb-3" />
-            <h3 class="text-lg font-medium text-gray-900 mb-1">Upload hero image</h3>
-            <p class="text-sm text-gray-500">PNG, JPG up to 10MB</p>
-        </div>
-    </div>
+    <x-slot:help>
+        This image will be specific to the English language
+    </x-slot:help>
+</x-form-image>
+```
+
+### With Auto-Crop After Change
+```blade
+<x-form-image 
+    name="auto_crop_image" 
+    label="Auto-Crop Image"
+    :crop-after-change="true">
+    
+    <x-slot:help>
+        Image will automatically open in crop mode after selection
+    </x-slot:help>
 </x-form-image>
 ```
 
 ### With Custom Crop Configuration
 ```blade
 <x-form-image 
-    name="thumbnail" 
-    label="Thumbnail"
-    :crop-after-change="true"
-    :crop-config="[
-        'aspectRatio' => 1,
-        'viewMode' => 2,
-        'dragMode' => 'move',
-        'autoCropArea' => 0.9,
-        'restore' => false,
-        'guides' => true,
-        'center' => true,
-        'highlight' => false,
-        'cropBoxMovable' => true,
-        'cropBoxResizable' => true,
-        'toggleDragModeOnDblclick' => false
-    ]">
+    name="square_image" 
+    label="Square Image"
+    :crop-config="['aspectRatio' => 1, 'viewMode' => 2]">
     
-    @if($post->thumbnail)
-        <img src="{{ $post->thumbnail }}" 
-             alt="Post thumbnail" 
-             class="w-24 h-24 object-cover rounded-lg" />
-    @endif
+    <x-slot:help>
+        Image will be constrained to a square aspect ratio
+    </x-slot:help>
+</x-form-image>
+```
+
+### With Hidden Progress Bar
+```blade
+<x-form-image 
+    name="hidden_progress_image" 
+    label="Image Upload"
+    :hide-progress="true">
+    
+    <x-slot:help>
+        Progress bar is hidden for this upload
+    </x-slot:help>
+</x-form-image>
+```
+
+### With Custom Change Text
+```blade
+<x-form-image 
+    name="custom_change_image" 
+    label="Custom Change Image"
+    change-text="Replace Image"
+    crop-title-text="Adjust Image Size"
+    crop-cancel-text="Keep Original"
+    crop-save-text="Apply Changes">
+    
+    <x-slot:help>
+        Custom text for all buttons and modal titles
+    </x-slot:help>
+</x-form-image>
+```
+
+### Livewire Integration
+```blade
+<x-form-image 
+    wire:model="profileImage"
+    name="livewire_image" 
+    label="Livewire Image"
+    :crop-after-change="true">
+    
+    <div class="livewire-preview">
+        @if($profileImage)
+            <img src="{{ $profileImage }}" alt="Profile" class="img-thumbnail">
+        @else
+            <div class="placeholder">
+                <i class="fas fa-user fa-3x text-muted"></i>
+                <p>No image selected</p>
+            </div>
+        @endif
+    </div>
+    
+    <x-slot:help>
+        <div class="livewire-status">
+            <strong>Status:</strong> 
+            <span x-text="$wire.profileImage ? 'Image uploaded' : 'No image'">
+                {{ $profileImage ? 'Image uploaded' : 'No image' }}
+            </span>
+        </div>
+    </x-slot:help>
+</x-form-image>
+```
+
+### With Model Binding
+```blade
+<x-form-image 
+    name="user_avatar" 
+    label="User Avatar"
+    :bind="$user">
+    
+    <x-slot:help>
+        This image will be bound to the user model
+    </x-slot:help>
 </x-form-image>
 ```
 
@@ -292,39 +289,39 @@ This component inherits from the base `Component` and supports these additional 
 
 ### Standard Image Upload
 **Usage:** `<x-form-image>` (default)
-**Description:** Basic image upload with file input
+**Description:** Basic image upload with preview
 **Features:**
-- File selection
+- File input with image preview
 - Progress tracking
-- Error handling
-- Basic validation
+- Basic form integration
+- Standard validation
 
-### Preview Image Upload
-**Usage:** `<x-form-image>...</x-form-image>`
-**Description:** Image upload with preview area
+### Custom Preview Image Upload
+**Usage:** `<x-form-image><div class="custom-preview">...</div></x-form-image>`
+**Description:** Image upload with custom preview content
 **Features:**
-- Current image display
-- Click to change functionality
-- Progress overlay
-- Better user experience
+- Custom preview area
+- Enhanced user experience
+- Professional appearance
+- Flexible content layout
 
 ### Auto-Crop Image Upload
 **Usage:** `<x-form-image :crop-after-change="true">`
-**Description:** Automatic cropping after file selection
+**Description:** Image upload with automatic cropping
 **Features:**
-- Immediate crop modal
-- Cropper.js integration
-- Real-time preview
-- Optimized workflow
+- Automatic crop modal
+- Enhanced user workflow
+- Professional image editing
+- Streamlined process
 
-### Custom Crop Image Upload
-**Usage:** `<x-form-image :crop-config="[...]">`
-**Description:** Fully customizable cropping experience
+### Localized Image Upload
+**Usage:** `<x-form-image language="en">`
+**Description:** Language-specific image upload
 **Features:**
-- Custom aspect ratios
-- Advanced crop settings
-- Professional editing tools
-- Flexible configuration
+- Multi-language support
+- Localized naming
+- Internationalization ready
+- Language-specific validation
 
 ## Configuration
 
@@ -338,147 +335,368 @@ This component inherits from the base `Component` and supports these additional 
 'components' => [
     'form-image' => [
         'view' => 'laravel-components::{framework}.form-image',
-        'class' => Components\FormImage::class,
     ],
 ],
 ```
 
 ### Cropper.js Configuration
-The component uses Cropper.js with these default settings:
-- **Auto crop area:** 100% (full image)
-- **View mode:** 1 (restrict crop box to container)
-- **Drag mode:** 'move' (move image within crop box)
+```blade
+<x-form-image 
+    name="image" 
+    :crop-config="[
+        'aspectRatio' => 16/9,
+        'viewMode' => 2,
+        'dragMode' => 'crop',
+        'autoCropArea' => 0.8,
+        'restore' => false,
+        'guides' => true,
+        'center' => true,
+        'highlight' => false,
+        'cropBoxMovable' => true,
+        'cropBoxResizable' => true,
+        'toggleDragModeOnDblclick' => false
+    ]">
+</x-form-image>
+```
 
-### Crop Configuration Options
-
-| Setting | Type | Default | Description | Example |
-|---------|------|---------|-------------|---------|
-| aspectRatio | number | null | Fixed aspect ratio | `16/9`, `1`, `4/3` |
-| viewMode | number | 1 | View mode restriction | `0`, `1`, `2`, `3` |
-| dragMode | string | 'move' | Drag behavior | `'move'`, `'crop'`, `'none'` |
-| autoCropArea | number | 1 | Auto crop area size | `0.8`, `0.5` |
-| restore | boolean | true | Restore crop area | `false` |
-| guides | boolean | true | Show crop guides | `false` |
-| center | boolean | true | Show center indicator | `false` |
-| highlight | boolean | true | Highlight crop area | `false` |
-| cropBoxMovable | boolean | true | Allow crop box movement | `false` |
-| cropBoxResizable | boolean | true | Allow crop box resizing | `false` |
+### Default Settings
+The component uses these default settings:
+- **File Type:** `image/*`
+- **Progress Tracking:** Enabled
+- **Auto-Crop:** Disabled
+- **Crop Configuration:** Standard Cropper.js defaults
 
 ## Common Patterns
 
 ### Profile Picture Upload
 ```blade
-<x-form-image 
-    name="avatar" 
-    label="Profile Picture"
-    :crop-after-change="true"
-    :crop-config="['aspectRatio' => 1, 'viewMode' => 2]">
+<div class="profile-picture-upload">
+    <h4>Profile Picture</h4>
+    <p>Upload a professional photo for your profile:</p>
     
-    @if($user->avatar)
-        <img src="{{ $user->avatar }}" 
-             alt="{{ $user->name }}'s avatar" 
-             class="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg" />
-    @else
-        <div class="w-32 h-32 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center border-4 border-white shadow-lg">
-            <x-icon name="user" class="w-16 h-16 text-white" />
+    <x-form-image 
+        name="profile_picture" 
+        label="Profile Picture"
+        :crop-after-change="true"
+        :crop-config="['aspectRatio' => 1, 'viewMode' => 2]">
+        
+        <div class="profile-upload-area">
+            <div class="avatar-placeholder">
+                <i class="fas fa-user fa-4x text-muted"></i>
+            </div>
+            <div class="upload-instructions">
+                <h6>Click to Upload</h6>
+                <p class="text-muted">Choose a clear, professional photo</p>
+                <small class="text-muted">Square format recommended</small>
+            </div>
         </div>
-    @endif
-</x-form-image>
-```
-
-### Product Image Gallery
-```blade
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-    @foreach(['main_image', 'image_1', 'image_2', 'image_3'] as $imageField)
-        <x-form-image 
-            name="{{ $imageField }}" 
-            label="{{ ucfirst(str_replace('_', ' ', $imageField)) }}"
-            :crop-after-change="true"
-            :crop-config="['aspectRatio' => 1]">
-            
-            @if($product->{$imageField})
-                <img src="{{ $product->{$imageField} }}" 
-                     alt="Product {{ $loop->iteration }}" 
-                     class="w-full h-32 object-cover rounded-lg" />
-            @else
-                <div class="w-full h-32 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
-                    <x-icon name="plus" class="w-6 h-6 text-gray-400" />
-                </div>
-            @endif
-        </x-form-image>
-    @endforeach
+        
+        <x-slot:help>
+            <div class="profile-picture-guidelines">
+                <strong>Photo Guidelines:</strong><br>
+                • Use a clear, high-quality image<br>
+                • Square format works best<br>
+                • Professional appearance recommended<br>
+                • File size under 5MB
+            </div>
+        </x-slot:help>
+    </x-form-image>
+    
+    <div class="profile-picture-tips mt-3">
+        <h6>Tips for Great Profile Pictures</h6>
+        <div class="row">
+            <div class="col-md-4">
+                <strong>Lighting:</strong><br>
+                • Good natural lighting<br>
+                • Avoid harsh shadows<br>
+                • Face should be well-lit
+            </div>
+            <div class="col-md-4">
+                <strong>Composition:</strong><br>
+                • Center your face<br>
+                • Leave some space around<br>
+                • Avoid extreme close-ups
+            </div>
+            <div class="col-md-4">
+                <strong>Background:</strong><br>
+                • Simple, clean background<br>
+                • Avoid busy patterns<br>
+                • Professional setting
+            </div>
+        </div>
+    </div>
 </div>
 ```
 
-### Hero Section Image
+### Product Image Management
 ```blade
-<x-form-image 
-    name="hero_image" 
-    label="Hero Background"
-    :crop-after-change="true"
-    :crop-config="['aspectRatio' => 21/9, 'viewMode' => 1]">
+<div class="product-image-management">
+    <h4>Product Images</h4>
+    <p>Upload images for your product:</p>
     
-    @if($page->hero_image)
-        <img src="{{ $page->hero_image }}" 
-             alt="Hero background" 
-             class="w-full h-64 object-cover rounded-xl shadow-lg" />
-    @else
-        <div class="w-full h-64 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center">
-            <div class="text-center text-white">
-                <x-icon name="image" class="w-16 h-16 mx-auto mb-4 opacity-75" />
-                <h3 class="text-xl font-semibold mb-2">Upload hero image</h3>
-                <p class="text-blue-100">Recommended: 1920x800px landscape</p>
+    <x-form-image 
+        name="product_main_image" 
+        label="Main Product Image"
+        :crop-after-change="true"
+        :crop-config="['aspectRatio' => 4/3, 'viewMode' => 1]">
+        
+        <div class="product-image-upload">
+            <div class="image-placeholder">
+                <i class="fas fa-box fa-4x text-muted"></i>
+            </div>
+            <div class="upload-text">
+                <h6>Main Product Image</h6>
+                <p class="text-muted">This will be the primary image</p>
+                <small class="text-muted">4:3 aspect ratio recommended</small>
             </div>
         </div>
-    @endif
-</x-form-image>
+        
+        <x-slot:help>
+            <div class="product-image-requirements">
+                <strong>Image Requirements:</strong><br>
+                • High resolution (minimum 800x600)<br>
+                • 4:3 aspect ratio recommended<br>
+                • Clear product visibility<br>
+                • Professional lighting
+            </div>
+        </x-slot:help>
+    </x-form-image>
+    
+    <div class="product-image-gallery mt-3">
+        <h6>Additional Product Images</h6>
+        <div class="row">
+            <div class="col-md-3">
+                <x-form-image 
+                    name="product_image_1" 
+                    label="Additional Image 1"
+                    :crop-config="['aspectRatio' => 4/3]">
+                    
+                    <div class="gallery-upload">
+                        <i class="fas fa-plus fa-2x text-muted"></i>
+                        <small>Add Image</small>
+                    </div>
+                </x-form-image>
+            </div>
+            <div class="col-md-3">
+                <x-form-image 
+                    name="product_image_2" 
+                    label="Additional Image 2"
+                    :crop-config="['aspectRatio' => 4/3]">
+                    
+                    <div class="gallery-upload">
+                        <i class="fas fa-plus fa-2x text-muted"></i>
+                        <small>Add Image</small>
+                    </div>
+                </x-form-image>
+            </div>
+            <div class="col-md-3">
+                <x-form-image 
+                    name="product_image_3" 
+                    label="Additional Image 3"
+                    :crop-config="['aspectRatio' => 4/3]">
+                    
+                    <div class="gallery-upload">
+                        <i class="fas fa-plus fa-2x text-muted"></i>
+                        <small>Add Image</small>
+                    </div>
+                </x-form-image>
+            </div>
+            <div class="col-md-3">
+                <x-form-image 
+                    name="product_image_4" 
+                    label="Additional Image 4"
+                    :crop-config="['aspectRatio' => 4/3]">
+                    
+                    <div class="gallery-upload">
+                        <i class="fas fa-plus fa-2x text-muted"></i>
+                        <small>Add Image</small>
+                    </div>
+                </x-form-image>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### Banner Image Upload
+```blade
+<div class="banner-image-upload">
+    <h4>Banner Image</h4>
+    <p>Upload a banner image for your page:</p>
+    
+    <x-form-image 
+        name="banner_image" 
+        label="Banner Image"
+        :crop-after-change="true"
+        :crop-config="['aspectRatio' => 3/1, 'viewMode' => 1]">
+        
+        <div class="banner-upload-area">
+            <div class="banner-placeholder">
+                <i class="fas fa-image fa-4x text-muted"></i>
+            </div>
+            <div class="banner-text">
+                <h6>Banner Image</h6>
+                <p class="text-muted">Upload a wide banner image</p>
+                <small class="text-muted">3:1 aspect ratio recommended</small>
+            </div>
+        </div>
+        
+        <x-slot:help>
+            <div class="banner-image-specs">
+                <strong>Banner Specifications:</strong><br>
+                • Width: 1200px minimum<br>
+                • Height: 400px minimum<br>
+                • 3:1 aspect ratio<br>
+                • File size under 2MB
+            </div>
+        </x-slot:help>
+    </x-form-image>
+    
+    <div class="banner-preview mt-3">
+        <h6>Banner Preview</h6>
+        <div class="banner-preview-container">
+            <div class="banner-preview-placeholder">
+                <p class="text-muted">Banner preview will appear here</p>
+                <small class="text-muted">Upload an image to see preview</small>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### Gallery Image Upload
+```blade
+<div class="gallery-image-upload">
+    <h4>Gallery Images</h4>
+    <p>Upload multiple images for your gallery:</p>
+    
+    <div class="gallery-upload-grid">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <x-form-image 
+                    name="gallery_image_1" 
+                    label="Gallery Image 1"
+                    :crop-config="['aspectRatio' => 1, 'viewMode' => 2]">
+                    
+                    <div class="gallery-upload-item">
+                        <i class="fas fa-image fa-3x text-muted"></i>
+                        <p class="text-muted">Image 1</p>
+                    </div>
+                </x-form-image>
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <x-form-image 
+                    name="gallery_image_2" 
+                    label="Gallery Image 2"
+                    :crop-config="['aspectRatio' => 1, 'viewMode' => 2]">
+                    
+                    <div class="gallery-upload-item">
+                        <i class="fas fa-image fa-3x text-muted"></i>
+                        <p class="text-muted">Image 2</p>
+                    </div>
+                </x-form-image>
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <x-form-image 
+                    name="gallery_image_3" 
+                    label="Gallery Image 3"
+                    :crop-config="['aspectRatio' => 1, 'viewMode' => 2]">
+                    
+                    <div class="gallery-upload-item">
+                        <i class="fas fa-image fa-3x text-muted"></i>
+                        <p class="text-muted">Image 3</p>
+                    </div>
+                </x-form-image>
+            </div>
+        </div>
+    </div>
+    
+    <div class="gallery-instructions mt-3">
+        <h6>Gallery Instructions</h6>
+        <div class="row">
+            <div class="col-md-6">
+                <strong>Image Requirements:</strong><br>
+                • Square format (1:1 aspect ratio)<br>
+                • High resolution (minimum 800x800)<br>
+                • Consistent lighting and style<br>
+                • Professional quality
+            </div>
+            <div class="col-md-6">
+                <strong>Upload Tips:</strong><br>
+                • Use descriptive filenames<br>
+                • Optimize file sizes<br>
+                • Maintain consistent style<br>
+                • Consider image order
+            </div>
+        </div>
+    </div>
+</div>
 ```
 
 ### Document Image Upload
 ```blade
-<x-form-image 
-    name="document_image" 
-    label="Document Scan"
-    accept="image/jpeg,image/png"
-    :crop-after-change="true"
-    :crop-config="['aspectRatio' => 8.5/11, 'viewMode' => 1]">
+<div class="document-image-upload">
+    <h4>Document Images</h4>
+    <p>Upload images of your documents:</p>
     
-    @if($document->image)
-        <img src="{{ $document->image }}" 
-             alt="Document scan" 
-             class="w-48 h-64 object-cover rounded-lg border shadow-sm" />
-    @else
-        <div class="w-48 h-64 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
-            <div class="text-center">
-                <x-icon name="document" class="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                <span class="text-sm text-gray-500">Scan document</span>
+    <x-form-image 
+        name="document_image" 
+        label="Document Image"
+        :crop-after-change="true"
+        :crop-config="['aspectRatio' => 4/3, 'viewMode' => 1]">
+        
+        <div class="document-upload-area">
+            <div class="document-placeholder">
+                <i class="fas fa-file-image fa-4x text-muted"></i>
+            </div>
+            <div class="document-text">
+                <h6>Document Image</h6>
+                <p class="text-muted">Upload a clear image of your document</p>
+                <small class="text-muted">Ensure all text is readable</small>
             </div>
         </div>
-    @endif
-</x-form-image>
-```
-
-### Social Media Image
-```blade
-<x-form-image 
-    name="social_image" 
-    label="Social Media Preview"
-    :crop-after-change="true"
-    :crop-config="['aspectRatio' => 1.91/1, 'viewMode' => 1]">
+        
+        <x-slot:help>
+            <div class="document-image-guidelines">
+                <strong>Document Guidelines:</strong><br>
+                • Ensure all text is clearly visible<br>
+                • Use good lighting to avoid shadows<br>
+                • Capture the entire document<br>
+                • Avoid blurry or low-quality images
+            </div>
+        </x-slot:help>
+    </x-form-image>
     
-    @if($post->social_image)
-        <img src="{{ $post->social_image }}" 
-             alt="Social media preview" 
-             class="w-80 h-42 object-cover rounded-lg" />
-    @else
-        <div class="w-80 h-42 bg-gradient-to-br from-pink-100 to-purple-100 rounded-lg border-2 border-dashed border-pink-300 flex items-center justify-center">
-            <div class="text-center">
-                <x-icon name="share" class="w-10 h-10 text-pink-400 mx-auto mb-2" />
-                <span class="text-sm text-pink-600">Social preview image</span>
+    <div class="document-examples mt-3">
+        <h6>Good vs. Bad Examples</h6>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="good-example">
+                    <h6 class="text-success">✅ Good Example</h6>
+                    <ul class="text-success">
+                        <li>Clear, readable text</li>
+                        <li>Good lighting</li>
+                        <li>Entire document visible</li>
+                        <li>High resolution</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="bad-example">
+                    <h6 class="text-danger">❌ Bad Example</h6>
+                    <ul class="text-danger">
+                        <li>Blurry or unclear text</li>
+                        <li>Poor lighting</li>
+                        <li>Partial document visible</li>
+                        <li>Low resolution</li>
+                    </ul>
+                </div>
             </div>
         </div>
-    @endif
-</x-form-image>
+    </div>
+</div>
 ```
 
 ## Testing Examples
@@ -495,12 +713,12 @@ public function it_renders_form_image_with_basic_attributes()
 }
 
 /** @test */
-public function it_renders_form_image_with_cropping_enabled()
+public function it_renders_form_image_with_label()
 {
-    $view = $this->blade('<x-form-image name="image" :crop-after-change="true" />');
+    $view = $this->blade('<x-form-image name="image" label="Upload Image" />');
     
     $view->assertSee('name="image"');
-    $view->assertSee('cropAfterChange');
+    $view->assertSee('Upload Image');
 }
 ```
 
@@ -511,81 +729,82 @@ public function it_integrates_with_livewire()
 {
     Livewire::test(ImageComponent::class)
         ->assertSee('<x-form-image')
-        ->set('selectedImage', 'test-image.jpg')
-        ->assertSee('test-image.jpg');
+        ->set('image', 'test.jpg')
+        ->assertSee('test.jpg');
 }
 ```
 
 ## Accessibility
 
 ### ARIA Attributes
-- `role="progressbar"`: Applied to progress bar
-- `aria-label`: Applied to file input
+- `role="progressbar"`: Applied to progress elements
+- `aria-label`: Applied to image inputs
 - `aria-describedby`: Links to help text
 
 ### Keyboard Navigation
-- Tab navigation to file input
-- Enter key for file selection
-- Escape key to close crop modal
-- Arrow keys for crop adjustments
+- Tab navigation to image input
+- File selection dialog
+- Crop modal navigation
+- Progress tracking
 
 ### Screen Reader Support
 - Proper labeling and descriptions
 - Progress announcements
-- File selection feedback
-- Crop operation communication
+- Help text communication
+- Error message communication
+
+### Image Accessibility
+- Clear image purpose indication
+- Proper validation feedback
+- Helpful error messages
+- Image guidelines
 
 ## Browser Compatibility
 
-- **Supported Browsers:** All modern browsers with ES6 support
-- **JavaScript Dependencies:** Alpine.js 3.x, Cropper.js
+- **Supported Browsers:** All modern browsers with HTML5 support
+- **JavaScript Dependencies:** Alpine.js, Cropper.js
 - **CSS Framework Requirements:** Bootstrap 4+ or custom styling
-- **File API Support:** Required for drag-and-drop functionality
+- **File Input Support:** HTML5 file input with image preview
 
 ## Troubleshooting
 
 ### Common Issues
 
 #### Image Not Uploading
-**Problem:** File upload fails
-**Solution:** Check Livewire configuration, file size limits, and permissions
+**Problem:** Image upload not working
+**Solution:** Check file permissions and upload configuration
 
-#### Cropper Not Initializing
-**Problem:** Crop modal doesn't work
-**Solution:** Ensure Cropper.js is properly loaded and check for JavaScript errors
+#### Cropper Not Working
+**Problem:** Image cropping not functioning
+**Solution:** Verify Cropper.js library inclusion
 
-#### Progress Bar Not Showing
-**Problem:** Upload progress not displayed
-**Solution:** Check `hideProgress` setting and Livewire upload configuration
+#### Progress Bar Issues
+**Problem:** Progress tracking not working
+**Solution:** Check Livewire upload configuration
 
-#### Crop Modal Not Closing
-**Problem:** Modal persists after crop operation
-**Solution:** Verify Alpine.js event handling and modal state management
+#### Preview Not Showing
+**Problem:** Image preview not displaying
+**Solution:** Verify file input and preview logic
 
-#### File Type Validation
-**Problem:** Wrong file types accepted
-**Solution:** Check `accept` attribute and server-side validation
-
-#### Image Preview Issues
-**Problem:** Preview not displaying correctly
-**Solution:** Verify image paths, check for broken links, ensure proper file permissions
+#### Crop Modal Issues
+**Problem:** Crop modal not opening
+**Solution:** Check modal component and Cropper.js initialization
 
 ## Related Components
 
-- **Form File:** Basic file upload component
-- **Form Dropzone:** Drag-and-drop file upload
-- **Modal:** Crop modal container
-- **Form Button:** Modal action buttons
-- **Icon:** UI icons for upload states
+- **Form File:** Base file input component
+- **Form Label:** Component labeling
+- **Form Errors:** Validation display
+- **Form Help:** Help text component
+- **Modal:** Crop modal component
 
 ## Changelog
 
 ### Version 1.0.0
 - Initial release with image upload functionality
-- Cropper.js integration for image editing
-- Livewire file upload support
-- Progress tracking and error handling
-- Customizable crop configuration
+- Image preview and cropping capabilities
+- Progress tracking and Livewire integration
+- Comprehensive form integration
 
 ## Contributing
 
@@ -598,9 +817,10 @@ To contribute to this component:
 ## See Also
 
 - [Form File Component](../form-file.md)
-- [Form Dropzone Component](../form-dropzone.md)
+- [Form Label Component](../form-label.md)
+- [Form Errors Component](../form-errors.md)
+- [Form Help Component](../form-help.md)
 - [Modal Component](../modal.md)
-- [Form Button Component](../form-button.md)
 - [Cropper.js Documentation](https://cropperjs.com/)
 - [Alpine.js Documentation](https://alpinejs.dev/)
-- [Livewire File Uploads](https://laravel-livewire.com/docs/file-uploads)
+- [Laravel File Uploads](https://laravel.com/docs/file-uploads)

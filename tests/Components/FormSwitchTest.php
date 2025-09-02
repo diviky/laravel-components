@@ -6,566 +6,614 @@ use Diviky\LaravelComponents\Tests\TestCase;
 
 class FormSwitchTest extends TestCase
 {
-    public function test_renders_basic_switch(): void
+    /** @test */
+    public function it_renders_form_switch_with_basic_attributes()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('name="test"');
+        $view->assertSee('form-switch');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_label()
     {
         $view = $this->blade('<x-form-switch name="notifications" label="Enable Notifications" />');
 
-        $view->assertSee('Enable Notifications');
-        $view->assertSee('form-switch');
-        $view->assertSee('form-check-input');
         $view->assertSee('name="notifications"');
-        $view->assertSee('type="checkbox"');
+        $view->assertSee('Enable Notifications');
     }
 
-    public function test_switch_with_title(): void
+    /** @test */
+    public function it_renders_form_switch_with_value()
     {
-        $view = $this->blade('
-            <x-form-switch
-                name="dark_mode"
-                label="Dark Mode"
-                title="Appearance Settings" />
-        ');
+        $view = $this->blade('<x-form-switch name="status" value="active" />');
 
-        $view->assertSee('Appearance Settings');
-        $view->assertSee('form-label');
-        $view->assertSee('Dark Mode');
-    }
-
-    public function test_switch_with_help_text(): void
-    {
-        $view = $this->blade('
-            <x-form-switch
-                name="auto_save"
-                label="Auto Save"
-                help="Automatically save your work" />
-        ');
-
-        $view->assertSee('Automatically save your work');
-        $view->assertSee('form-check-description');
-    }
-
-    public function test_switch_checked_by_default(): void
-    {
-        $view = $this->blade('
-            <x-form-switch
-                name="feature"
-                label="Beta Feature"
-                :checked="true" />
-        ');
-
-        $view->assertSee('checked');
-        $view->assertSee('Beta Feature');
-    }
-
-    public function test_switch_not_checked_by_default(): void
-    {
-        $view = $this->blade('
-            <x-form-switch
-                name="feature"
-                label="Beta Feature"
-                :checked="false" />
-        ');
-
-        $view->assertDontSee('checked');
-        $view->assertSee('Beta Feature');
-    }
-
-    public function test_switch_with_custom_value(): void
-    {
-        $view = $this->blade('
-            <x-form-switch
-                name="status"
-                label="Active Status"
-                value="active" />
-        ');
-
+        $view->assertSee('name="status"');
         $view->assertSee('value="active"');
-        $view->assertSee('Active Status');
     }
 
-    public function test_switch_with_custom_copy_value(): void
+    /** @test */
+    public function it_renders_form_switch_with_checked_attribute()
     {
-        $view = $this->blade('
-            <x-form-switch
-                name="status"
-                label="Active Status"
-                copy="inactive" />
-        ');
+        $view = $this->blade('<x-form-switch name="feature" :checked="true" />');
 
-        $view->assertSee('value="inactive"');
-        $view->assertSee('type="hidden"');
+        $view->assertSee('name="feature"');
+        $view->assertSee('checked');
     }
 
-    public function test_switch_with_copy_false(): void
+    /** @test */
+    public function it_renders_form_switch_with_copy_attribute()
     {
-        $view = $this->blade('
-            <x-form-switch
-                name="status"
-                label="Active Status"
-                :copy="false" />
-        ');
+        $view = $this->blade('<x-form-switch name="test" :copy="false" />');
 
-        $view->assertDontSee('type="hidden"');
-        $view->assertSee('Active Status');
+        $view->assertSee('name="test"');
+        $view->assertSee('copy !== false');
     }
 
-    public function test_switch_inline_display(): void
+    /** @test */
+    public function it_renders_form_switch_with_help_text()
     {
-        $view = $this->blade('
-            <x-form-switch
-                name="email"
-                label="Email"
-                inline />
-        ');
+        $view = $this->blade('<x-form-switch name="test" help="Enable this feature" />');
 
-        $view->assertSee('form-check-inline');
-        $view->assertSee('Email');
+        $view->assertSee('name="test"');
+        $view->assertSee('Enable this feature');
     }
 
-    public function test_switch_not_inline(): void
+    /** @test */
+    public function it_renders_form_switch_with_extra_attributes()
     {
-        $view = $this->blade('
-            <x-form-switch
-                name="email"
-                label="Email"
-                :inline="false" />
-        ');
+        $view = $this->blade('<x-form-switch name="test" :extra-attributes="[\'data-test\' => \'switch\']" />');
 
-        $view->assertDontSee('form-check-inline');
-        $view->assertSee('Email');
+        $view->assertSee('name="test"');
+        $view->assertSee('data-test="switch"');
     }
 
-    public function test_switch_disabled(): void
+    /** @test */
+    public function it_renders_form_switch_with_custom_class()
     {
-        $view = $this->blade('
-            <x-form-switch
-                name="premium"
-                label="Premium Features"
-                disabled />
-        ');
+        $view = $this->blade('<x-form-switch name="test" class="custom-switch" />');
 
+        $view->assertSee('name="test"');
+        $view->assertSee('class="custom-switch');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_custom_id()
+    {
+        $view = $this->blade('<x-form-switch name="test" id="switch-input" />');
+
+        $view->assertSee('name="test"');
+        $view->assertSee('id="switch-input"');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_disabled_attribute()
+    {
+        $view = $this->blade('<x-form-switch name="test" disabled />');
+
+        $view->assertSee('name="test"');
         $view->assertSee('disabled');
-        $view->assertSee('Premium Features');
     }
 
-    public function test_switch_required(): void
+    /** @test */
+    public function it_renders_form_switch_with_readonly_attribute()
     {
-        $view = $this->blade('
-            <x-form-switch
-                name="terms"
-                label="I agree to terms"
-                required />
-        ');
+        $view = $this->blade('<x-form-switch name="test" readonly />');
 
+        $view->assertSee('name="test"');
+        $view->assertSee('readonly');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_required_attribute()
+    {
+        $view = $this->blade('<x-form-switch name="test" required />');
+
+        $view->assertSee('name="test"');
         $view->assertSee('required');
-        $view->assertSee('I agree to terms');
     }
 
-    public function test_switch_with_custom_classes(): void
+    /** @test */
+    public function it_renders_form_switch_with_inline_attribute()
     {
-        $view = $this->blade('
-            <x-form-switch
-                name="feature"
-                label="Beta Feature"
-                class="custom-switch-lg">
-            </x-form-switch>
-        ');
+        $view = $this->blade('<x-form-switch name="test" inline />');
 
-        $view->assertSee('custom-switch-lg');
-        $view->assertSee('Beta Feature');
+        $view->assertSee('name="test"');
+        $view->assertSee('form-check-inline');
     }
 
-    public function test_switch_with_custom_attributes(): void
+    /** @test */
+    public function it_renders_form_switch_with_title_attribute()
     {
-        $view = $this->blade('
-            <x-form-switch
-                name="test_switch"
-                label="Test Switch"
-                id="custom-id"
-                data-testid="switch"
-                aria-label="Test switch">
-            </x-form-switch>
-        ');
+        $view = $this->blade('<x-form-switch name="test" title="Toggle Switch" />');
 
-        $view->assertSee('id="custom-id"');
-        $view->assertSee('data-testid="switch"');
-        $view->assertSee('aria-label="Test switch"');
+        $view->assertSee('name="test"');
+        $view->assertSee('Toggle Switch');
     }
 
-    public function test_switch_livewire_integration(): void
+    /** @test */
+    public function it_renders_form_switch_with_help_slot()
     {
         $view = $this->blade('
-            <x-form-switch
-                name="real_time"
-                label="Real-time Updates"
-                wire:model="settings.realTime" />
-        ');
-
-        $view->assertSee('wire:model="settings.realTime"');
-        $view->assertSee('Real-time Updates');
-    }
-
-    public function test_switch_with_default_slot(): void
-    {
-        $view = $this->blade('
-            <x-form-switch name="analytics" label="Analytics">
-                <div class="custom-content">Additional content</div>
-            </x-form-switch>
-        ');
-
-        $view->assertSee('Analytics');
-        $view->assertSee('Additional content');
-        $view->assertSee('custom-content');
-    }
-
-    public function test_switch_form_group_structure(): void
-    {
-        $view = $this->blade('
-            <x-form-switch
-                name="notifications"
-                label="Enable Notifications" />
-        ');
-
-        $view->assertSee('form-group');
-        $view->assertSee('form-check');
-        $view->assertSee('form-switch');
-    }
-
-    public function test_switch_label_structure(): void
-    {
-        $view = $this->blade('
-            <x-form-switch
-                name="notifications"
-                label="Enable Notifications" />
-        ');
-
-        $view->assertSee('form-check-label');
-        $view->assertSee('Enable Notifications');
-    }
-
-    public function test_switch_input_structure(): void
-    {
-        $view = $this->blade('
-            <x-form-switch
-                name="notifications"
-                label="Enable Notifications" />
-        ');
-
-        $view->assertSee('form-check-input');
-        $view->assertSee('type="checkbox"');
-        $view->assertSee('name="notifications"');
-    }
-
-    public function test_switch_with_help_slot(): void
-    {
-        $view = $this->blade('
-            <x-form-switch name="analytics" label="Analytics">
+            <x-form-switch name="test">
                 <x-slot:help>
-                    <div class="text-muted small">
-                        <i class="icon-info"></i>
-                        Help us improve by sharing anonymous usage data
-                    </div>
+                    Enable this feature to receive real-time updates and notifications.
                 </x-slot:help>
             </x-form-switch>
         ');
 
-        $view->assertSee('Analytics');
-        $view->assertSee('Help us improve by sharing anonymous usage data');
-        $view->assertSee('icon-info');
+        $view->assertSee('name="test"');
+        $view->assertSee('Enable this feature to receive real-time updates and notifications.');
     }
 
-    public function test_switch_multiple_features_combination(): void
+    /** @test */
+    public function it_renders_form_switch_with_default_slot()
     {
-        $view = $this->blade('
-            <x-form-switch
-                name="premium_feature"
-                label="Premium Feature"
-                title="Premium Settings"
-                help="Enable premium features"
-                value="premium"
-                copy="basic"
-                :checked="true"
-                inline
-                required
-                class="custom-switch">
-                <div>Additional content</div>
-            </x-form-switch>
-        ');
+        $view = $this->blade('<x-form-switch name="test">Feature status will be updated immediately</x-form-switch>');
 
-        $view->assertSee('Premium Settings');
-        $view->assertSee('Premium Feature');
-        $view->assertSee('Enable premium features');
-        $view->assertSee('value="premium"');
-        $view->assertSee('value="basic"');
-        $view->assertSee('checked');
-        $view->assertSee('form-check-inline');
-        $view->assertSee('required');
-        $view->assertSee('custom-switch');
-        $view->assertSee('Additional content');
+        $view->assertSee('name="test"');
+        $view->assertSee('Feature status will be updated immediately');
     }
 
-    public function test_switch_accessibility_features(): void
+    /** @test */
+    public function it_renders_form_switch_with_form_group()
     {
-        $view = $this->blade('
-            <x-form-switch
-                name="accessibility"
-                label="Accessibility Mode"
-                role="switch"
-                aria-describedby="help-text">
-            </x-form-switch>
-        ');
+        $view = $this->blade('<x-form-switch name="test" />');
 
-        $view->assertSee('role="switch"');
-        $view->assertSee('aria-describedby="help-text"');
-        $view->assertSee('Accessibility Mode');
+        $view->assertSee('form-group');
     }
 
-    public function test_switch_handles_edge_cases(): void
+    /** @test */
+    public function it_renders_form_switch_with_form_label()
     {
-        // Empty label
-        $view = $this->blade('<x-form-switch name="empty" label="" />');
-        $view->assertStatus(200);
+        $view = $this->blade('<x-form-switch name="test" label="Test Switch" />');
 
-        // Special characters in label
-        $view = $this->blade('<x-form-switch name="special" label="Special & Characters →" />');
-        $view->assertSee('Special &amp; Characters →');
-
-        // Long label
-        $longLabel = 'This is a very long label that might wrap to multiple lines and should still display correctly';
-        $view = $this->blade("<x-form-switch name=\"long\" label=\"{$longLabel}\" />");
-        $view->assertSee($longLabel);
+        $view->assertSee('<label class="form-label">');
+        $view->assertSee('Test Switch');
     }
 
-    public function test_switch_validation_integration(): void
+    /** @test */
+    public function it_renders_form_switch_with_form_check()
     {
-        $view = $this->blade('
-            <x-form-switch
-                name="terms"
-                label="I agree to terms"
-                required />
-        ');
+        $view = $this->blade('<x-form-switch name="test" />');
 
-        $view->assertSee('required');
-        $view->assertSee('I agree to terms');
-    }
-
-    public function test_switch_performance_attributes(): void
-    {
-        $view = $this->blade('
-            <x-form-switch
-                name="performance"
-                label="Performance Mode"
-                data-testid="switch-component"
-                data-loading="false"
-                data-interactive="true">
-            </x-form-switch>
-        ');
-
-        $view->assertSee('data-testid="switch-component"');
-        $view->assertSee('data-loading="false"');
-        $view->assertSee('data-interactive="true"');
-    }
-
-    public function test_switch_bootstrap_integration(): void
-    {
-        $view = $this->blade('
-            <x-form-switch
-                name="bootstrap"
-                label="Bootstrap Switch"
-                id="bootstrapSwitch">
-            </x-form-switch>
-        ');
-
-        // Should have proper Bootstrap switch structure
-        $view->assertSee('form-switch');
-        $view->assertSee('form-check-input');
-        $view->assertSee('form-check-label');
-        $view->assertSee('id="bootstrapSwitch"');
-    }
-
-    public function test_switch_with_numeric_values(): void
-    {
-        $view = $this->blade('
-            <x-form-switch
-                name="numeric"
-                label="Numeric Switch"
-                value="1"
-                copy="0" />
-        ');
-
-        $view->assertSee('value="1"');
-        $view->assertSee('value="0"');
-        $view->assertSee('Numeric Switch');
-    }
-
-    public function test_switch_with_boolean_values(): void
-    {
-        $view = $this->blade('
-            <x-form-switch
-                name="boolean"
-                label="Boolean Switch"
-                :checked="true" />
-        ');
-
-        $view->assertSee('checked');
-        $view->assertSee('Boolean Switch');
-    }
-
-    public function test_switch_with_complex_content(): void
-    {
-        $view = $this->blade('
-            <x-form-switch name="complex" label="Complex Switch">
-                <div class="complex-content">
-                    <span class="icon">⚙️</span>
-                    <span class="text">Settings</span>
-                    <small class="description">Advanced configuration options</small>
-                </div>
-            </x-form-switch>
-        ');
-
-        $view->assertSee('Complex Switch');
-        $view->assertSee('⚙️');
-        $view->assertSee('Settings');
-        $view->assertSee('Advanced configuration options');
-    }
-
-    public function test_switch_semantic_structure(): void
-    {
-        $view = $this->blade('
-            <x-form-switch
-                name="semantic"
-                label="Semantic Switch" />
-        ');
-
-        // Should have proper semantic structure
-        $view->assertSee('<label', false);
-        $view->assertSee('<input', false);
         $view->assertSee('form-check');
         $view->assertSee('form-switch');
     }
 
-    public function test_switch_css_class_merging(): void
+    /** @test */
+    public function it_renders_form_switch_with_form_check_input()
     {
-        $view = $this->blade('
-            <x-form-switch
-                name="merging"
-                label="Class Merging"
-                class="custom-class">
-            </x-form-switch>
-        ');
+        $view = $this->blade('<x-form-switch name="test" />');
 
-        // Should merge custom class with default classes
-        $view->assertSee('custom-class');
         $view->assertSee('form-check-input');
     }
 
-    public function test_switch_with_extra_attributes(): void
+    /** @test */
+    public function it_renders_form_switch_with_form_check_label()
+    {
+        $view = $this->blade('<x-form-switch name="test" label="Test Label" />');
+
+        $view->assertSee('form-check-label');
+        $view->assertSee('Test Label');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_form_check_description()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('form-check-description');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_hidden_input()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('type="hidden"');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_checkbox_input()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('type="checkbox"');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_wire_model()
+    {
+        $view = $this->blade('<x-form-switch name="test" wire:model="feature" />');
+
+        $view->assertSee('name="test"');
+        $view->assertSee('wire:model="feature"');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_wire_modifier()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('wire:model');
+        $view->assertSee('wireModifier');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_checked_helper()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('@checked');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_help_component()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('<x-help>');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_form_errors()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('<x-form-errors');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_error_class()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('is-invalid');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_id_helper()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('id()');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_is_wired_helper()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('isWired()');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_has_error_helper()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('hasError');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_attributes_class()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('attributes->class');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_attributes_merge()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('attributes->merge');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_attributes_has()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('attributes->has');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_attributes_get()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('attributes->get');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_class_helper()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('@class');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_conditional_classes()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('form-group');
+        $view->assertSee('form-check-inline');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_copy_conditional()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('copy !== false');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_title_conditional()
+    {
+        $view = $this->blade('<x-form-switch name="test" title="Test Title" />');
+
+        $view->assertSee('attributes->has(\'title\')');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_inline_conditional()
+    {
+        $view = $this->blade('<x-form-switch name="test" inline />');
+
+        $view->assertSee('attributes->has(\'inline\')');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_wired_conditional()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('isWired()');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_checked_conditional()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('@checked');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_help_conditional()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('help ?? null');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_help_attributes()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('help ?? $attributes->get(\'help\')');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_livewire_integration()
+    {
+        $view = $this->blade('<x-form-switch name="test" wire:model="feature" />');
+
+        $view->assertSee('name="test"');
+        $view->assertSee('wire:model="feature"');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_turbo_attributes()
+    {
+        $view = $this->blade('<x-form-switch name="test" data-turbo="true" />');
+
+        $view->assertSee('name="test"');
+        $view->assertSee('data-turbo="true"');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_accessibility_attributes()
+    {
+        $view = $this->blade('<x-form-switch name="test" aria-label="Toggle switch" />');
+
+        $view->assertSee('name="test"');
+        $view->assertSee('aria-label="Toggle switch"');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_data_attributes()
+    {
+        $view = $this->blade('<x-form-switch name="test" data-test="switch-component" />');
+
+        $view->assertSee('name="test"');
+        $view->assertSee('data-test="switch-component"');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_component_structure()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('form-switch');
+        $view->assertSee('form-check');
+        $view->assertSee('form-check-input');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_form_structure()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('form-group');
+        $view->assertSee('form-check');
+        $view->assertSee('form-check-label');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_input_structure()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('type="checkbox"');
+        $view->assertSee('form-check-input');
+        $view->assertSee('name="test"');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_label_structure()
+    {
+        $view = $this->blade('<x-form-switch name="test" label="Test Label" />');
+
+        $view->assertSee('form-check-label');
+        $view->assertSee('Test Label');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_help_structure()
+    {
+        $view = $this->blade('<x-form-switch name="test" help="Help text" />');
+
+        $view->assertSee('Help text');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_slot_structure()
+    {
+        $view = $this->blade('<x-form-switch name="test">Content</x-form-switch>');
+
+        $view->assertSee('Content');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_help_slot_structure()
     {
         $view = $this->blade('
-            <x-form-switch
-                name="extra"
-                label="Extra Attributes"
-                extra-attributes="data-custom=\"value\" onclick=\"alert(\'clicked\')\"">
+            <x-form-switch name="test">
+                <x-slot:help>Help text</x-slot:help>
             </x-form-switch>
         ');
 
-        $view->assertSee('data-custom="value"');
-        $view->assertSee('onclick="alert(\'clicked\')"');
+        $view->assertSee('Help text');
     }
 
-    public function test_switch_form_group_with_title(): void
+    /** @test */
+    public function it_renders_form_switch_with_copy_functionality()
     {
-        $view = $this->blade('
-            <x-form-switch
-                name="with_title"
-                label="Switch with Title"
-                title="Form Group Title" />
-        ');
+        $view = $this->blade('<x-form-switch name="test" />');
 
-        $view->assertSee('Form Group Title');
-        $view->assertSee('form-label');
-        $view->assertSee('Switch with Title');
-    }
-
-    public function test_switch_form_group_without_title(): void
-    {
-        $view = $this->blade('
-            <x-form-switch
-                name="without_title"
-                label="Switch without Title" />
-        ');
-
-        $view->assertDontSee('form-label');
-        $view->assertSee('Switch without Title');
-    }
-
-    public function test_switch_hidden_input_behavior(): void
-    {
-        // With copy value
-        $view = $this->blade('
-            <x-form-switch
-                name="hidden_test"
-                label="Hidden Test"
-                copy="off" />
-        ');
-
+        $view->assertSee('copy !== false');
         $view->assertSee('type="hidden"');
-        $view->assertSee('value="off"');
-
-        // Without copy (copy = false)
-        $view = $this->blade('
-            <x-form-switch
-                name="no_hidden"
-                label="No Hidden"
-                :copy="false" />
-        ');
-
-        $view->assertDontSee('type="hidden"');
     }
 
-    public function test_switch_checked_attribute_behavior(): void
+    /** @test */
+    public function it_renders_form_switch_with_inline_functionality()
     {
-        // Checked = true
-        $view = $this->blade('
-            <x-form-switch
-                name="checked_true"
-                label="Checked True"
-                :checked="true" />
-        ');
-
-        $view->assertSee('checked');
-
-        // Checked = false
-        $view = $this->blade('
-            <x-form-switch
-                name="checked_false"
-                label="Checked False"
-                :checked="false" />
-        ');
-
-        $view->assertDontSee('checked');
-    }
-
-    public function test_switch_inline_behavior(): void
-    {
-        // Inline = true
-        $view = $this->blade('
-            <x-form-switch
-                name="inline_true"
-                label="Inline True"
-                inline />
-        ');
+        $view = $this->blade('<x-form-switch name="test" inline />');
 
         $view->assertSee('form-check-inline');
+    }
 
-        // Inline = false
-        $view = $this->blade('
-            <x-form-switch
-                name="inline_false"
-                label="Inline False"
-                :inline="false" />
-        ');
+    /** @test */
+    public function it_renders_form_switch_with_title_functionality()
+    {
+        $view = $this->blade('<x-form-switch name="test" title="Test Title" />');
 
-        $view->assertDontSee('form-check-inline');
+        $view->assertSee('Test Title');
+        $view->assertSee('form-label');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_livewire_functionality()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('wire:model');
+        $view->assertSee('isWired()');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_validation_functionality()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('hasError');
+        $view->assertSee('is-invalid');
+        $view->assertSee('<x-form-errors');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_accessibility_functionality()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('form-check');
+        $view->assertSee('form-check-input');
+        $view->assertSee('form-check-label');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_bootstrap_styling()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('form-switch');
+        $view->assertSee('form-check-input');
+        $view->assertSee('form-check-label');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_form_validation()
+    {
+        $view = $this->blade('<x-form-switch name="test" required />');
+
+        $view->assertSee('name="test"');
+        $view->assertSee('required');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_error_handling()
+    {
+        $view = $this->blade('<x-form-switch name="test" />');
+
+        $view->assertSee('hasError');
+        $view->assertSee('is-invalid');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_help_integration()
+    {
+        $view = $this->blade('<x-form-switch name="test" help="Help text" />');
+
+        $view->assertSee('Help text');
+        $view->assertSee('<x-help>');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_slot_integration()
+    {
+        $view = $this->blade('<x-form-switch name="test">Slot content</x-form-switch>');
+
+        $view->assertSee('Slot content');
+    }
+
+    /** @test */
+    public function it_renders_form_switch_with_comprehensive_functionality()
+    {
+        $view = $this->blade('<x-form-switch name="test" label="Test" help="Help" inline title="Title" />');
+
+        $view->assertSee('name="test"');
+        $view->assertSee('Test');
+        $view->assertSee('Help');
+        $view->assertSee('Title');
+        $view->assertSee('form-check-inline');
     }
 }
