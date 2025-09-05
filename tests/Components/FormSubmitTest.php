@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Components;
+namespace Diviky\LaravelComponents\Tests\Components;
 
 use Diviky\LaravelComponents\Components\FormSubmit;
 
@@ -11,6 +11,11 @@ class FormSubmitTest extends ComponentTestCase
     protected function getComponentClass(): string
     {
         return FormSubmit::class;
+    }
+
+    protected function getComponentName(): string
+    {
+        return 'form-submit';
     }
 
     public function test_can_render_basic_submit_button(): void

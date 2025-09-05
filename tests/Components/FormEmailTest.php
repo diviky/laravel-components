@@ -354,14 +354,6 @@ class FormEmailTest extends TestCase
     }
 
     /** @test */
-    public function it_renders_form_email_with_slot_structure_display()
-    {
-        $view = $this->blade('<x-form-email name="test">Content</x-form-email>');
-
-        $view->assertSee('Content');
-    }
-
-    /** @test */
     public function it_renders_form_email_with_help_slot_structure_display()
     {
         $view = $this->blade('

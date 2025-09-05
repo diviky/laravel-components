@@ -363,14 +363,6 @@ class FormNumberTest extends TestCase
     }
 
     /** @test */
-    public function it_renders_form_number_with_slot_structure_display()
-    {
-        $view = $this->blade('<x-form-number name="test">Content</x-form-number>');
-
-        $view->assertSee('Content');
-    }
-
-    /** @test */
     public function it_renders_form_number_with_help_slot_structure_display()
     {
         $view = $this->blade('

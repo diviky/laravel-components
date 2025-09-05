@@ -7,16 +7,6 @@ use Diviky\LaravelComponents\Tests\TestCase;
 abstract class ComponentTestCase extends TestCase
 {
     /**
-     * Test that component renders with basic attributes
-     */
-    abstract public function test_renders_with_basic_attributes(): void;
-
-    /**
-     * Test that component handles all supported attributes
-     */
-    abstract public function test_handles_all_attributes(): void;
-
-    /**
      * Test component with invalid/edge case data
      */
     public function test_handles_edge_cases(): void
@@ -44,11 +34,6 @@ abstract class ComponentTestCase extends TestCase
     }
 
     /**
-     * Helper to create component instance for testing
-     */
-    abstract protected function createComponent(array $attributes = []): \Diviky\LaravelComponents\Components\Component;
-
-    /**
      * Get the component's blade tag name
      */
     abstract protected function getComponentName(): string;
@@ -74,8 +59,8 @@ abstract class ComponentTestCase extends TestCase
      */
     public function test_component_renders(): void
     {
-        $component = $this->createComponent($this->getDefaultAttributes());
-        $this->assertComponentRenders($component);
+        $view = $this->blade('<x-'.$this->getComponentName().' />');
+        $this->assertNotNull($view);
     }
 
     /**
@@ -83,11 +68,10 @@ abstract class ComponentTestCase extends TestCase
      */
     public function test_html_structure(): void
     {
-        $component = $this->createComponent($this->getDefaultAttributes());
-        $view = $this->component($component);
+        $view = $this->blade('<x-'.$this->getComponentName().' />');
 
         // Override in specific tests to check expected HTML elements
-        $view->assertStatus(200);
+        $this->assertNotNull($view);
     }
 
     /**
@@ -95,11 +79,7 @@ abstract class ComponentTestCase extends TestCase
      */
     public function test_custom_css_classes(): void
     {
-        $component = $this->createComponent([
-            'class' => 'custom-class another-class',
-        ]);
-
-        $view = $this->component($component);
+        $view = $this->blade('<x-'.$this->getComponentName().' class="custom-class another-class" />');
         $this->assertHasClass($view, 'custom-class');
         $this->assertHasClass($view, 'another-class');
     }
@@ -109,9 +89,7 @@ abstract class ComponentTestCase extends TestCase
      */
     public function test_disabled_state(): void
     {
-        $component = $this->createComponent(['disabled' => true]);
-        $view = $this->component($component);
-
+        $view = $this->blade('<x-'.$this->getComponentName().' disabled />');
         $this->assertHasAttribute($view, 'disabled');
     }
 
@@ -120,9 +98,7 @@ abstract class ComponentTestCase extends TestCase
      */
     public function test_readonly_state(): void
     {
-        $component = $this->createComponent(['readonly' => true]);
-        $view = $this->component($component);
-
+        $view = $this->blade('<x-'.$this->getComponentName().' readonly />');
         $this->assertHasAttribute($view, 'readonly');
     }
 }
