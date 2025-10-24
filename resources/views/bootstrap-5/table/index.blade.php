@@ -16,7 +16,7 @@
 ])
 
 @if ($responsive)
-    <div class="table-responsive" @if ($height) style="min-height: {{ $height }}" @endif>
+    <div class="table-responsive" @if ($height && $height !== 'auto') style="min-height: {{ $height }}" @endif>
 @endif
 
 <table {!! $attributes->class([
