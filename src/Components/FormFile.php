@@ -36,6 +36,7 @@ class FormFile extends Component
         string|HtmlString|array|Collection|null $extraAttributes = null,
         public ?array $settings = [],
         string $accept = '*.*',
+        public mixed $enabled = true,
     ) {
         $this->name = $name;
         $this->label = $label;

@@ -12,6 +12,7 @@ class FormButton extends Component
         bool $outline = false,
         public bool $ghost = false,
         public bool $disabled = false,
+        public mixed $enabled = true,
     ) {
         $this->outline = $outline ? 'outline-' : ($ghost ? 'ghost-' : '');
     }

@@ -21,14 +21,15 @@ class FormTags extends Component
         public ?string $language = null,
         bool $showErrors = true,
         public bool $floating = false,
-        string|HtmlString|array|Collection|null $extraAttributes = null
+        string|HtmlString|array|Collection|null $extraAttributes = null,
+        public mixed $enabled = true,
     ) {
         $this->name = $name;
         $this->label = $label;
         $this->showErrors = $showErrors;
         $this->floating = $floating;
 
-        if (! is_null($language)) {
+        if (!is_null($language)) {
             $this->name = "{$name}[{$language}]";
         }
 

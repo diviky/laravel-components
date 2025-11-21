@@ -31,6 +31,7 @@ class FormRating extends Component
         public bool $half = false,
         public ?array $settings = [],
         HtmlString|array|string|Collection|null $extraAttributes = null,
+        public mixed $enabled = true,
     ) {
 
         $this->name = $name;
@@ -43,7 +44,7 @@ class FormRating extends Component
 
         $this->setExtraAttributes($extraAttributes);
 
-        if (! is_null($language)) {
+        if (!is_null($language)) {
             $this->name = "{$name}[{$language}]";
         }
 

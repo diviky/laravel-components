@@ -32,6 +32,7 @@ class FilterSearch extends Component
         bool $showErrors = true,
         bool $floating = false,
         HtmlString|array|string|Collection|null $extraAttributes = null,
+        public mixed $enabled = true,
     ) {
         $this->name = $name;
         $this->label = $label;

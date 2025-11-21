@@ -6,9 +6,7 @@ namespace Diviky\LaravelComponents\Components;
 
 class Container extends Component
 {
-    protected mixed $enabled = true;
-
-    public function __construct(mixed $enabled = true)
+    public function __construct(public mixed $enabled = true)
     {
         $this->enabled = $enabled;
     }

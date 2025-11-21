@@ -4,6 +4,7 @@
     'icon' => null,
     'title' => null,
     'message' => null,
+    'size' => 'xl',
 ])
 
 @php
@@ -20,12 +21,13 @@
 @endphp
 
 <div role="alert"
-    {{ $attributes->merge(['class' => 'alert text-sm max-w-xl'])->class([
+    {{ $attributes->merge(['class' => 'alert text-sm'])->class([
         'alert-info' => $type == 'info',
         'alert-info' => $type == 'help',
         'alert-success' => $type == 'success',
         'alert-warning' => $type == 'warning',
         'alert-danger' => $type == 'danger',
+        'max-w-xl' => $size == 'xl',
         'alert-dismissible' => $dismissible,
     ]) }}>
     <div @class(['d-flex align-items-center' => $icon])>

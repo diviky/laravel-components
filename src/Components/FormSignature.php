@@ -23,13 +23,14 @@ class FormSignature extends Component
         public ?string $height = '250',
         public ?array $config = [],
         public ?string $clearText = 'Clear',
+        public mixed $enabled = true,
     ) {
         $this->name = $name;
         $this->label = $label;
         $this->showErrors = $showErrors;
         $this->floating = $floating;
 
-        if (! is_null($language)) {
+        if (!is_null($language)) {
             $this->name = "{$name}[{$language}]";
         }
 

@@ -26,6 +26,7 @@ class FormDropzone extends Component
         $language = null,
         bool $showErrors = true,
         HtmlString|array|string|Collection|null $extraAttributes = null,
+        public mixed $enabled = true,
     ) {
         $this->name = $name;
         $this->label = $label;

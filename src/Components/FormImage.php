@@ -31,13 +31,14 @@ class FormImage extends Component
         public ?string $cropSaveText = 'Crop',
         public array $cropConfig = [],
         HtmlString|array|string|Collection|null $extraAttributes = null,
+        public mixed $enabled = true,
     ) {
 
         $this->name = $name;
         $this->value = $value;
         $this->label = $label;
 
-        if (! is_null($language)) {
+        if (!is_null($language)) {
             $this->name = "{$name}[{$language}]";
         }
 

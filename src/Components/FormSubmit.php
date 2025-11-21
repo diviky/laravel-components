@@ -29,6 +29,7 @@ class FormSubmit extends Component
         public ?string $size = null,
         public ?string $variant = null,
         public ?string $icon = null,
+        public mixed $enabled = true,
     ) {
         $this->outline = $outline ? 'outline-' : ($ghost ? 'ghost-' : '');
     }

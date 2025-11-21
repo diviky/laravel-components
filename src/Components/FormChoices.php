@@ -50,6 +50,7 @@ class FormChoices extends FormSelect
         // slots
         public mixed $item = null,
         public mixed $selection = null,
+        public mixed $enabled = true,
     ) {
 
         $this->uuid = (string) Str::uuid();

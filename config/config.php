@@ -301,6 +301,9 @@ return [
         'nav' => [
             'view' => 'laravel-components::{framework}.nav.index',
         ],
+        'nav.link' => [
+            'view' => 'laravel-components::{framework}.nav.link',
+        ],
         'nav-item' => [
             'alias' => 'nav.item',
             'view' => 'laravel-components::{framework}.nav.item',
@@ -405,6 +408,20 @@ return [
         'tab.pane' => [
             'view' => 'laravel-components::{framework}.tabs.pane',
         ],
+
+        'tabs' => [
+            'view' => 'laravel-components::{framework}.tabs.index',
+        ],
+        'tabs.content' => [
+            'view' => 'laravel-components::{framework}.tabs.content',
+        ],
+        'tabs.item' => [
+            'view' => 'laravel-components::{framework}.tabs.item',
+        ],
+        'tabs.pane' => [
+            'view' => 'laravel-components::{framework}.tabs.pane',
+        ],
+
         'table' => [
             'view' => 'laravel-components::{framework}.table.index',
         ],
