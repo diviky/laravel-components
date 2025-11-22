@@ -52,13 +52,41 @@
                 'class' => 'date',
                 'x-ref' => 'container',
             ])">
-            {!! $slot !!}
+            @isset($prepend)
+                <x-slot:prepend :attributes="$prepend->attributes">
+                    {!! $prepend !!}
+                </x-slot:prepend>
+            @endisset
+
+            @isset($before)
+                <x-slot:before>
+                    {!! $before !!}
+                </x-slot:before>
+            @endisset
+
+            <x-slot:icon>
+                @isset($icon)
+                    {!! $icon !!}
+                @else
+                    {{ $attributes->has('icon') ? $attributes->get('icon') : 'calendar-month' }}
+                @endisset
+            </x-slot:icon>
+
+            @isset($append)
+                <x-slot:append :attributes="$append->attributes">
+                    {!! $append !!}
+                </x-slot:append>
+            @endisset
+
+            @isset($after)
+                <x-slot:after>
+                    {!! $after !!}
+                </x-slot:after>
+            @endisset
 
             <x-slot:help>{{ $help ?? '' }}</x-slot:help>
 
-            @slot('icon')
-                {{ $attributes->has('icon') ? $attributes->get('icon') : 'calendar-month' }}
-            @endslot
+            {!! $slot !!}
         </x-form-input>
     </div>
 @else
