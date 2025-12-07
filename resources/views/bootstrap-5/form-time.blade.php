@@ -1,3 +1,7 @@
+@props([
+    'icon' => 'clock',
+])
+
 <div x-data="{
     picker: null,
     initPicker() {
@@ -45,7 +49,8 @@ $nextTick(() => {
         'type' => $type,
         'class' => 'date',
         'x-ref' => 'container',
-    ])">
+    ])"
+        :icon="$icon">
         @isset($prepend)
             <x-slot:prepend :attributes="$prepend->attributes">
                 {!! $prepend !!}
@@ -57,14 +62,6 @@ $nextTick(() => {
                 {!! $before !!}
             </x-slot:before>
         @endisset
-
-        <x-slot:icon>
-            @isset($icon)
-                {!! $icon !!}
-            @else
-                {{ $attributes->has('icon') ? $attributes->get('icon') : 'clock' }}
-            @endisset
-        </x-slot:icon>
 
         @isset($append)
             <x-slot:append :attributes="$append->attributes">

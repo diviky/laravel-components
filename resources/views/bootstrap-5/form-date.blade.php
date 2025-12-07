@@ -1,3 +1,6 @@
+@props([
+    'icon' => 'calendar-month',
+])
 <div x-data="{
     picker: null,
     initPicker() {
@@ -45,13 +48,10 @@ $nextTick(() => {
         'type' => $type,
         'class' => 'date',
         'x-ref' => 'container',
-    ])">
+    ])"
+        :icon="$icon">
         {!! $slot !!}
 
         <x-slot:help>{{ $help ?? '' }}</x-slot:help>
-
-        @slot('icon')
-            {{ $attributes->has('icon') ? $attributes->get('icon') : 'calendar-month' }}
-        @endslot
     </x-form-input>
 </div>

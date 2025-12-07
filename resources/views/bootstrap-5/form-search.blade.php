@@ -16,11 +16,7 @@
     @endisset
 
     <x-slot:icon>
-        @isset($icon)
-            {!! $icon !!}
-        @else
-            search
-        @endisset
+        search
     </x-slot:icon>
 
     @isset($append)

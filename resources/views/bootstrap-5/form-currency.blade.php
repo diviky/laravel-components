@@ -1,6 +1,6 @@
 @props([
     'extraAttributes' => [],
-    'currency' => 'USD',
+    'currency' => null,
 ])
 
 @php
@@ -8,7 +8,7 @@
 @endphp
 
 <x-form-input :extra-attributes="$extraAttributes" :attributes="$attributes->merge(['type' => 'number'])">
-    <x-slot:prepend {{ $prepend?->attributes ?? '' }}>
+    <x-slot:prepend :attributes="$prepend->attributes ?? ''">
         @isset($prepend)
             {!! $prepend !!}
         @else
@@ -41,6 +41,6 @@
     @endisset
 
     <x-slot:help>{{ $help ?? '' }}</x-slot:help>
-    
+
     {!! $slot !!}
 </x-form-input>
