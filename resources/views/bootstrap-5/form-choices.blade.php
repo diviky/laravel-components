@@ -16,7 +16,7 @@
         fetchUrl: '{{ $attributes->get('data-fetch') }}',
         fetchMethod: '{{ $attributes->get('data-method', 'GET') }}',
         formData: {{ $attributes->get('form-data', '{}') }},
-
+    
         init() {
             this.fetch();
             // Fix weird issue when navigating back
@@ -61,11 +61,11 @@
         },
         get selectedOptions() {
             const allOptions = this.allSelectableOptions;
-
+    
             if (this.isSingle) {
                 return allOptions.filter(i => i.{{ $valueField }} == this.selection) || {};
             }
-
+    
             return this.selection.map(i => allOptions.find(o => o.{{ $valueField }} == i) || {});
         },
         updateOptions(newOptions) {
@@ -75,7 +75,7 @@
             if (!this.isSearchable || this.$refs.searchInput.value == '') {
                 return false;
             }
-
+    
             const selectableOptions = this.allSelectableOptions;
             return this.isSingle ?
                 (this.selection && selectableOptions.length == 1) || (!this.selection && selectableOptions.length == 0) :
@@ -107,14 +107,14 @@
             } else {
                 this.selection = [];
             }
-
+    
             this.dispatchChangeEvent({ value: this.selection });
         },
         focus() {
             if (this.isReadonly || this.isDisabled) {
                 return;
             }
-
+    
             this.focused = true;
             this.$refs.searchInput.focus();
         },
@@ -127,7 +127,7 @@
             if (this.isReadonly || this.isDisabled) {
                 return;
             }
-
+    
             if (this.isSingle) {
                 this.selection = id;
                 this.focused = false;
@@ -139,10 +139,10 @@
                     this.selection.push(id);
                 }
             }
-
+    
             this.dispatchChangeEvent({ value: this.selection });
             this.$refs.searchInput.value = '';
-
+    
             if (!keepOpen) {
                 this.$refs.searchInput.focus();
             }
@@ -155,7 +155,7 @@
                     child.classList.remove('hidden');
                 }
             });
-
+    
             this.noResults = Array.from(this.$refs.choicesOptions.querySelectorAll('div > .hidden')).length ==
                 Array.from(this.$refs.choicesOptions.querySelectorAll('[search-value]')).length;
         },
@@ -163,12 +163,12 @@
             if (!value || value.length < this.minChars) {
                 return;
             }
-
+    
             // Prevent search for this keys
             if (event && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Shift', 'CapsLock', 'Tab'].includes(event.key)) {
                 return;
             }
-
+    
             @if($searchFunction)
             // Call search function from parent component
             // `search(value)` or `search(value, extra1, extra2 ...)`
@@ -176,7 +176,7 @@
                 ? preg_replace('/\((.*?)\)/', '(value, $1)', $searchFunction)
                 : $searchFunction . '(value)' }}
             @endif
-
+    
         },
         dispatchChangeEvent(detail) {
             this.$refs.searchInput.dispatchEvent(new CustomEvent('change', { bubbles: true, detail }));
@@ -265,15 +265,15 @@
                     type="hidden" />
 
                 <template x-if="!Array.isArray(selection)">
-                    <input type="hidden" x-model="selection" name="{{ $name }}" />
+                    <input type="hidden" x-model="selection" name="{{ $inputName() }}" />
                 </template>
 
                 <template x-if="Array.isArray(selection) && selection.length <= 0">
-                    <input type="hidden" value="" name="{{ $name }}" />
+                    <input type="hidden" value="" name="{{ $inputName() }}" />
                 </template>
 
                 <template x-for="select in Array.isArray(selection) ? selection : []">
-                    <input type="hidden" :value="select" name="{{ $name }}" />
+                    <input type="hidden" :value="select" name="{{ $inputName() }}" />
                 </template>
             </div>
 
@@ -401,6 +401,6 @@
             </div>
         </div>
         <x-help> {!! $help ?? $attributes->get('help') !!} </x-help>
-        <x-form-errors :name="$name" />
+        <x-form-errors :name="$inputName()" />
     </div>
 </div>

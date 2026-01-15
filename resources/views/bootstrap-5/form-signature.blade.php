@@ -51,13 +51,13 @@
             {{ $attributes->except(['wire:model', 'wire:model.live'])->class([
                     'form-control relative h-auto',
                     'border border-dashed' => $isReadonly(),
-                    'input-error' => $errors->has($name) || $errors->has($name . '*'),
+                    'input-error' => $errors->has($inputName()) || $errors->has($inputName() . '*'),
                 ]) }}>
 
             <canvas id="{{ $id() }}signature" height="{{ $height }}"
                 class="rounded-lg block w-full select-none touch-none text-white"></canvas>
 
-            <input type="hidden" name="{{ $name }}" {{ $wire() }} :required="isRequired" x-model="value" />
+            <input type="hidden" name="{{ $inputName() }}" {{ $wire() }} :required="isRequired" x-model="value" />
 
             <!-- CLEAR BUTTON -->
             <div class="absolute end-2 top-1/2 -translate-y-1/2 ">
@@ -65,7 +65,7 @@
             </div>
         </div>
 
-        <x-form-errors :name="$name" />
+        <x-form-errors :name="$inputName()" />
 
         <x-help> {!! $help ?? $attributes->get('help') !!} </x-help>
     </div>

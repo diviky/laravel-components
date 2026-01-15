@@ -35,6 +35,7 @@
                 </span>
             @endif
         </template>
-        <input type="hidden" name="{{ $name }}" x-model="rating" />
+
+        <x-form-hidden name="{{ $inputName() }}" x-model="rating" :attributes="$attributes" />
     </div>
 </div>

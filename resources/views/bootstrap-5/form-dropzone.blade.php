@@ -6,12 +6,12 @@
             <div> Or Click to choose from your computer</div>
             <ul class="drop-preview hide"></ul>
         </div>
-        <input name="{{ $name }}" {{ $extraAttributes ?? '' }} type="file" {!! $attributes->except(['extra-attributes']) !!}>
+        <input name="{{ $inputName() }}" {{ $extraAttributes ?? '' }} type="file" {!! $attributes->except(['extra-attributes']) !!}>
     </div>
     <div class="progress" style="height:5px">
         <div class="progress-bar bg-info" role="progressbar" style="width: 0%"></div>
     </div>
 
-    <x-form-errors :name="$name" />
+    <x-form-errors :name="$inputName()" />
     {!! $help ?? null !!}
 </div>

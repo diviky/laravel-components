@@ -15,7 +15,7 @@
             this.$nextTick(() => {
                 this.initializeEditor();
             });
-
+    
             // Handles a case where people try to change contents on the fly from Livewire methods
             this.$watch('value', (newValue) => {
                 if (this.editorInstance && newValue !== this.editorInstance.getEditorContent()) {
@@ -27,7 +27,7 @@
         },
         initializeEditor() {
             const config = {{ $setup() }};
-
+    
             this.editorInstance = new LexicalEditor({
                 value: this.value,
                 prefix: this.prefix,
@@ -124,7 +124,7 @@
 
             <!-- Hidden input to store HTML content -->
             <input type="hidden" id="{{ $id() }}" {{ $attributes->except(['extra-attributes', 'settings']) }}
-                {{ $extraAttributes }} name="{{ $name }}" x-ref="hiddenInput{{ $id() }}"
+                {{ $extraAttributes }} name="{{ $inputName() }}" x-ref="hiddenInput{{ $id() }}"
                 :value="value">
 
             <!-- Upload indicator -->
@@ -138,7 +138,7 @@
         </div>
     </div>
 
-    <x-form-errors :name="$name" />
+    <x-form-errors :name="$inputName()" />
 
     <x-help> {!! $help ?? $attributes->get('help') !!} </x-help>
 </div>

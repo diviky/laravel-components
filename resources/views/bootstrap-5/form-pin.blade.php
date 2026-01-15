@@ -53,6 +53,6 @@
                 x-model="inputs[{{ $i }}]" @keydown.space.prevent
                 @keydown.backspace.prevent="remove($event.target, {{ $i }})" @input="next($event.target)">
         @endfor
-        <input x-ref="source" type="hidden" name="{{ $name }}" {{ $attributes }} />
+        <input x-ref="source" type="hidden" name="{{ $inputName() }}" {{ $attributes }} />
     </div>
 </div>

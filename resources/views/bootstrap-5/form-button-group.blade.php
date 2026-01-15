@@ -9,12 +9,17 @@
         <x-form-label :label="$label" :required="$isRequired()" :for="$attributes->get('id') ?: $id()" />
 @endif
 
-<div {!! $attributes->except(['extra-attributes'])->class(['btn-group', 'd-flex' => !$inline, 'is-invalid' => $hasError($name), 'btn-group-vertical' => $vertical]) !!} {{ $extraAttributes ?? '' }}>
+<div {!! $attributes->except(['extra-attributes'])->class([
+        'btn-group',
+        'd-flex' => !$inline,
+        'is-invalid' => $hasError($inputName()),
+        'btn-group-vertical' => $vertical,
+    ]) !!} {{ $extraAttributes ?? '' }}>
 
     {!! $before ?? null !!}
 
     @forelse($options as $key => $option)
-        <x-form-button-item type="{{ $type }}" name="{{ $name }}" value="{{ $optionValue($option) }}"
+        <x-form-button-item type="{{ $type }}" name="{{ $inputName() }}" value="{{ $optionValue($option) }}"
             :default="$isSelected($optionValue($option))" :attributes="$attributes->whereStartsWith('wire:')" :disabled="$optionIsDisabled($option)">
             {{ $optionLabel($option) }}
         </x-form-button-item>
@@ -28,7 +33,7 @@
 
 {!! $help ?? null !!}
 
-<x-form-errors :name="$name" />
+<x-form-errors :name="$inputName()" />
 
 @if ($label)
     </div>

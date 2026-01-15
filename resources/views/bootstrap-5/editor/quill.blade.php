@@ -23,13 +23,13 @@
                 onUploadStart: () => { this.uploading = true },
                 onUploadEnd: () => { this.uploading = false }
             });
-
+    
             this.initEditor();
-
+    
             // Handles a case where people try to change contents on the fly from Livewire methods
             this.$watch('value', (newValue) => {
                 if (this.isUpdating) return;
-
+    
                 if (this.editor && newValue !== this.quillEditor.getContents()) {
                     this.isUpdating = true;
                     // Instead of destroying/recreating the editor, just set the content
@@ -42,11 +42,11 @@
         initEditor() {
             const config = {{ $setup() }};
             this.editor = this.quillEditor.init($refs.quillContainer{{ $id() }}, this.value, config);
-
+    
             // Update value when content changes
             this.quillEditor.onChange((content) => {
                 if (this.isUpdating) return;
-
+    
                 this.isUpdating = true;
                 this.value = content;
                 // Update hidden field
@@ -64,7 +64,7 @@
         <div class="relative" :class="uploading && 'pointer-events-none opacity-50'">
             <div x-ref="quillContainer{{ $id() }}" class="quill-editor"></div>
             <input type="hidden" id="{{ $id() }}" {{ $attributes->except(['extra-attributes', 'settings']) }}
-                {{ $extraAttributes }} name="{{ $name }}" x-ref="hiddenInput{{ $id() }}"
+                {{ $extraAttributes }} name="{{ $inputName() }}" x-ref="hiddenInput{{ $id() }}"
                 :value="value">
 
             <div class="absolute top-1/2 start-1/2 opacity-100! text-center hidden" :class="uploading && 'block!'">
@@ -74,7 +74,7 @@
         </div>
     </div>
 
-    <x-form-errors :name="$name" />
+    <x-form-errors :name="$inputName()" />
 
     <x-help> {!! $help ?? $attributes->get('help') !!} </x-help>
 </div>

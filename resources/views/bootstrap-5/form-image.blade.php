@@ -7,7 +7,7 @@
     imageCrop: null,
     originalImageUrl: null,
     cropAfterChange: {{ json_encode($cropAfterChange) }},
-    file: {{ json_encode($name) }},
+    file: {{ json_encode($inputName()) }},
     init() {
         this.imagePreview = this.$refs.preview?.querySelector('img')
         this.imageCrop = this.$refs.crop?.querySelector('img')
@@ -49,7 +49,7 @@
         this.cropper = new Cropper(this.imageCrop, {{ $cropSetup() }});
     },
     revert() {
-        $wire.$removeUpload('{{ $name }}', this.file.split('livewire-file:').pop(), () => {
+        $wire.$removeUpload('{{ $inputName() }}', this.file.split('livewire-file:').pop(), () => {
             this.imagePreview.src = this.originalImageUrl
         })
     },
@@ -64,7 +64,7 @@
         {{--
         this.cropper.getCroppedCanvas().toBlob((blob) => {
             blob.name = $refs.file.files[0].name
-            @this.upload('{{ $name }}', blob,
+            @this.upload('{{ $inputName() }}', blob,
                 (uploadedFilename) => {},
                 (error) => {},
                 (event) => { this.progress = event.detail.progress }
@@ -86,7 +86,7 @@
         @endif
 
         <!-- FILE INPUT -->
-        <input accept="image/*" id="{{ $id() }}" name="{{ $name }}" type="file" x-ref="file"
+        <input accept="image/*" id="{{ $id() }}" name="{{ $inputName() }}" type="file" x-ref="file"
             @change="refreshImage()"
             {{ $attributes->whereDoesntStartWith('class')->class(['form-file form-control', 'hide' => $slot->isNotEmpty()]) }} />
 
@@ -117,7 +117,7 @@
             </div>
         @endif
 
-        <x-form-errors :name="$name" />
+        <x-form-errors :name="$inputName()" />
 
         <x-help> {!! $help ?? $attributes->get('help') !!} </x-help>
     </div>

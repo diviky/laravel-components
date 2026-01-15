@@ -40,7 +40,7 @@
         }
     }" wire:ignore x-on:livewire:navigating.window="destroyEditor()">
         <div class="relative disabled" :class="uploading && 'pointer-events-none opacity-50'">
-            <textarea id="{{ $id() }}" {{ $attributes }} {{ $extraAttributes }} name="{{ $name }}" x-ref="tinymce"></textarea>
+            <textarea id="{{ $id() }}" {{ $attributes }} {{ $extraAttributes }} name="{{ $inputName() }}" x-ref="tinymce"></textarea>
 
             <div class="absolute top-1/2 start-1/2 opacity-100! text-center hidden" :class="uploading && 'block!'">
                 <div>Uploading</div>
@@ -49,7 +49,7 @@
         </div>
     </div>
 
-    <x-form-errors :name="$name" />
+    <x-form-errors :name="$inputName()" />
 
     <x-help> {!! $help ?? $attributes->get('help') !!} </x-help>
 </div>

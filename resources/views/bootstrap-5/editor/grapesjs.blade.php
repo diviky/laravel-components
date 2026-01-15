@@ -5,7 +5,7 @@
         value: {{ $entangle($attributes) }},
         prefix: {{ json_encode($prefix) }},
         uploading: false,
-
+    
         init() {
             // Initialize the editor after ensuring the required module is loaded
             if (window.GrapesJSEditor) {
@@ -26,7 +26,7 @@
                     }
                 });
             }
-
+    
             // Watch for value changes
             this.$watch('value', (newValue) => {
                 if (this.grapesjsEditor && newValue !== this.getValue()) {
@@ -35,10 +35,10 @@
                 }
             });
         },
-
+    
         initEditor() {
             const containerId = 'grapesjs-editor-{{ $id() }}';
-
+    
             this.grapesjsEditor = new GrapesJSEditor({
                 containerId: containerId,
                 inputId: '{{ $id() }}',
@@ -49,14 +49,14 @@
                 prefix: this.prefix,
                 folder: '{{ $folder }}'
             });
-
+    
             this.grapesjsEditor.init();
         },
-
+    
         getValue() {
             return this.grapesjsEditor ? this.grapesjsEditor.editor.getHtml() : '';
         },
-
+    
         destroyEditor() {
             if (this.grapesjsEditor) {
                 this.grapesjsEditor.destroy();
@@ -68,7 +68,7 @@
             <div id="grapesjs-editor-{{ $id() }}"></div>
 
             <input type="hidden" id="{{ $id() }}" {{ $attributes->except(['extra-attributes', 'settings']) }}
-                {{ $extraAttributes }} name="{{ $name }}" :value="value">
+                {{ $extraAttributes }} name="{{ $inputName() }}" :value="value">
 
             <div class="editor-loading" x-show="uploading">
                 <div>Uploading</div>
@@ -77,7 +77,7 @@
         </div>
     </div>
 
-    <x-form-errors :name="$name" />
+    <x-form-errors :name="$inputName()" />
 
     <x-help> {!! $help ?? $attributes->get('help') !!} </x-help>
 </div>

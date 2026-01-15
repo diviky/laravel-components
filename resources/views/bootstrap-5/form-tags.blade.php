@@ -68,7 +68,7 @@
             {{ $attributes->except(['wire:model', 'wire:model.live'])->class([
                     'form-control relative',
                     'border border-dashed' => $isReadonly(),
-                    'input-error' => $errors->has($name) || $errors->has($name . '*'),
+                    'input-error' => $errors->has($inputName()) || $errors->has($inputName() . '*'),
                     'ps-10' => $icon,
                 ]) }}>
             <!-- ICON  -->
@@ -101,19 +101,19 @@
                 @keyup.prevent="if (event.key === ',') { push() }" />
 
             <template x-if="!Array.isArray(tags)">
-                <input type="hidden" x-model="tags" name="{{ $name }}" />
+                <x-form-hidden x-model="tags" :name="$inputName()" :attributes="$attributes" />
             </template>
 
             <template x-if="Array.isArray(tags) && tags.length <= 0">
-                <input type="hidden" value="" name="{{ $name }}" />
+                <x-form-hidden value="" :name="$inputName()" :attributes="$attributes" />
             </template>
 
             <template x-for="select in Array.isArray(tags) ? tags : []">
-                <input type="hidden" :value="select" name="{{ $name }}" />
+                <input type="hidden" :value="select" name="{{ $inputName() }}" />
             </template>
         </div>
 
-        <x-form-errors :name="$name" />
+        <x-form-errors :name="$inputName()" />
 
         <x-help> {!! $help ?? $attributes->get('help') !!} </x-help>
     </div>

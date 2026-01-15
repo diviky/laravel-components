@@ -7,7 +7,7 @@
     @endif
 
     @if ($copy !== false)
-        <input type="hidden" value="{{ $copy }}" name="{{ $name }}" />
+        <input type="hidden" value="{{ $copy }}" name="{{ $inputName() }}" />
     @endif
 
     <label @class([
@@ -16,16 +16,14 @@
         'form-check-inline' => $attributes->has('inline'),
     ])>
         <input {!! $attributes->class([
-                'is-invalid' => $hasError($name),
+                'is-invalid' => $hasError($inputName()),
             ])->merge([
                 'class' => 'form-check-input',
                 'id' => $id(),
-                'name' => $name,
+                'name' => $inputName(),
                 'type' => 'checkbox',
                 'value' => $value,
-            ]) !!}
-            @if ($isWired()) wire:model{!! $wireModifier() !!}="{{ $name }}" @endif
-            @checked($checked) {{ $extraAttributes ?? '' }} />
+            ]) !!} {{ $wire() }} @checked($checked) {{ $extraAttributes ?? '' }} />
 
         <span class="form-check-label">
             {{ $label }}
@@ -40,5 +38,5 @@
         </span>
     </label>
 
-    <x-form-errors :name="$name" />
+    <x-form-errors :name="$inputName()" />
 </div>

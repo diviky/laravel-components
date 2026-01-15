@@ -38,7 +38,7 @@
             </div>
             <div x-ref="tiptapContainer{{ $id() }}" class="tiptap-editor"></div>
             <input type="hidden" id="{{ $id() }}" {{ $attributes->except(['extra-attributes', 'settings']) }}
-                {{ $extraAttributes }} name="{{ $name }}" x-ref="hiddenInput{{ $id() }}"
+                {{ $extraAttributes }} name="{{ $inputName() }}" x-ref="hiddenInput{{ $id() }}"
                 :value="value">
 
             <div class="absolute top-1/2 start-1/2 opacity-100! text-center hidden" :class="uploading && 'block!'">
@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <x-form-errors :name="$name" />
+    <x-form-errors :name="$inputName()" />
 
     <x-help> {!! $help ?? $attributes->get('help') !!} </x-help>
 </div>

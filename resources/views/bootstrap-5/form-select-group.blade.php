@@ -9,13 +9,13 @@
             'form-selectgroup',
             'form-selectgroup-pills' => $attributes->has('pills'),
             'form-selectgroup-boxes' => $attributes->has('boxes'),
-            'is-invalid' => $hasError($name),
+            'is-invalid' => $hasError($inputName()),
             'd-flex' => true,
             'flex-column' => $attributes->has('full'),
         ])->except('pills') !!} {{ $extraAttributes ?? '' }}>
 
         @forelse($options as $key => $option)
-            <x-form-select-item name="{{ $name }}" :attributes="$attributes->whereStartsWith('wire:')" value="{{ $optionValue($option) }}"
+            <x-form-select-item name="{{ $inputName() }}" :attributes="$attributes->whereStartsWith('wire:')" value="{{ $optionValue($option) }}"
                 type="{{ $type }}" :show="$attributes->has('show')">
                 {!! $optionLabel($option) !!}
             </x-form-select-item>
@@ -25,7 +25,7 @@
 
         {!! $help ?? null !!}
 
-        <x-form-errors :name="$name" />
+        <x-form-errors :name="$inputName()" />
     </div>
     @isset($label)
     </div>

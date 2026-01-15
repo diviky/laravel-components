@@ -54,20 +54,27 @@ class FormFile extends Component
 
     protected function convertToMimeTypes(string $accept): string
     {
-        if (strpos($accept, '/') !== false || $accept == '*.*' || $accept == '*' || $accept == '') {
+        if ($accept == '*.*' || $accept == '*' || $accept == '') {
             return implode(',', ['image/*', 'text/*', 'application/*', 'audio/*', 'video/*']);
         }
 
-        $extensions = collect(explode(',', str_replace('.', '', $accept)))
+        $mimes = collect(explode(',', str_replace('.', '', $accept)))
             ->map(function ($extension) {
+                $extension = trim(strtolower($extension));
+
+                if (strpos($extension, '/') !== false) {
+                    return $extension;
+                }
+
                 $getMimeTypes = MimeTypes::getDefault()->getMimeTypes($extension);
 
                 return ($extension == 'csv') ? array_merge(['text/plain'], $getMimeTypes) : $getMimeTypes;
             })
             ->unique()
+            ->flatten()
             ->toArray();
 
-        $mimes = Arr::collapse($extensions);
+        // $mimes = Arr::collapse($extensions);
 
         return implode(',', $mimes);
     }

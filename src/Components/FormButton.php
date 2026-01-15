@@ -13,6 +13,7 @@ class FormButton extends Component
         public bool $ghost = false,
         public bool $disabled = false,
         public mixed $enabled = true,
+        public string $label = '',
     ) {
         $this->outline = $outline ? 'outline-' : ($ghost ? 'ghost-' : '');
     }

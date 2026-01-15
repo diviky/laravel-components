@@ -9,7 +9,7 @@
             this.$nextTick(() => {
                 this.initEditor();
             });
-
+    
             // Handle Livewire updates
             this.$watch('value', (newValue) => {
                 // Only reinitialize if the value changes externally
@@ -21,7 +21,7 @@
         },
         initEditor() {
             const config = {{ $setup() }};
-
+    
             // Create EditorJS component
             this.editorInstance = new EditorJsComponent({
                 container: $refs.editorContainer{{ $id() }},
@@ -36,7 +36,7 @@
                 folder: '{{ $folder }}',
                 hiddenInput: $refs.hiddenInput{{ $id() }}
             }).init();
-
+    
             // Set up custom image uploader
             if (config.tools && config.tools.image) {
                 // The image tool will be properly configured in the instance
@@ -74,7 +74,7 @@
         <div class="relative" :class="uploading && 'pointer-events-none opacity-50'">
             <div x-ref="editorContainer{{ $id() }}" class="editor-js-container"></div>
             <input type="hidden" id="{{ $id() }}" {{ $attributes->except(['extra-attributes', 'settings']) }}
-                {{ $extraAttributes }} name="{{ $name }}" x-ref="hiddenInput{{ $id() }}"
+                {{ $extraAttributes }} name="{{ $inputName() }}" x-ref="hiddenInput{{ $id() }}"
                 :value="JSON.stringify(value)">
 
             <div class="editor-js-loading hidden" :class="uploading && 'block!'">
@@ -84,7 +84,7 @@
         </div>
     </div>
 
-    <x-form-errors :name="$name" />
+    <x-form-errors :name="$inputName()" />
 
     <x-help> {!! $help ?? $attributes->get('help') !!} </x-help>
 </div>

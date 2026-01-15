@@ -45,12 +45,12 @@ $nextTick(() => {
     });
 });" x-on:livewire:navigated.window="initPicker()">
     <x-form-input name="{{ $name }}" :label="$label" :default="$defaultValue()" :extra-attributes="$properties" :attributes="$attributes->merge([
-        'placeholder' => 'Select Date',
+        'placeholder' => 'Select Time',
         'type' => $type,
         'class' => 'date',
         'x-ref' => 'container',
-    ])"
-        :icon="$icon">
+        'icon' => $icon,
+    ])">
         @isset($prepend)
             <x-slot:prepend :attributes="$prepend->attributes">
                 {!! $prepend !!}

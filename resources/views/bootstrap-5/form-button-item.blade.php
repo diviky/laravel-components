@@ -1,11 +1,11 @@
 <input {!! $attributes->except(['extra-attributes'])->merge([
         'type' => $type,
         'value' => $value,
-        'name' => $name,
+        'name' => $inputName(),
         'id' => $id(),
     ])->class([
         'btn-check' => true,
-        'is-invalid' => $hasError($name),
+        'is-invalid' => $hasError($inputName()),
     ]) !!} {{ $extraAttributes ?? '' }} @checked($checked) {{ $wire() }} />
 
 <label for="{{ $id() }}" type="button"

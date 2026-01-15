@@ -14,31 +14,31 @@
                     // Ignore disposal errors
                 }
             }
-
+    
             let data = {{ $setup() }};
             this.picker = new tempusDominus.TempusDominus(this.$refs.container, data);
-
+    
             // Store reference to this context
             const self = this;
-
+    
             // Remove existing event listeners to prevent duplicates
             this.$refs.container.removeEventListener('change.td', this.boundHandleChange);
-
+    
             // Create bound event handler
             this.boundHandleChange = (event) => {
                 const date = self.picker.dates.lastPicked ? self.picker.dates.formatInput(self.picker.dates.lastPicked) : '';
-
+    
                 self.$refs.container.dispatchEvent(new CustomEvent('picked', {
                     detail: { value: date },
                     bubbles: true
                 }));
             };
-
+    
             // Add event listener
             this.$refs.container.addEventListener('change.td', this.boundHandleChange);
         }
     }" x-init="initPicker();
-
+    
     // Reinitialize after Livewire updates
     $nextTick(() => {
         Livewire.hook('morph.updated', () => {
@@ -51,6 +51,7 @@
                 'type' => $type,
                 'class' => 'date',
                 'x-ref' => 'container',
+                'icon' => 'calendar-month',
             ])">
             @isset($prepend)
                 <x-slot:prepend :attributes="$prepend->attributes">
@@ -64,13 +65,11 @@
                 </x-slot:before>
             @endisset
 
-            <x-slot:icon>
-                @isset($icon)
+            @isset($icon)
+                <x-slot:icon>
                     {!! $icon !!}
-                @else
-                    {{ $attributes->has('icon') ? $attributes->get('icon') : 'calendar-month' }}
-                @endisset
-            </x-slot:icon>
+                </x-slot:icon>
+            @endisset
 
             @isset($append)
                 <x-slot:append :attributes="$append->attributes">
@@ -93,7 +92,7 @@
     <div class="row" x-data="{
         dateValue: '{{ $defaultDate() }}',
         timeValue: '{{ $defaultTime() }}',
-        current: '{{ $defaultValue() }}',
+        current: {{ $entangle($attributes) }},
         updateDate(event) {
             if (event.detail && event.detail.value) {
                 this.dateValue = event.detail.value;
@@ -112,11 +111,12 @@
     }">
         <div class="col">
             <x-form-date :default="$defaultDate()" :value="$defaultDate()" :settings="$settings" :label="$label"
-                @picked="updateDate($event)" :extra-attributes="$properties" :attributes="$attributes" x-model="dateValue" />
+                @picked="updateDate($event)" :extra-attributes="$properties" :name="$name . '-date'" :attributes="$attributes->filter(fn($value, $key) => str_starts_with($key, 'wire:') !== true)"
+                x-model="dateValue" />
         </div>
         <div class="col-4">
             <x-form-time :default="$defaultTime()" :value="$defaultTime()" :settings="$settings" label="Time" x-model="timeValue"
-                @picked="updateTime($event)" :extra-attributes="$properties" :attributes="$attributes" />
+                @picked="updateTime($event)" :extra-attributes="$properties" :name="$name . '-time'" :attributes="$attributes->filter(fn($value, $key) => str_starts_with($key, 'wire:') !== true)" />
         </div>
         <x-form-hidden name="{{ $name }}" x-model="current" :attributes="$attributes" :default="$defaultValue()" />
     </div>
