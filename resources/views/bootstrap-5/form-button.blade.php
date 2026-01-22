@@ -30,5 +30,5 @@
         <x-icon :name="$attributes->get('icon')" class="me-1" />
     @endif
 
-    {{ isset($label) ? $label : $slot }}
+    {{ !empty($label) ? $label : $slot }}
 </button>
