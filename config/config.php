@@ -523,5 +523,8 @@ return [
         'view.badge' => [
             'view' => 'laravel-components::{framework}.view.badge',
         ],
+        'view.badges' => [
+            'view' => 'laravel-components::{framework}.view.badges',
+        ],
     ],
 ];

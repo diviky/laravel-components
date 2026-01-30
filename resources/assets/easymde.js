@@ -82,15 +82,23 @@ window.initAlpineEasyMde = function () {
         setup: {},
 
         init() {
-            this.initEditor();
-
-            // Handles a case where people try to change contents on the fly from Livewire methods
-            this.$watch('value', (newValue) => {
-                if (newValue !== this.editor.value()) {
-                    this.value = newValue || '';
-                    this.destroyEditor();
-                    this.initEditor();
+            // Wait for Livewire to be fully initialized
+            this.$nextTick(() => {
+                // Get initial value from textarea or Livewire
+                if (!this.value && this.$refs.textarea.value) {
+                    this.value = this.$refs.textarea.value;
                 }
+
+                this.initEditor();
+
+                // Handles a case where people try to change contents on the fly from Livewire methods
+                this.$watch('value', (newValue) => {
+                    if (this.editor && newValue !== this.editor.value()) {
+                        this.value = newValue || '';
+                        this.destroyEditor();
+                        this.$nextTick(() => this.initEditor());
+                    }
+                });
             });
         },
 
@@ -102,10 +110,13 @@ window.initAlpineEasyMde = function () {
         },
 
         initEditor() {
+            // Get the initial value from textarea if value is not set
+            const initialValue = this.value ?? this.$refs.textarea.value ?? '';
+
             this.editor = new EasyMDE({
                 ...this.setup,
                 element: this.$refs.textarea,
-                initialValue: this.value ?? '',
+                initialValue: initialValue,
                 imageUploadFunction: (file, onSuccess, onError) => {
                     handleImageUpload(file, onSuccess, onError, {
                         prefix: this.prefix,
@@ -117,7 +128,13 @@ window.initAlpineEasyMde = function () {
                 },
             });
 
-            this.editor.codemirror.on('change', () => (this.value = this.editor.value()));
+            // Sync editor changes back to Livewire
+            this.editor.codemirror.on('change', () => {
+                const newValue = this.editor.value();
+                if (this.value !== newValue) {
+                    this.value = newValue;
+                }
+            });
         },
     };
 };

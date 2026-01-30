@@ -1,7 +1,7 @@
 @props([
     'value' => null,
     'icon' => null,
-    'color' => 'success',
+    'color' => 'primary',
     'label' => null,
     'copy' => false,
     'settings' => [],

@@ -23,12 +23,12 @@ A powerful markdown editor component that provides professional markdown editing
 
 ### Simple EasyMDE Editor
 ```blade
-<x-editor-easymde name="content" label="Content" />
+<x-editor.easymde name="content" label="Content" />
 ```
 
 ### EasyMDE with Configuration
 ```blade
-<x-editor-easymde 
+<x-editor.easymde 
     name="article_content" 
     label="Article Content"
     :value="$article->content"
@@ -39,7 +39,7 @@ A powerful markdown editor component that provides professional markdown editing
 
 ### EasyMDE with Custom Settings
 ```blade
-<x-editor-easymde 
+<x-editor.easymde 
     name="description" 
     label="Description"
     :config="['spellChecker' => false, 'placeholder' => 'Enter your markdown content...']" />
@@ -72,16 +72,16 @@ The component inherits all standard form input attributes and Laravel component 
 ### Basic Markdown Editor
 ```blade
 <!-- Simple Markdown Editor -->
-<x-editor-easymde name="content" label="Content" />
+<x-editor.easymde name="content" label="Content" />
 
 <!-- Markdown Editor with Value -->
-<x-editor-easymde 
+<x-editor.easymde 
     name="description" 
     label="Description"
     :value="$product->description" />
 
 <!-- Markdown Editor with Help Text -->
-<x-editor-easymde 
+<x-editor.easymde 
     name="body" 
     label="Article Body"
     help="Write your article content in markdown format. Use the toolbar to format text." />
@@ -90,7 +90,7 @@ The component inherits all standard form input attributes and Laravel component 
 ### Blog Post Editor
 ```blade
 <!-- Blog Post Markdown Editor -->
-<x-editor-easymde 
+<x-editor.easymde 
     name="post_content" 
     label="Post Content"
     :value="$post->content"
@@ -109,7 +109,7 @@ The component inherits all standard form input attributes and Laravel component 
     <x-form-input name="title" label="Title" required />
     <x-form-input name="slug" label="Slug" />
     
-    <x-editor-easymde 
+    <x-editor.easymde 
         name="content" 
         label="Content"
         :value="old('content')"
@@ -125,7 +125,7 @@ The component inherits all standard form input attributes and Laravel component 
 ### E-commerce Product Description
 ```blade
 <!-- Product Description Markdown Editor -->
-<x-editor-easymde 
+<x-editor.easymde 
     name="description" 
     label="Product Description"
     :value="$product->description"
@@ -138,7 +138,7 @@ The component inherits all standard form input attributes and Laravel component 
 ### CMS Content Editor
 ```blade
 <!-- CMS Page Markdown Editor -->
-<x-editor-easymde 
+<x-editor.easymde 
     name="page_content" 
     label="Page Content"
     :value="$page->content"
@@ -151,7 +151,7 @@ The component inherits all standard form input attributes and Laravel component 
 ### Documentation Editor
 ```blade
 <!-- Documentation Markdown Editor -->
-<x-editor-easymde 
+<x-editor.easymde 
     name="documentation" 
     label="Documentation"
     :value="$doc->content"
@@ -164,7 +164,7 @@ The component inherits all standard form input attributes and Laravel component 
 ### Email Template Editor
 ```blade
 <!-- Email Template Markdown Editor -->
-<x-editor-easymde 
+<x-editor.easymde 
     name="template_content" 
     label="Email Template"
     :value="$template->content"
@@ -223,7 +223,7 @@ The component inherits all standard form input attributes and Laravel component 
 ### Basic Livewire EasyMDE
 ```blade
 <div>
-    <x-editor-easymde 
+    <x-editor.easymde 
         name="content" 
         label="Content"
         wire:model="content" />
@@ -240,7 +240,7 @@ The component inherits all standard form input attributes and Laravel component 
 ### Livewire with Real-time Updates
 ```blade
 <div>
-    <x-editor-easymde 
+    <x-editor.easymde 
         name="article_content" 
         label="Article Content"
         wire:model="articleContent"
@@ -257,7 +257,7 @@ The component inherits all standard form input attributes and Laravel component 
 ### Livewire with Auto-save
 ```blade
 <div>
-    <x-editor-easymde 
+    <x-editor.easymde 
         name="content" 
         label="Content"
         wire:model.lazy="content"

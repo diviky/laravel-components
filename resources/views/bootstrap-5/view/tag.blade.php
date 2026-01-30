@@ -3,6 +3,7 @@
     'icon' => null,
     'label' => null,
     'copy' => false,
+    'outline' => true,
     'settings' => [],
     'valueField' => 'name',
     'colorField' => 'color',
@@ -19,7 +20,7 @@
             $color = $value[$colorField] ?? $color;
         @endphp
 
-        <span {{ $attributes->class(['badge', 'badge-outline', 'text-' . $color => $color]) }}>
+        <span {{ $attributes->class(['badge', 'badge-outline' => $outline, 'text-' . $color => $color]) }}>
 
             <x-icon :name="$icon" class="me-1" />
             {!! $label !!}
@@ -33,7 +34,6 @@
         </span>
     @else
         <span {{ $attributes->class(['badge', 'text-' . $color => $color]) }}>
-
             <x-icon :name="$icon" class="me-1" />
             {!! $label !!}
             {{ $value }}

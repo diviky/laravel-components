@@ -1,11 +1,10 @@
 @props([
     'values' => [],
-    'outline' => true,
     'limit' => 10,
 ])
 
 @foreach ($values as $value)
-    <x-view.tag :value="$value" :outline="$outline" :attributes="$attributes->except('values')" />
+    <x-view.badge :label="$value" :attributes="$attributes->except('values')" />
 
     @if ($loop->index >= $limit)
         + {{ $loop->remaining }}

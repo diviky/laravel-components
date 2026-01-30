@@ -1,6 +1,8 @@
 @props([
     'type' => 'tabs',
+    'default' => null,
 ])
+
 <ul {!! $attributes->merge(['class' => 'nav'])->class([
     'nav-tabs' => $type == 'tabs',
     'nav-pills mb-2' => $type == 'pills',
