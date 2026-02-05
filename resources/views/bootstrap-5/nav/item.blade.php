@@ -2,10 +2,13 @@
     'dropdown' => false,
     'disabled' => false,
 ])
+
+@aware(['format' => null])
+
 <div {!! $attributes->class([
     'nav-item',
     'dropdown' => $dropdown,
-    'tab' => $tab,
+    'tab' => $tab || $format == 'tab',
     'active' => $active || $routeMatches(),
     'disabled' => $disabled,
 ]) !!}>
@@ -16,7 +19,7 @@
         @if ($dropdown) data-bs-toggle="dropdown" @endif
         @class([
             'active' => $active || $routeMatches(),
-            'nav-link' => $tab,
+            'nav-link' => $tab || $format == 'tab',
             'nav-link dropdown-toggle' => $dropdown,
             'data-pjax' => $attributes->has('turbo'),
         ])>

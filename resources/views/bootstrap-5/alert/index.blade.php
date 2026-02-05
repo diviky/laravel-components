@@ -1,5 +1,5 @@
 @props([
-    'type' => 'info',
+    'variant' => 'info',
     'dismissible' => false,
     'icon' => null,
     'title' => null,
@@ -16,21 +16,22 @@
             'warning' => 'alert-triangle',
             'danger' => 'alert-hexagon',
         ];
-        $icon = $icons[$type] ?? null;
+        $icon = $icons[$variant] ?? null;
     }
 @endphp
 
 <div role="alert"
-    {{ $attributes->merge(['class' => 'alert text-sm'])->class([
-        'alert-info' => $type == 'info',
-        'alert-info' => $type == 'help',
-        'alert-success' => $type == 'success',
-        'alert-warning' => $type == 'warning',
-        'alert-danger' => $type == 'danger',
+    {{ $attributes->class([
+        'alert text-sm' => true,
+        'alert-info' => $variant == 'info',
+        'alert-help' => $variant == 'help',
+        'alert-success' => $variant == 'success',
+        'alert-warning' => $variant == 'warning',
+        'alert-danger' => $variant == 'danger',
         'max-w-xl' => $size == 'xl',
         'alert-dismissible' => $dismissible,
     ]) }}>
-    <div @class(['d-flex align-items-center' => $icon])>
+    <div @class(['d-flex align-items-center w-100' => $icon])>
         @if ($icon)
             <div>
                 <x-icon :name="$icon" size="md" class="me-2" />
