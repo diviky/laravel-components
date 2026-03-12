@@ -11,6 +11,7 @@
     $initialValue = $name
         ? old($name) ?? (app(\Diviky\LaravelFormComponents\FormDataBinder::class)->boundValue($name) ?? '')
         : '';
+    $wirePath = $name ? str_replace(['[', ']'], ['.', ''], \Illuminate\Support\Str::before($name, '[]')) : '';
 @endphp
 
 <x-form-input :extra-attributes="$extraAttributes" :attributes="$attributes
@@ -39,7 +40,6 @@
             @if ($clearable)
                 <span x-data="{
                     colorId: '{{ $colorInputId }}',
-                    hiddenName: '{{ addslashes($name) }}',
                     init() {
                         this.$nextTick(() => {
                             const colorInput = document.getElementById(this.colorId);
@@ -51,24 +51,20 @@
                                 });
                             }
                         });
-                    },
-                    clear() {
-                        const hidden = this.$el.querySelector('input[type=hidden]');
-                        const colorInput = document.getElementById(this.colorId);
-                        if (hidden) {
-                            hidden.value = '';
-                            hidden.dispatchEvent(new Event('input', { bubbles: true }));
-                        }
-                        if (colorInput) {
-                            colorInput.value = '#cccccc';
-                            if (typeof $wire !== 'undefined') {
-                                $wire.set(this.hiddenName, '');
-                            }
-                        }
                     }
                 }">
                     <input type="hidden" name="{{ $name }}" value="{{ $initialValue }}">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" @click="clear()" title="Clear color">
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-color-id="{{ $colorInputId }}"
+                        data-wire-path="{{ addslashes($wirePath) }}"
+                        onclick="(function(btn){
+                            var hidden = btn.closest('span').querySelector('input[type=hidden]');
+                            var colorInput = document.getElementById(btn.dataset.colorId);
+                            if (hidden) { hidden.value = ''; hidden.dispatchEvent(new Event('input', { bubbles: true })); }
+                            if (colorInput) colorInput.value = '#cccccc';
+                            if (typeof $wire !== 'undefined' && btn.dataset.wirePath) $wire.set(btn.dataset.wirePath, null);
+                        })(this)"
+                        title="Clear color">
                         <x-icon name="x" />
                     </button>
                 </span>
