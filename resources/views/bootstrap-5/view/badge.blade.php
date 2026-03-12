@@ -11,6 +11,7 @@
 
 <span {{ $attributes->class(['badge', 'badge-' . $color => $color]) }}>
     {!! $label !!}
+    {!! $slot !!}
 </span>
 
 @if ($copy)

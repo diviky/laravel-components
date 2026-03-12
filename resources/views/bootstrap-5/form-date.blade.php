@@ -45,8 +45,8 @@ $nextTick(() => {
 });" x-on:livewire:navigated.window="initPicker()">
     <x-form-input name="{{ $name }}" :label="$label" :default="$defaultValue()" :extra-attributes="$properties" :attributes="$attributes->merge([
         'placeholder' => 'Select Date',
-        'type' => $type,
         'class' => 'date',
+        'type' => 'date-local',
         'x-ref' => 'container',
     ])"
         :icon="$icon">

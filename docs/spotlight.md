@@ -234,7 +234,7 @@ The spotlight component expects a JSON response from the search URL:
 ```php
 // Example search endpoint
 Route::get('/api/search', function (Request $request) {
-    $query = $request->get('search');
+    $query = $request->input('search');
     
     $results = collect([
         [
@@ -267,8 +267,8 @@ Route::get('/api/search', function (Request $request) {
 ### Advanced Search with Categories
 ```php
 Route::get('/api/advanced-search', function (Request $request) {
-    $query = $request->get('search');
-    $category = $request->get('category', 'all');
+    $query = $request->input('search');
+    $category = $request->input('category', 'all');
     
     $results = [];
     
