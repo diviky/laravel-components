@@ -16,7 +16,7 @@
         fetchUrl: '{{ $attributes->get('data-fetch') }}',
         fetchMethod: '{{ $attributes->get('data-method', 'GET') }}',
         formData: {{ $attributes->get('form-data', '{}') }},
-    
+
         init() {
             this.fetch();
             // Fix weird issue when navigating back
@@ -60,12 +60,16 @@
             return allOptions;
         },
         get selectedOptions() {
+            if (typeof this.selection === 'undefined' || this.selection === null) {
+                return [];
+            }
+
             const allOptions = this.allSelectableOptions;
-    
+
             if (this.isSingle) {
                 return allOptions.filter(i => i.{{ $valueField }} == this.selection) || {};
             }
-    
+
             return this.selection.map(i => allOptions.find(o => o.{{ $valueField }} == i) || {});
         },
         updateOptions(newOptions) {
@@ -75,7 +79,7 @@
             if (!this.isSearchable || this.$refs.searchInput.value == '') {
                 return false;
             }
-    
+
             const selectableOptions = this.allSelectableOptions;
             return this.isSingle ?
                 (this.selection && selectableOptions.length == 1) || (!this.selection && selectableOptions.length == 0) :
@@ -86,6 +90,10 @@
             return this.selection == null ? false : selectableOptions.length == this.selection.length;
         },
         get isSelectionEmpty() {
+            if (typeof this.selection === 'undefined' || this.selection === null) {
+                return true;
+            }
+
             return this.isSingle ?
                 this.selection == null || this.selection == '' :
                 this.selection.length == 0;
@@ -107,27 +115,31 @@
             } else {
                 this.selection = [];
             }
-    
+
             this.dispatchChangeEvent({ value: this.selection });
         },
         focus() {
             if (this.isReadonly || this.isDisabled) {
                 return;
             }
-    
+
             this.focused = true;
             this.$refs.searchInput.focus();
         },
         isActive(id) {
-            return this.isSingle ?
-                this.selection == id :
-                this.selection.includes(id);
+            if (typeof this.selection === 'undefined' || this.selection === null) {
+                return false;
+            } else {
+                return this.isSingle ?
+                    this.selection == id :
+                    this.selection.includes(id);
+            }
         },
         toggle(id, keepOpen = false) {
             if (this.isReadonly || this.isDisabled) {
                 return;
             }
-    
+
             if (this.isSingle) {
                 this.selection = id;
                 this.focused = false;
@@ -139,10 +151,10 @@
                     this.selection.push(id);
                 }
             }
-    
+
             this.dispatchChangeEvent({ value: this.selection });
             this.$refs.searchInput.value = '';
-    
+
             if (!keepOpen) {
                 this.$refs.searchInput.focus();
             }
@@ -155,7 +167,7 @@
                     child.classList.remove('hidden');
                 }
             });
-    
+
             this.noResults = Array.from(this.$refs.choicesOptions.querySelectorAll('div > .hidden')).length ==
                 Array.from(this.$refs.choicesOptions.querySelectorAll('[search-value]')).length;
         },
@@ -163,12 +175,12 @@
             if (!value || value.length < this.minChars) {
                 return;
             }
-    
+
             // Prevent search for this keys
             if (event && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Shift', 'CapsLock', 'Tab'].includes(event.key)) {
                 return;
             }
-    
+
             @if($searchFunction)
             // Call search function from parent component
             // `search(value)` or `search(value, extra1, extra2 ...)`
@@ -176,7 +188,7 @@
                 ? preg_replace('/\((.*?)\)/', '(value, $1)', $searchFunction)
                 : $searchFunction . '(value)' }}
             @endif
-    
+
         },
         dispatchChangeEvent(detail) {
             this.$refs.searchInput.dispatchEvent(new CustomEvent('change', { bubbles: true, detail }));
