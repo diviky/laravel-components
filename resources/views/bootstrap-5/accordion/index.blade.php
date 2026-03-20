@@ -1,8 +1,14 @@
 @props([
     'id' => 'accordion',
     'tabs' => false,
+    'variant' => null,
+    'transition' => false,
+    'exclusive' => false,
 ])
 
-<div {{ $attributes->merge(['class' => 'accordion'])->class(['accordion-tabs' => $tabs]) }}>
+<div {{ $attributes->class([
+    'accordion' => true,
+    'accordion-tabs' => $tabs,
+]) }}>
     {!! $slot !!}
 </div>

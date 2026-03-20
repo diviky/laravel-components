@@ -1,7 +1,7 @@
 @if ($stacked)
     <div class="avatar-list avatar-list-stacked">
 @endif
-@if ($image)
+@if ($src)
     <span
         {{ $attributes->class([
             'avatar',
@@ -13,10 +13,14 @@
             'avatar-xl' => $attributes->has('xl'),
             'avatar-md' => $attributes->has('md'),
             'avatar-' . $size => $size,
-            $color => $color,
+            'bg-' . $color => $color,
         ]) }}
-        style="background-image: url({{ $image }})">
+        style="background-image: url({{ $src }})">
         {!! $slot ?? null !!}
+        <x-icon :name="$icon" />
+        @isset($badge)
+            {!! $badge !!}
+        @endisset
     </span>
 @else
     <span
@@ -30,10 +34,14 @@
             'avatar-xl' => $attributes->has('xl'),
             'avatar-md' => $attributes->has('md'),
             'avatar-' . $size => $size,
-            $color => $color,
+            'bg-' . $color => $color,
         ]) }}>
-        {{ $label }}
+        {{ $initials }}
         {!! $slot ?? null !!}
+        <x-icon :name="$icon" />
+        @isset($badge)
+            {!! $badge !!}
+        @endisset
     </span>
 @endif
 @if ($stacked)

@@ -1,17 +1,14 @@
 @props([
-    'dots' => false,
-    'arrows' => true,
-    'bullets' => false,
     'turbo' => true,
-    'design' => null,
+    'separator' => 'arrows',
 ])
 
 <ol {{ $attributes->class([
     'breadcrumb',
-    'breadcrumb-dots' => !$design && $dots,
-    'breadcrumb-arrows' => !$design && $arrows,
-    'breadcrumb-bullets' => !$design && $bullets,
-    'breadcrumb-' . $design => $design,
+    'breadcrumb-dots' => $separator == 'dots',
+    'breadcrumb-arrows' => $separator == 'arrows',
+    'breadcrumb-bullets' => $separator == 'bullets',
+    'breadcrumb-' . $separator => $separator,
 ]) }}
     aria-label="breadcrumbs" @if ($turbo) data-pjax @endif>
     {!! $slot !!}

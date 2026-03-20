@@ -6,9 +6,9 @@ namespace Diviky\LaravelComponents\Components;
 
 class Avatar extends Component
 {
-    public ?string $label;
+    public ?string $initials;
 
-    public ?string $image;
+    public ?string $src;
 
     public string $color;
 
@@ -18,23 +18,27 @@ class Avatar extends Component
      * Create a new component instance.
      */
     public function __construct(
+        ?string $src = null,
+        ?string $initials = null,
         ?string $label = null,
+        public ?string $icon = null,
+        public ?string $size = null,
         ?string $name = null,
         ?string $image = '',
         ?string $color = null,
-        public ?string $size = null,
         bool $stacked = false
     ) {
-        $label = isset($name) && ! empty($name) ? $name : $label;
-        $this->color = $color ?? $this->getColor($label);
+        $initials = $initials ?? $label ?? $name;
 
-        if (isset($label)) {
-            preg_match_all('#(?<=\s|\b)\pL#u', $label, $matches);
-            $label = implode('', array_slice($matches[0], 0, 2));
+        $this->color = $color ?? $this->getColor($initials);
+
+        if (isset($initials)) {
+            preg_match_all('#(?<=\s|\b)\pL#u', $initials, $matches);
+            $initials = implode('', array_slice($matches[0], 0, 2));
         }
 
-        $this->label = $label;
-        $this->image = $image;
+        $this->src = $src ?? $image;
+        $this->initials = $initials;
         $this->size = $size;
         $this->stacked = $stacked;
     }
@@ -46,20 +50,20 @@ class Avatar extends Component
         }
 
         $colors = [
-            'bg-blue-lt',
-            'bg-azure-lt',
-            'bg-indigo-lt',
-            'bg-purple-lt',
-            'bg-pink-lt',
-            'bg-red-lt',
-            'bg-orange-lt',
-            'bg-yellow-lt',
-            'bg-lime-lt',
-            'bg-green-lt',
-            'bg-teal-lt',
-            'bg-cyan-lt',
-            'bg-gray-200',
-            'bg-gray-300',
+            'blue-lt',
+            'azure-lt',
+            'indigo-lt',
+            'purple-lt',
+            'pink-lt',
+            'red-lt',
+            'orange-lt',
+            'yellow-lt',
+            'lime-lt',
+            'green-lt',
+            'teal-lt',
+            'cyan-lt',
+            'gray-200',
+            'gray-300',
         ];
 
         return $this->getRandomElement($colors, $label);

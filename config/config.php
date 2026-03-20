@@ -14,17 +14,14 @@ return [
         'accordion' => [
             'view' => 'laravel-components::{framework}.accordion.index',
         ],
-        'accordion.body' => [
-            'view' => 'laravel-components::{framework}.accordion.body',
-        ],
-        'accordion.content' => [
-            'view' => 'laravel-components::{framework}.accordion.body',
-        ],
-        'accordion.header' => [
-            'view' => 'laravel-components::{framework}.accordion.header',
-        ],
         'accordion.item' => [
             'view' => 'laravel-components::{framework}.accordion.item',
+        ],
+        'accordion.content' => [
+            'view' => 'laravel-components::{framework}.accordion.content',
+        ],
+        'accordion.heading' => [
+            'view' => 'laravel-components::{framework}.accordion.heading',
         ],
         'alert' => [
             'view' => 'laravel-components::{framework}.alert.index',
