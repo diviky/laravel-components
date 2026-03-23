@@ -5,21 +5,25 @@
     'copy' => false,
     'settings' => [],
     'format' => null,
+    'precision' => 2,
 ])
 
 @php
     if ($format) {
         $settings['format'] = $format;
     }
+    if ($precision) {
+        $settings['precision'] = $precision;
+    }
 @endphp
 
 @isset($value)
     <span {{ $attributes }}>
-        <x-icon :name="$icon" class="me-1"/>
+        <x-icon :name="$icon" class="me-1" />
         {!! $label !!}
         @isset($settings['format'])
-            @if ($settings['format'] == 'percent')
-                {{ \Illuminate\Support\Number::percentage($value) }}
+            @if ($settings['format'] == 'percent' || $settings['format'] == 'percentage')
+                {{ \Illuminate\Support\Number::percentage($value, precision: $settings['precision'], maxPrecision: $settings['precision']) }}
             @elseif ($settings['format'] == 'abbreviate')
                 {{ \Illuminate\Support\Number::abbreviate($value) }}
             @elseif ($settings['format'] == 'number')
@@ -28,6 +32,8 @@
                 {{ \Illuminate\Support\Number::currency($value) }}
             @elseif ($settings['format'] == 'normal')
                 {{ $value }}
+            @else
+                {{ \Illuminate\Support\Number::format($value) }}
             @endif
         @else
             {{ \Illuminate\Support\Number::format($value) }}
