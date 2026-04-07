@@ -53,7 +53,7 @@ class FormChoices extends FormSelect
         public mixed $enabled = true,
     ) {
 
-        $this->uuid = (string) Str::uuid();
+        $this->uuid = (string) Str::uuid7();
 
         if (isset($searchFunction)) {
             $this->searchable = true;

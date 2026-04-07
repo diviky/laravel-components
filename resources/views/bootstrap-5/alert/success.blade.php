@@ -1,1 +1,1 @@
-<x-alert type="success" :attributes="$attributes">{!! $slot !!}</x-alert>
+<x-alert variant="success" :attributes="$attributes">{!! $slot !!}</x-alert>

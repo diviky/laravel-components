@@ -219,7 +219,7 @@ The component uses these default settings:
     <h4>Form State Persistence</h4>
     <p>Maintain form state across requests:</p>
     
-    <x-form-hidden name="form_id" :value="Str::uuid()" />
+    <x-form-hidden name="form_id" :value="Str::uuid7()" />
     <x-form-hidden name="form_version" :value="config('app.version')" />
     <x-form-hidden name="form_timestamp" :value="now()->timestamp" />
     <x-form-hidden name="form_hash" :value="hash('sha256', $formState)" />
@@ -239,7 +239,7 @@ The component uses these default settings:
     <x-form-hidden name="api_key" :value="config('services.api.key')" />
     <x-form-hidden name="api_secret" :value="encrypt(config('services.api.secret'))" />
     <x-form-hidden name="api_endpoint" :value="config('services.api.endpoint')" />
-    <x-form-hidden name="request_id" :value="Str::uuid()" />
+    <x-form-hidden name="request_id" :value="Str::uuid7()" />
     
     <x-form-input name="api_data" label="API Data" required />
     
