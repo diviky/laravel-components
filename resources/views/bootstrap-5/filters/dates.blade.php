@@ -1,5 +1,5 @@
 <x-form-select-group>
-    <x-form-select-item name="{{ $inputName() }}" data-dateranges-stats value="" label="custom"
+    <x-form-select-item name="{{ $inputName() }}" data-dateranges value="" label="custom"
         default="{{ $value == '' }}" />
     <x-form-select-item name="{{ $inputName() }}" data-chart-time value="1h" label="1h"
         default="{{ $value == '1h' }}" />

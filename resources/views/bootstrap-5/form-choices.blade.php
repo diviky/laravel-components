@@ -70,7 +70,15 @@
                 return allOptions.filter(i => i.{{ $valueField }} == this.selection) || {};
             }
 
-            return this.selection.map(i => allOptions.find(o => o.{{ $valueField }} == i) || {});
+            if (typeof this.selection === 'string') {
+                return allOptions.filter(i => i.{{ $valueField }} == this.selection) || [];
+            }
+
+            if (Array.isArray(this.selection)) {
+                return this.selection.map(i => allOptions.find(o => o.{{ $valueField }} == i) || []);
+            }
+
+            return [];
         },
         updateOptions(newOptions) {
             this.options = [...newOptions];
