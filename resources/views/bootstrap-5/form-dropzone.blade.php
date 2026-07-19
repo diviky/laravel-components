@@ -1,4 +1,4 @@
-<div class="form-group">
+<div {{ $attributes->only(['class'])->class(['form-group']) }}>
     <x-form-label :label="$label" :required="$isRequired()" :for="$attributes->get('id') ?: $id()" />
     <div class="dropzone" data-drop>
         <div class="uploader" data-dropzone>
@@ -6,7 +6,7 @@
             <div> Or Click to choose from your computer</div>
             <ul class="drop-preview hide"></ul>
         </div>
-        <input name="{{ $inputName() }}" {{ $extraAttributes ?? '' }} type="file" {!! $attributes->except(['extra-attributes']) !!}>
+        <input name="{{ $inputName() }}" {{ $extraAttributes ?? '' }} type="file" {!! $attributes->except(['extra-attributes', 'class']) !!}>
     </div>
     <div class="progress" style="height:5px">
         <div class="progress-bar bg-info" role="progressbar" style="width: 0%"></div>

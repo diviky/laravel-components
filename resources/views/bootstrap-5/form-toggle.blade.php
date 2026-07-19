@@ -1,7 +1,7 @@
-<div @class([
+<div {{ $attributes->only(['class'])->class([
     'form-group' => true,
     'form-check-inline' => $attributes->has('inline'),
-])>
+]) }}>
     @if ($attributes->has('title'))
         <div class="mb-2 text-bold">{{ $attributes->get('title') }}</div>
     @endif
@@ -15,10 +15,10 @@
         'form-switch' => true,
         'form-check-inline' => $attributes->has('inline'),
     ])>
-        <input {!! $attributes->class([
+        <input {!! $attributes->except(['class'])->class([
                 'is-invalid' => $hasError($inputName()),
+                'form-check-input',
             ])->merge([
-                'class' => 'form-check-input',
                 'id' => $id(),
                 'name' => $inputName(),
                 'type' => 'checkbox',

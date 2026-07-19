@@ -2,16 +2,16 @@
     'pond' => true,
     'livewire' => false,
 ])
-<div class="form-group">
+<div {{ $attributes->only(['class'])->class(['form-group']) }}>
     <x-form-label :label="$label" :required="$isRequired()" :for="$attributes->get('id') ?: $id()" />
 
     @if ($livewire)
         <x-filepond::upload :attributes="$attributes
-            ->except(['extra-attributes'])
-            ->class(['form-control'])
-            ->merge(['accept' => $accept])" />
+    ->except(['extra-attributes', 'class'])
+    ->class(['form-control'])
+    ->merge(['accept' => $accept])" />
     @else
-        <input name="{{ $inputName() }}" type="file" {!! $attributes->except(['extra-attributes'])->class(['form-control'])->merge(['accept' => $accept]) !!} {{ $extraAttributes }}
+        <input name="{{ $inputName() }}" type="file" {!! $attributes->except(['extra-attributes', 'class'])->class(['form-control'])->merge(['accept' => $accept]) !!} {{ $extraAttributes }}
             {{ $wire() }} @if ($pond) data-filepond @endif />
     @endif
 

@@ -1,4 +1,4 @@
-<div class="form-group">
+<div {{ $attributes->only(['class'])->class(['form-group']) }}>
     <x-form-label :label="$label" :required="$isRequired()" :title="$attributes->get('title')" :for="$attributes->get('id') ?: $id()" />
 
     <div class="pt-5 ms-3" x-data="{

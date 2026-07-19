@@ -1,7 +1,7 @@
-<div @class([
+<div {{ $attributes->only(['class'])->class([
     'form-group' => !$inline,
     'form-choices',
-]) x-data="{ focused: false, selection: {{ $entangle($attributes) }} }">
+]) }} x-data="{ focused: false, selection: {{ $entangle($attributes) }} }">
     <div @click.outside = "clear()" @keyup.esc = "clear()" x-data="{
         id: {{ json_encode($id()) }},
         options: {{ json_encode($options) }},
@@ -228,7 +228,7 @@
 
             <!-- SELECTED OPTIONS + SEARCH INPUT -->
             <div @click="focus();" x-ref="container"
-                {{ $attributes->whereDoesntStartWith('wire:')->class(['form-select', 'form-select-sm' => $size == 'sm', 'form-select-lg' => $size == 'lg']) }}>
+                {{ $attributes->whereDoesntStartWith('wire:')->except(['class'])->class(['form-select', 'form-select-sm' => $size == 'sm', 'form-select-lg' => $size == 'lg']) }}>
                 <!-- ICON  -->
                 @if (isset($icon))
                     <x-icon :name="$icon" class="choice-append" />

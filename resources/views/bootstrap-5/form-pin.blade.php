@@ -3,7 +3,7 @@
     'length' => 6,
 ])
 
-<div class="form-group" x-data="{
+<div {{ $attributes->only(['class'])->class(['form-group']) }} x-data="{
     value: '{{ $value }}',
     inputs: [],
     init() {
