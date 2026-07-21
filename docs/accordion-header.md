@@ -20,9 +20,9 @@ Location: `resources/views/bootstrap-5/accordion/header.blade.php`
 ```blade
 <x-accordion>
     <x-accordion.item>
-        <x-accordion.header>
+        <x-accordion.heading>
             Click to expand
-        </x-accordion.header>
+        </x-accordion.heading>
         <x-accordion.content>
             Content here
         </x-accordion.content>

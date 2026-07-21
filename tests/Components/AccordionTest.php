@@ -11,10 +11,10 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="item-1">
-                    <x-accordion.header>Section 1</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Section 1</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Content for section 1</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -32,10 +32,10 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion id="custom-accordion">
                 <x-accordion.item id="item-1">
-                    <x-accordion.header>Section 1</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Section 1</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Content for section 1</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -50,16 +50,16 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="item-1">
-                    <x-accordion.header>Section 1</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Section 1</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Content for section 1</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
                 <x-accordion.item id="item-2">
-                    <x-accordion.header>Section 2</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Section 2</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Content for section 2</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -75,10 +75,10 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="custom-item">
-                    <x-accordion.header>Section 1</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Section 1</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Content for section 1</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -93,12 +93,12 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="item-1">
-                    <x-accordion.header>
+                    <x-accordion.heading>
                         <strong>Bold Header</strong>
-                    </x-accordion.header>
-                    <x-accordion.body>
+                    </x-accordion.heading>
+                    <x-accordion.content>
                         <p>Content</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -113,10 +113,10 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="item-1">
-                    <x-accordion.header>Section 1</x-accordion.header>
-                    <x-accordion.body show>
+                    <x-accordion.heading>Section 1</x-accordion.heading>
+                    <x-accordion.content show>
                         <p>Content for section 1</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -131,10 +131,10 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="item-1">
-                    <x-accordion.header>Section 1</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Section 1</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Content for section 1</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -150,12 +150,12 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion class="custom-accordion shadow">
                 <x-accordion.item id="item-1" class="border-primary">
-                    <x-accordion.header class="bg-primary text-white">
+                    <x-accordion.heading class="bg-primary text-white">
                         Section 1
-                    </x-accordion.header>
-                    <x-accordion.body class="bg-light">
+                    </x-accordion.heading>
+                    <x-accordion.content class="bg-light">
                         <p>Content for section 1</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -177,10 +177,10 @@ class AccordionTest extends TestCase
                 data-testid="accordion"
                 aria-label="Test accordion">
                 <x-accordion.item id="item-1">
-                    <x-accordion.header>Section 1</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Section 1</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Content for section 1</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -197,14 +197,14 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="rich-content">
-                    <x-accordion.header>
+                    <x-accordion.heading>
                         <div class="d-flex align-items-center">
                             <i class="icon-info me-2"></i>
                             <span>Product Information</span>
                             <span class="badge bg-primary ms-auto">New</span>
                         </div>
-                    </x-accordion.header>
-                    <x-accordion.body>
+                    </x-accordion.heading>
+                    <x-accordion.content>
                         <div class="row">
                             <div class="col-md-6">
                                 <h5>Features</h5>
@@ -218,7 +218,7 @@ class AccordionTest extends TestCase
                                 <p>Product specs here</p>
                             </div>
                         </div>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -237,17 +237,17 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="livewire-1">
-                    <x-accordion.header>
+                    <x-accordion.heading>
                         <span wire:click="toggleSection(\'section1\')" style="cursor: pointer;">
                             Section 1 (Open)
                         </span>
-                    </x-accordion.header>
-                    <x-accordion.body show>
+                    </x-accordion.heading>
+                    <x-accordion.content show>
                         <div wire:poll.10s>
                             <p>This content updates every 10 seconds.</p>
                             <p>Last updated: 12:00:00</p>
                         </div>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -264,20 +264,20 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion id="faq">
                 <x-accordion.item id="faq-1">
-                    <x-accordion.header>
+                    <x-accordion.heading>
                         <strong>How do I create an account?</strong>
-                    </x-accordion.header>
-                    <x-accordion.body>
+                    </x-accordion.heading>
+                    <x-accordion.content>
                         <p>To create an account, click the "Sign Up" button.</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
                 <x-accordion.item id="faq-2">
-                    <x-accordion.header>
+                    <x-accordion.heading>
                         <strong>What payment methods do you accept?</strong>
-                    </x-accordion.header>
-                    <x-accordion.body>
+                    </x-accordion.heading>
+                    <x-accordion.content>
                         <p>We accept all major credit cards and PayPal.</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -293,8 +293,8 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="nested">
-                    <x-accordion.header>Main Section</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Main Section</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Main content</p>
                         <div class="alert alert-info">
                             <strong>Note:</strong> This is a nested alert.
@@ -303,7 +303,7 @@ class AccordionTest extends TestCase
                             <li>Item 1</li>
                             <li>Item 2</li>
                         </ul>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -323,19 +323,19 @@ class AccordionTest extends TestCase
                 class="custom-accordion"
                 data-testid="accordion">
                 <x-accordion.item id="item-1" class="border-primary">
-                    <x-accordion.header class="bg-primary text-white">
+                    <x-accordion.heading class="bg-primary text-white">
                         <div class="d-flex align-items-center">
                             <i class="icon-info me-2"></i>
                             <span>Section 1</span>
                             <span class="badge bg-light text-dark ms-auto">New</span>
                         </div>
-                    </x-accordion.header>
-                    <x-accordion.body show class="bg-light">
+                    </x-accordion.heading>
+                    <x-accordion.content show class="bg-light">
                         <p>Content for section 1</p>
                         <div class="alert alert-info">
                             <strong>Info:</strong> This section is expanded by default.
                         </div>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -360,10 +360,10 @@ class AccordionTest extends TestCase
                 role="region"
                 aria-label="FAQ section">
                 <x-accordion.item id="accessible-1">
-                    <x-accordion.header>Accessible Section</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Accessible Section</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Accessible content</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -384,8 +384,8 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="empty-item">
-                    <x-accordion.header></x-accordion.header>
-                    <x-accordion.body></x-accordion.body>
+                    <x-accordion.heading></x-accordion.heading>
+                    <x-accordion.content></x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -395,10 +395,10 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="special-chars">
-                    <x-accordion.header>Section & Content</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Section & Content</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Content with "quotes" and &amp; symbols</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -411,10 +411,10 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="semantic">
-                    <x-accordion.header>Semantic Section</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Semantic Section</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Semantic content</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -432,10 +432,10 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion class="custom-class">
                 <x-accordion.item id="merged" class="item-class">
-                    <x-accordion.header class="header-class">Section</x-accordion.header>
-                    <x-accordion.body class="body-class">
+                    <x-accordion.heading class="header-class">Section</x-accordion.heading>
+                    <x-accordion.content class="body-class">
                         <p>Content</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -457,10 +457,10 @@ class AccordionTest extends TestCase
                 data-loading="false"
                 data-interactive="true">
                 <x-accordion.item id="performance">
-                    <x-accordion.header>Performance Section</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Performance Section</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Performance content</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -477,10 +477,10 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion id="bootstrapAccordion">
                 <x-accordion.item id="bootstrap-item">
-                    <x-accordion.header>Bootstrap Section</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Bootstrap Section</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Bootstrap content</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -502,11 +502,11 @@ class AccordionTest extends TestCase
         $view = $this->blade("
             <x-accordion>
                 <x-accordion.item id=\"long-content\">
-                    <x-accordion.header>Long Content Section</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Long Content Section</x-accordion.heading>
+                    <x-accordion.content>
                         <p>{$longContent}</p>
                         <p>Additional paragraph with more content to test scrolling and layout.</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ");
@@ -521,10 +521,10 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="html-content">
-                    <x-accordion.header>
+                    <x-accordion.heading>
                         <strong>Bold</strong> <em>Italic</em> <span class="text-primary">Colored</span> Header
-                    </x-accordion.header>
-                    <x-accordion.body>
+                    </x-accordion.heading>
+                    <x-accordion.content>
                         <div class="alert alert-info">
                             <strong>Info:</strong> This is an alert within accordion content.
                         </div>
@@ -533,7 +533,7 @@ class AccordionTest extends TestCase
                             <li><em>Italic item</em></li>
                             <li><span class="badge bg-primary">Badge item</span></li>
                         </ul>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -553,10 +553,10 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="empty-header">
-                    <x-accordion.header></x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading></x-accordion.heading>
+                    <x-accordion.content>
                         <p>Content</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -567,8 +567,8 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="empty-body">
-                    <x-accordion.header>Header</x-accordion.header>
-                    <x-accordion.body></x-accordion.body>
+                    <x-accordion.heading>Header</x-accordion.heading>
+                    <x-accordion.content></x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -581,16 +581,16 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="show-1">
-                    <x-accordion.header>Section 1</x-accordion.header>
-                    <x-accordion.body show>
+                    <x-accordion.heading>Section 1</x-accordion.heading>
+                    <x-accordion.content show>
                         <p>Content 1</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
                 <x-accordion.item id="show-2">
-                    <x-accordion.header>Section 2</x-accordion.header>
-                    <x-accordion.body show>
+                    <x-accordion.heading>Section 2</x-accordion.heading>
+                    <x-accordion.content show>
                         <p>Content 2</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -607,18 +607,18 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion id="parent">
                 <x-accordion.item id="parent-item">
-                    <x-accordion.header>Parent Section</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Parent Section</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Parent content</p>
                         <x-accordion id="child">
                             <x-accordion.item id="child-item">
-                                <x-accordion.header>Child Section</x-accordion.header>
-                                <x-accordion.body>
+                                <x-accordion.heading>Child Section</x-accordion.heading>
+                                <x-accordion.content>
                                     <p>Child content</p>
-                                </x-accordion.body>
+                                </x-accordion.content>
                             </x-accordion.item>
                         </x-accordion>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -637,10 +637,10 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="boolean-show">
-                    <x-accordion.header>Section</x-accordion.header>
-                    <x-accordion.body :show="true">
+                    <x-accordion.heading>Section</x-accordion.heading>
+                    <x-accordion.content :show="true">
                         <p>Content</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -652,10 +652,10 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion>
                 <x-accordion.item id="boolean-hide">
-                    <x-accordion.header>Section</x-accordion.header>
-                    <x-accordion.body :show="false">
+                    <x-accordion.heading>Section</x-accordion.heading>
+                    <x-accordion.content :show="false">
                         <p>Content</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -670,10 +670,10 @@ class AccordionTest extends TestCase
         $view = $this->blade('
             <x-accordion id="complex-123">
                 <x-accordion.item id="item-456">
-                    <x-accordion.header>Section</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Section</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Content</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -690,10 +690,10 @@ class AccordionTest extends TestCase
                 data-bs-parent="#parent"
                 data-testid="accordion">
                 <x-accordion.item id="data-item">
-                    <x-accordion.header>Section</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Section</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Content</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');
@@ -711,10 +711,10 @@ class AccordionTest extends TestCase
                 aria-label="FAQ section"
                 aria-describedby="accordion-description">
                 <x-accordion.item id="aria-item">
-                    <x-accordion.header>Section</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Section</x-accordion.heading>
+                    <x-accordion.content>
                         <p>Content</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
         ');

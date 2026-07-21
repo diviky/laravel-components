@@ -19,14 +19,14 @@ Location: `resources/views/bootstrap-5/accordion/item.blade.php`
 ```blade
 <x-accordion>
     <x-accordion.item id="item1" show>
-        <x-accordion.header>First Item</x-accordion.header>
+        <x-accordion.heading>First Item</x-accordion.heading>
         <x-accordion.content>
             Content for the first accordion item
         </x-accordion.content>
     </x-accordion.item>
     
     <x-accordion.item id="item2">
-        <x-accordion.header>Second Item</x-accordion.header>
+        <x-accordion.heading>Second Item</x-accordion.heading>
         <x-accordion.content>
             Content for the second accordion item
         </x-accordion.content>

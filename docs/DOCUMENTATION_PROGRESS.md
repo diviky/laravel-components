@@ -438,7 +438,7 @@ This document tracks the progress of comprehensive documentation and testing for
 - **Files:** `docs/accordion.md`, `tests/Components/AccordionTest.php`
 - **Features Documented:**
   - Collapsible content sections with smooth animations
-  - Sub-component architecture (accordion.item, accordion.header, accordion.body)
+  - Sub-component architecture (accordion.item, accordion.heading, accordion.content)
   - Pre-expanded sections with show attribute
   - Custom styling and rich content support
   - Bootstrap JavaScript integration with data-bs-toggle

@@ -25,17 +25,17 @@ A collapsible content component that allows users to expand and collapse section
 ```blade
 <x-accordion>
     <x-accordion.item id="item-1">
-        <x-accordion.header>Section 1</x-accordion.header>
-        <x-accordion.body>
+        <x-accordion.heading>Section 1</x-accordion.heading>
+        <x-accordion.content>
             <p>This is the content for section 1.</p>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
     
     <x-accordion.item id="item-2">
-        <x-accordion.header>Section 2</x-accordion.header>
-        <x-accordion.body>
+        <x-accordion.heading>Section 2</x-accordion.heading>
+        <x-accordion.content>
             <p>This is the content for section 2.</p>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
 </x-accordion>
 ```
@@ -74,7 +74,7 @@ This component supports these additional attributes:
 |------|------|---------|-------------|---------|
 | class | string | null | Additional CSS classes | `'custom-item'` |
 
-### Accordion Header (`<x-accordion.header>`)
+### Accordion Header (`<x-accordion.heading>`)
 
 #### Optional Attributes
 
@@ -90,7 +90,7 @@ This component supports these additional attributes:
 |------|------|---------|-------------|---------|
 | class | string | null | Additional CSS classes | `'custom-header'` |
 
-### Accordion Body (`<x-accordion.body>`)
+### Accordion Body (`<x-accordion.content>`)
 
 #### Optional Attributes
 
@@ -135,22 +135,22 @@ This component supports these additional attributes:
 ```blade
 <x-accordion>
     <x-accordion.item id="section-1">
-        <x-accordion.header>Getting Started</x-accordion.header>
-        <x-accordion.body>
+        <x-accordion.heading>Getting Started</x-accordion.heading>
+        <x-accordion.content>
             <p>Learn how to get started with our platform.</p>
             <ul>
                 <li>Create an account</li>
                 <li>Set up your profile</li>
                 <li>Explore features</li>
             </ul>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
     
     <x-accordion.item id="section-2">
-        <x-accordion.header>Advanced Features</x-accordion.header>
-        <x-accordion.body>
+        <x-accordion.heading>Advanced Features</x-accordion.heading>
+        <x-accordion.content>
             <p>Discover advanced features and customization options.</p>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
 </x-accordion>
 ```
@@ -159,17 +159,17 @@ This component supports these additional attributes:
 ```blade
 <x-accordion id="faq-accordion">
     <x-accordion.item id="faq-1">
-        <x-accordion.header>What is this service?</x-accordion.header>
-        <x-accordion.body>
+        <x-accordion.heading>What is this service?</x-accordion.heading>
+        <x-accordion.content>
             <p>This is a comprehensive platform that helps you manage your projects.</p>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
     
     <x-accordion.item id="faq-2">
-        <x-accordion.header>How do I get support?</x-accordion.header>
-        <x-accordion.body>
+        <x-accordion.heading>How do I get support?</x-accordion.heading>
+        <x-accordion.content>
             <p>Contact our support team through the help center.</p>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
 </x-accordion>
 ```
@@ -178,20 +178,20 @@ This component supports these additional attributes:
 ```blade
 <x-accordion>
     <x-accordion.item id="section-1">
-        <x-accordion.header>Important Information</x-accordion.header>
-        <x-accordion.body show>
+        <x-accordion.heading>Important Information</x-accordion.heading>
+        <x-accordion.content show>
             <p>This section is expanded by default.</p>
             <x-alert type="info">
                 This information is important and visible immediately.
             </x-alert>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
     
     <x-accordion.item id="section-2">
-        <x-accordion.header>Additional Details</x-accordion.header>
-        <x-accordion.body>
+        <x-accordion.heading>Additional Details</x-accordion.heading>
+        <x-accordion.content>
             <p>This section is collapsed by default.</p>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
 </x-accordion>
 ```
@@ -200,14 +200,14 @@ This component supports these additional attributes:
 ```blade
 <x-accordion>
     <x-accordion.item id="rich-content">
-        <x-accordion.header>
+        <x-accordion.heading>
             <div class="d-flex align-items-center">
                 <x-icon name="info" class="me-2" />
                 <span>Product Information</span>
                 <x-badge color="primary" class="ms-auto">New</x-badge>
             </div>
-        </x-accordion.header>
-        <x-accordion.body>
+        </x-accordion.heading>
+        <x-accordion.content>
             <div class="row">
                 <div class="col-md-6">
                     <h5>Features</h5>
@@ -233,7 +233,7 @@ This component supports these additional attributes:
                     </x-table>
                 </div>
             </div>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
 </x-accordion>
 ```
@@ -242,21 +242,21 @@ This component supports these additional attributes:
 ```blade
 <x-accordion class="custom-accordion shadow">
     <x-accordion.item id="styled-1" class="border-primary">
-        <x-accordion.header class="bg-primary text-white">
+        <x-accordion.heading class="bg-primary text-white">
             <strong>Primary Section</strong>
-        </x-accordion.header>
-        <x-accordion.body class="bg-light">
+        </x-accordion.heading>
+        <x-accordion.content class="bg-light">
             <p>This section has custom styling.</p>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
     
     <x-accordion.item id="styled-2" class="border-success">
-        <x-accordion.header class="bg-success text-white">
+        <x-accordion.heading class="bg-success text-white">
             <strong>Success Section</strong>
-        </x-accordion.header>
-        <x-accordion.body class="bg-light">
+        </x-accordion.heading>
+        <x-accordion.content class="bg-light">
             <p>This section also has custom styling.</p>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
 </x-accordion>
 ```
@@ -265,33 +265,33 @@ This component supports these additional attributes:
 ```blade
 <x-accordion>
     <x-accordion.item id="livewire-1">
-        <x-accordion.header>
+        <x-accordion.heading>
             <span wire:click="toggleSection('section1')" style="cursor: pointer;">
                 Section 1 ({{ $section1Open ? 'Open' : 'Closed' }})
             </span>
-        </x-accordion.header>
-        <x-accordion.body show="{{ $section1Open }}">
+        </x-accordion.heading>
+        <x-accordion.content show="{{ $section1Open }}">
             <div wire:poll.10s>
                 <p>This content updates every 10 seconds.</p>
                 <p>Last updated: {{ now()->format('H:i:s') }}</p>
             </div>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
     
     <x-accordion.item id="livewire-2">
-        <x-accordion.header>
+        <x-accordion.heading>
             <span wire:click="toggleSection('section2')" style="cursor: pointer;">
                 Section 2 ({{ $section2Open ? 'Open' : 'Closed' }})
             </span>
-        </x-accordion.header>
-        <x-accordion.body show="{{ $section2Open }}">
+        </x-accordion.heading>
+        <x-accordion.content show="{{ $section2Open }}">
             <x-form-input wire:model="searchTerm" placeholder="Search..." />
             <div class="mt-3">
                 @foreach($filteredItems as $item)
                     <div class="p-2 border-bottom">{{ $item->name }}</div>
                 @endforeach
             </div>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
 </x-accordion>
 ```
@@ -300,35 +300,35 @@ This component supports these additional attributes:
 ```blade
 <x-accordion id="faq">
     <x-accordion.item id="faq-1">
-        <x-accordion.header>
+        <x-accordion.heading>
             <strong>How do I create an account?</strong>
-        </x-accordion.header>
-        <x-accordion.body>
+        </x-accordion.heading>
+        <x-accordion.content>
             <p>To create an account, click the "Sign Up" button in the top right corner and follow the registration process.</p>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
     
     <x-accordion.item id="faq-2">
-        <x-accordion.header>
+        <x-accordion.heading>
             <strong>What payment methods do you accept?</strong>
-        </x-accordion.header>
-        <x-accordion.body>
+        </x-accordion.heading>
+        <x-accordion.content>
             <p>We accept all major credit cards, PayPal, and bank transfers.</p>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
     
     <x-accordion.item id="faq-3">
-        <x-accordion.header>
+        <x-accordion.heading>
             <strong>How can I contact support?</strong>
-        </x-accordion.header>
-        <x-accordion.body>
+        </x-accordion.heading>
+        <x-accordion.content>
             <p>You can contact our support team through:</p>
             <ul>
                 <li>Email: support@example.com</li>
                 <li>Phone: 1-800-123-4567</li>
                 <li>Live chat: Available 24/7</li>
             </ul>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
 </x-accordion>
 ```
@@ -337,26 +337,26 @@ This component supports these additional attributes:
 ```blade
 <x-accordion id="multi-level">
     <x-accordion.item id="level-1">
-        <x-accordion.header>Level 1 - Main Category</x-accordion.header>
-        <x-accordion.body>
+        <x-accordion.heading>Level 1 - Main Category</x-accordion.heading>
+        <x-accordion.content>
             <p>This is the main category content.</p>
             
             <x-accordion id="sub-accordion">
                 <x-accordion.item id="sub-1">
-                    <x-accordion.header>Sub-category 1</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Sub-category 1</x-accordion.heading>
+                    <x-accordion.content>
                         <p>This is sub-category 1 content.</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
                 
                 <x-accordion.item id="sub-2">
-                    <x-accordion.header>Sub-category 2</x-accordion.header>
-                    <x-accordion.body>
+                    <x-accordion.heading>Sub-category 2</x-accordion.heading>
+                    <x-accordion.content>
                         <p>This is sub-category 2 content.</p>
-                    </x-accordion.body>
+                    </x-accordion.content>
                 </x-accordion.item>
             </x-accordion>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
 </x-accordion>
 ```
@@ -394,12 +394,12 @@ This component supports these additional attributes:
 <x-accordion id="faq-section">
     @foreach($faqs as $faq)
         <x-accordion.item id="faq-{{ $faq->id }}">
-            <x-accordion.header>
+            <x-accordion.heading>
                 <strong>{{ $faq->question }}</strong>
-            </x-accordion.header>
-            <x-accordion.body>
+            </x-accordion.heading>
+            <x-accordion.content>
                 {!! $faq->answer !!}
-            </x-accordion.body>
+            </x-accordion.content>
         </x-accordion.item>
     @endforeach
 </x-accordion>
@@ -409,11 +409,11 @@ This component supports these additional attributes:
 ```blade
 <x-accordion>
     <x-accordion.item id="product-details">
-        <x-accordion.header>
+        <x-accordion.heading>
             <x-icon name="info" class="me-2" />
             Product Details
-        </x-accordion.header>
-        <x-accordion.body>
+        </x-accordion.heading>
+        <x-accordion.content>
             <div class="row">
                 <div class="col-md-6">
                     <h6>Specifications</h6>
@@ -437,7 +437,7 @@ This component supports these additional attributes:
                     </ul>
                 </div>
             </div>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
 </x-accordion>
 ```
@@ -446,27 +446,27 @@ This component supports these additional attributes:
 ```blade
 <x-accordion>
     <x-accordion.item id="account-settings">
-        <x-accordion.header>
+        <x-accordion.heading>
             <x-icon name="user" class="me-2" />
             Account Settings
-        </x-accordion.header>
-        <x-accordion.body>
+        </x-accordion.heading>
+        <x-accordion.content>
             <x-form-input name="name" label="Full Name" />
             <x-form-input name="email" label="Email Address" type="email" />
             <x-form-button>Save Changes</x-form-button>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
     
     <x-accordion.item id="privacy-settings">
-        <x-accordion.header>
+        <x-accordion.heading>
             <x-icon name="shield" class="me-2" />
             Privacy Settings
-        </x-accordion.header>
-        <x-accordion.body>
+        </x-accordion.heading>
+        <x-accordion.content>
             <x-form-switch name="public_profile" label="Public Profile" />
             <x-form-switch name="email_notifications" label="Email Notifications" />
             <x-form-switch name="two_factor" label="Two-Factor Authentication" />
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
 </x-accordion>
 ```
@@ -483,11 +483,11 @@ This component supports these additional attributes:
     'accordion.item' => [
         'view' => 'laravel-components::{framework}.accordion.item',
     ],
-    'accordion.header' => [
-        'view' => 'laravel-components::{framework}.accordion.header',
+    'accordion.heading' => [
+        'view' => 'laravel-components::{framework}.accordion.heading',
     ],
-    'accordion.body' => [
-        'view' => 'laravel-components::{framework}.accordion.body',
+    'accordion.content' => [
+        'view' => 'laravel-components::{framework}.accordion.content',
     ],
 ],
 ```
@@ -675,36 +675,36 @@ function initializeAccordionAnalytics() {
 ```blade
 <x-accordion id="documentation">
     <x-accordion.item id="installation">
-        <x-accordion.header>
+        <x-accordion.heading>
             <div class="d-flex align-items-center">
                 <x-icon name="download" class="me-2" />
                 <span>Installation</span>
                 <x-badge color="success" class="ms-auto">Complete</x-badge>
             </div>
-        </x-accordion.header>
-        <x-accordion.body>
+        </x-accordion.heading>
+        <x-accordion.content>
             <div class="alert alert-info">
                 <strong>Prerequisites:</strong> PHP 8.1+, Laravel 10+
             </div>
             <pre><code>composer require diviky/laravel-components</code></pre>
             <p>Follow the installation guide to get started.</p>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
     
     <x-accordion.item id="configuration">
-        <x-accordion.header>
+        <x-accordion.heading>
             <div class="d-flex align-items-center">
                 <x-icon name="settings" class="me-2" />
                 <span>Configuration</span>
                 <x-badge color="warning" class="ms-auto">Required</x-badge>
             </div>
-        </x-accordion.header>
-        <x-accordion.body>
+        </x-accordion.heading>
+        <x-accordion.content>
             <p>Configure the package in your Laravel application.</p>
             <x-alert type="warning">
                 Make sure to publish the configuration file.
             </x-alert>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
 </x-accordion>
 ```
@@ -713,11 +713,11 @@ function initializeAccordionAnalytics() {
 ```blade
 <x-accordion>
     <x-accordion.item id="personal-info">
-        <x-accordion.header>
+        <x-accordion.heading>
             <x-icon name="user" class="me-2" />
             Personal Information
-        </x-accordion.header>
-        <x-accordion.body>
+        </x-accordion.heading>
+        <x-accordion.content>
             <div class="row">
                 <div class="col-md-6">
                     <x-form-input name="first_name" label="First Name" />
@@ -734,15 +734,15 @@ function initializeAccordionAnalytics() {
                     <x-form-input name="phone" label="Phone" type="tel" />
                 </div>
             </div>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
     
     <x-accordion.item id="address-info">
-        <x-accordion.header>
+        <x-accordion.heading>
             <x-icon name="map-pin" class="me-2" />
             Address Information
-        </x-accordion.header>
-        <x-accordion.body>
+        </x-accordion.heading>
+        <x-accordion.content>
             <x-form-input name="street" label="Street Address" />
             <div class="row">
                 <div class="col-md-6">
@@ -755,7 +755,7 @@ function initializeAccordionAnalytics() {
                     <x-form-input name="zip" label="ZIP Code" />
                 </div>
             </div>
-        </x-accordion.body>
+        </x-accordion.content>
     </x-accordion.item>
 </x-accordion>
 ```

@@ -19,7 +19,7 @@ Location: `resources/views/bootstrap-5/accordion/body.blade.php`
 ```blade
 <x-accordion>
     <x-accordion.item>
-        <x-accordion.header>Accordion Header</x-accordion.header>
+        <x-accordion.heading>Accordion Header</x-accordion.heading>
         <x-accordion.content>
             This is the accordion content that will be shown/hidden.
         </x-accordion.content>
