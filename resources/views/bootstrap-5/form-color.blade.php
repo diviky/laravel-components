@@ -14,9 +14,7 @@
     $wirePath = $name ? str_replace(['[', ']'], ['.', ''], \Illuminate\Support\Str::before($name, '[]')) : '';
 @endphp
 
-<x-form-input :extra-attributes="$extraAttributes" :attributes="$attributes
-    ->except('clearable')
-    ->merge(['type' => 'color', 'class' => 'form-control-color', 'id' => $colorInputId])">
+<x-form-input :extra-attributes="$extraAttributes" :attributes="$attributes->except('clearable')->merge(['type' => 'color', 'id' => $colorInputId])">
     @isset($prepend)
         <x-slot:prepend :attributes="$prepend->attributes">
             {!! $prepend !!}
@@ -54,8 +52,7 @@
                     }
                 }">
                     <input type="hidden" name="{{ $name }}" value="{{ $initialValue }}">
-                    <button type="button" class="btn btn-outline-secondary btn-sm"
-                        data-color-id="{{ $colorInputId }}"
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-color-id="{{ $colorInputId }}"
                         data-wire-path="{{ addslashes($wirePath) }}"
                         onclick="(function(btn){
                             var hidden = btn.closest('span').querySelector('input[type=hidden]');

@@ -80,23 +80,23 @@ window.initAlpineEasyMde = function () {
         uploadUrl: null,
         uploading: false,
         setup: {},
+        syncingFromEditor: false,
 
         init() {
-            // Wait for Livewire to be fully initialized
             this.$nextTick(() => {
-                // Get initial value from textarea or Livewire
-                if (!this.value && this.$refs.textarea.value) {
-                    this.value = this.$refs.textarea.value;
-                }
-
                 this.initEditor();
 
-                // Handles a case where people try to change contents on the fly from Livewire methods
+                // Sync when Livewire pushes a new value into the entangled property.
+                // Do not reassign `this.value` here — that would replace the entangle proxy.
                 this.$watch('value', (newValue) => {
-                    if (this.editor && newValue !== this.editor.value()) {
-                        this.value = newValue || '';
-                        this.destroyEditor();
-                        this.$nextTick(() => this.initEditor());
+                    if (this.syncingFromEditor || !this.editor) {
+                        return;
+                    }
+
+                    const next = newValue ?? '';
+                    if (next !== this.editor.value()) {
+                        this.editor.value(next);
+                        this.editor.codemirror.save();
                     }
                 });
             });
@@ -110,8 +110,15 @@ window.initAlpineEasyMde = function () {
         },
 
         initEditor() {
-            // Get the initial value from textarea if value is not set
+            if (this.editor || !this.$refs.textarea) {
+                return;
+            }
+
             const initialValue = this.value ?? this.$refs.textarea.value ?? '';
+
+            if (this.$refs.textarea.value !== initialValue) {
+                this.$refs.textarea.value = initialValue;
+            }
 
             this.editor = new EasyMDE({
                 ...this.setup,
@@ -128,11 +135,24 @@ window.initAlpineEasyMde = function () {
                 },
             });
 
-            // Sync editor changes back to Livewire
+            // Sync editor changes back to the textarea (non-Livewire forms) and Alpine/Livewire entangle
             this.editor.codemirror.on('change', () => {
                 const newValue = this.editor.value();
+                this.editor.codemirror.save();
+
                 if (this.value !== newValue) {
+                    this.syncingFromEditor = true;
                     this.value = newValue;
+                    this.$nextTick(() => {
+                        this.syncingFromEditor = false;
+                    });
+                }
+            });
+
+            // CodeMirror needs a refresh when initialized inside a hidden container.
+            this.$nextTick(() => {
+                if (this.editor) {
+                    this.editor.codemirror.refresh();
                 }
             });
         },
