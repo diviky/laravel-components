@@ -251,6 +251,10 @@ return [
             'view' => 'laravel-components::{framework}.form-time',
             'class' => Components\FormTime::class,
         ],
+        'form-timezones' => [
+            'view' => 'laravel-components::{framework}.form-timezones',
+            'class' => Components\FormTimezones::class,
+        ],
         'form-toggle' => [
             'view' => 'laravel-components::{framework}.form-toggle',
             'class' => Components\FormToggle::class,

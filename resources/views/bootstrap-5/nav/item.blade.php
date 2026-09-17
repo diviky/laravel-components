@@ -15,13 +15,15 @@
     <a @if ($href) href="{{ $href }}"
         @if ($away) target="_blank" @endif
         @endif
-        @if ($attributes->has('turbo')) data-pjax @endif
+        @if ($attributes->has('turbo') && !$attributes->has('data-inertia')) data-pjax @endif
         @if ($dropdown) data-bs-toggle="dropdown" @endif
+        @if ($attributes->has('data-inertia')) data-inertia @endif
+        @if ($attributes->has('nojax')) nojax @endif
+        @if ($attributes->has('data-nojax')) data-nojax @endif
         @class([
             'active' => $active || $routeMatches(),
             'nav-link' => $tab || $format == 'tab',
             'nav-link dropdown-toggle' => $dropdown,
-            'data-pjax' => $attributes->has('turbo'),
         ])>
         <x-icon :name="$icon" class="me-1" />
         @if ($title || $slot->isNotEmpty())
