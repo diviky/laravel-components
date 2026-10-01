@@ -44,7 +44,7 @@ class Timezone
         $only ??= false;
         $cacheKey = is_array($only) ? implode('|', $only) : (string) $only;
 
-        if (! isset(self::$mappedCache[$cacheKey])) {
+        if (!isset(self::$mappedCache[$cacheKey])) {
             self::$mappedCache[$cacheKey] = (new self)->only($only)->allMapped();
         }
 

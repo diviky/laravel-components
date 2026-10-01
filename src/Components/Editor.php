@@ -30,7 +30,7 @@ class Editor extends Component
         $this->showErrors = $showErrors;
         $this->floating = $floating;
 
-        if (! is_null($language)) {
+        if (!is_null($language)) {
             $this->name = "{$name}[{$language}]";
         }
 

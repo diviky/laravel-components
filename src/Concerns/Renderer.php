@@ -17,7 +17,7 @@ trait Renderer
 
         $config = config("laravel-components.components.{$alias}");
 
-        $framework = config('laravel-components.framework');
+        $framework = config('laravel-components.framework', 'bootstrap-5');
 
         return (string) Str::replace('{framework}', $framework, $config['view']);
     }

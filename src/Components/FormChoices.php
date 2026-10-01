@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Diviky\LaravelComponents\Components;
 
 use Diviky\LaravelComponents\Concerns\Renderer;
-use Diviky\LaravelFormComponents\Components\FormSelect;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;

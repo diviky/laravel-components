@@ -8,7 +8,7 @@ class EditorTiptap extends Editor
     {
         $setup = array_merge([
             'placeholder' => 'Write something...',
-            'editable' => ! ($this->isReadonly() || $this->isDisabled()),
+            'editable' => !($this->isReadonly() || $this->isDisabled()),
             'extensions' => [
                 'starterKit',
                 'underline',

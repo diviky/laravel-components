@@ -6,7 +6,6 @@ namespace Diviky\LaravelComponents\Components;
 
 use Carbon\Carbon;
 use Diviky\LaravelComponents\Concerns\Renderer;
-use Diviky\LaravelFormComponents\Components\FormInput;
 
 class FormTime extends FormInput
 {

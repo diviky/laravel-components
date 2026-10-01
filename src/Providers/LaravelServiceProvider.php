@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Diviky\LaravelComponents\Providers;
 
-use Diviky\LaravelFormComponents\FormDataBinder;
+use Diviky\LaravelComponents\FormDataBinder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
@@ -18,6 +18,7 @@ class LaravelServiceProvider extends BaseServiceProvider
     public function boot(): void
     {
         $this->bootConsole();
+        $this->bootBladeDirectives();
         $this->bootBalde();
         $this->bootViews();
     }
@@ -28,9 +29,34 @@ class LaravelServiceProvider extends BaseServiceProvider
     #[\Override]
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'laravel-components');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'laravel-components');
 
         $this->app->singleton(FormDataBinder::class, fn () => new FormDataBinder);
+    }
+
+    protected function bootBladeDirectives(): self
+    {
+        Blade::directive('bind', function (mixed $bind) {
+            return '<?php app(\\Diviky\\LaravelComponents\\FormDataBinder::class)->bind(' . $bind . '); ?>';
+        });
+
+        Blade::directive('bound', function (string $name) {
+            return '<?php echo app(\\Diviky\\LaravelComponents\\FormDataBinder::class)->boundValue(' . $name . '); ?>';
+        });
+
+        Blade::directive('endbind', function () {
+            return '<?php app(\\Diviky\\LaravelComponents\\FormDataBinder::class)->pop(); ?>';
+        });
+
+        Blade::directive('wire', function (string|bool $modifier) {
+            return '<?php app(\\Diviky\\LaravelComponents\\FormDataBinder::class)->wire(' . $modifier . '); ?>';
+        });
+
+        Blade::directive('endwire', function () {
+            return '<?php app(\\Diviky\\LaravelComponents\\FormDataBinder::class)->endWire(); ?>';
+        });
+
+        return $this;
     }
 
     protected function bootBalde(): self
@@ -54,7 +80,7 @@ class LaravelServiceProvider extends BaseServiceProvider
 
     public function bootViews(): self
     {
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'laravel-components');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'laravel-components');
 
         return $this;
     }
@@ -63,11 +89,11 @@ class LaravelServiceProvider extends BaseServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../../config/config.php' => config_path('laravel-components.php'),
+                __DIR__ . '/../../config/config.php' => config_path('laravel-components.php'),
             ], 'config');
 
             $this->publishes([
-                __DIR__.'/../../resources/views' => base_path('resources/views/vendor/laravel-components'),
+                __DIR__ . '/../../resources/views' => base_path('resources/views/vendor/laravel-components'),
             ], 'views');
         }
 

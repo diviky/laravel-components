@@ -9,7 +9,7 @@
         ? 'color_' . str_replace(['[', ']'], ['_', ''], $name)
         : 'color_' . \Illuminate\Support\Str::random(8);
     $initialValue = $name
-        ? old($name) ?? (app(\Diviky\LaravelFormComponents\FormDataBinder::class)->boundValue($name) ?? '')
+        ? old($name) ?? (app(\Diviky\LaravelComponents\FormDataBinder::class)->boundValue($name) ?? '')
         : '';
     $wirePath = $name ? str_replace(['[', ']'], ['.', ''], \Illuminate\Support\Str::before($name, '[]')) : '';
 @endphp

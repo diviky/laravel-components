@@ -10,7 +10,76 @@ return [
     // bootstrap-4
     'framework' => env('LARAVEL_COMPONENTS_FRAMEWORK', env('COMPONENTS_FRAMEWORK', 'bootstrap-5')),
 
+    'use_eloquent_date_casting' => false,
+
+    /** bool | string */
+    'default_wire' => false,
+
+    /**
+     * How the form field should display
+     */
+    'form_style' => env('COMPONENTS_FORM_STYLE'),
+
     'components' => [
+        'form' => [
+            'view' => 'laravel-components::{framework}.form',
+            'class' => Components\Form::class,
+        ],
+        'form-checkbox' => [
+            'view' => 'laravel-components::{framework}.form-checkbox',
+            'class' => Components\FormCheckbox::class,
+        ],
+        'form-errors' => [
+            'view' => 'laravel-components::{framework}.form-errors',
+            'class' => Components\FormErrors::class,
+        ],
+        'form-group' => [
+            'view' => 'laravel-components::{framework}.form-group',
+            'class' => Components\FormGroup::class,
+        ],
+        'form-input' => [
+            'view' => 'laravel-components::{framework}.form-input',
+            'class' => Components\FormInput::class,
+        ],
+        'form-input-group' => [
+            'view' => 'laravel-components::{framework}.form-input-group',
+            'class' => Components\FormInputGroup::class,
+        ],
+        'form-input-group-text' => [
+            'view' => 'laravel-components::{framework}.form-input-group-text',
+            'class' => Components\FormInputGroupText::class,
+        ],
+        'form-label' => [
+            'view' => 'laravel-components::{framework}.form-label',
+            'class' => Components\FormLabel::class,
+        ],
+        'form-radio' => [
+            'view' => 'laravel-components::{framework}.form-radio',
+            'class' => Components\FormRadio::class,
+        ],
+        'form-range' => [
+            'view' => 'laravel-components::{framework}.form-range',
+            'class' => Components\FormRange::class,
+        ],
+        'form-select' => [
+            'view' => 'laravel-components::{framework}.form-select',
+            'class' => Components\FormSelect::class,
+        ],
+        'form-submit' => [
+            'view' => 'laravel-components::{framework}.form-submit',
+            'class' => Components\FormSubmit::class,
+        ],
+        'form-textarea' => [
+            'view' => 'laravel-components::{framework}.form-textarea',
+            'class' => Components\FormTextarea::class,
+        ],
+        'help' => [
+            'view' => 'laravel-components::{framework}.help',
+        ],
+        'icon' => [
+            'view' => 'laravel-components::{framework}.icon',
+            'class' => Components\Icon::class,
+        ],
         'accordion' => [
             'view' => 'laravel-components::{framework}.accordion.index',
         ],
@@ -195,6 +264,7 @@ return [
         ],
         'form-hidden' => [
             'view' => 'laravel-components::{framework}.form-hidden',
+            'class' => Components\FormHidden::class,
         ],
         'form-icon' => [
             'view' => 'laravel-components::{framework}.form-icon',
@@ -473,6 +543,9 @@ return [
         ],
         'view.empty' => [
             'view' => 'laravel-components::{framework}.view.empty',
+        ],
+        'view.loading' => [
+            'view' => 'laravel-components::{framework}.view.loading',
         ],
         'view.file' => [
             'view' => 'laravel-components::{framework}.view.file',
